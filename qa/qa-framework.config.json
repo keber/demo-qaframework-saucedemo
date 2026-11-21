@@ -1,0 +1,167 @@
+{
+  "$schema": "./qa-framework.config.schema.json",
+  "frameworkVersion": "1.14.0-rc.9",
+  "project": {
+    "name": "saucedemo",
+    "displayName": "Swag Labs (saucedemo.com)",
+    "description": "Tienda e-commerce de demostración de Sauce Labs (Swag Labs): login, catálogo de productos, carrito y checkout. Publica intencionalmente usuarios de prueba con comportamientos distintos.",
+    "qaBaseUrl": "https://www.saucedemo.com",
+    "techStack": "SPA React (frontend estático, sin API pública; estado en localStorage)",
+    "loginPath": "/"
+  },
+  "modules": [
+    {
+      "code": "AUTH",
+      "name": "Autenticación",
+      "description": "Login, mensajes de error, usuario bloqueado, logout y protección de rutas",
+      "specPath": "qa/01-specifications/module-auth",
+      "automationPath": "qa/07-automation/e2e/tests/auth"
+    },
+    {
+      "code": "INV",
+      "name": "Catálogo de productos",
+      "description": "Listado de inventario, ordenamiento, detalle de producto",
+      "specPath": "qa/01-specifications/module-inventory",
+      "automationPath": "qa/07-automation/e2e/tests/inventory"
+    },
+    {
+      "code": "CART",
+      "name": "Carrito de compras",
+      "description": "Agregar/quitar productos, badge, página de carrito, persistencia",
+      "specPath": "qa/01-specifications/module-cart",
+      "automationPath": "qa/07-automation/e2e/tests/cart"
+    },
+    {
+      "code": "CHK",
+      "name": "Checkout",
+      "description": "Información del cliente, resumen de orden, totales e impuestos, confirmación",
+      "specPath": "qa/01-specifications/module-checkout",
+      "automationPath": "qa/07-automation/e2e/tests/checkout"
+    },
+    {
+      "code": "NAV",
+      "name": "Navegación y menú",
+      "description": "Menú lateral (All Items, About, Logout, Reset App State), footer y enlaces sociales",
+      "specPath": "qa/01-specifications/module-navigation",
+      "automationPath": "qa/07-automation/e2e/tests/navigation"
+    }
+  ],
+  "conventions": {
+    "language": "es",
+    "locale": "es-CL",
+    "testCaseIdPattern": "TC-{MODULE}-{SUBMODULE}-{NUM}",
+    "businessRuleIdPattern": "RN-{MODULE}-{NUM}",
+    "workflowIdPattern": "FL-{MODULE}-{NUM}",
+    "defectIdPattern": "DEF-{PREFIX}-{NUM}",
+    "testNamingPattern": "[{ID}] {title} @{priority}",
+    "timestampFormat": "YYYY-MM-DD_HH-MM-SS",
+    "tcPriorityLevels": [
+      "P0",
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "qaRoot": "qa"
+  },
+  "testUsers": [
+    {
+      "role": "standard_user",
+      "envVarEmail": "QA_USER_STANDARD_USER_USERNAME",
+      "envVarPassword": "QA_USER_PASSWORD",
+      "description": "Usuario estándar, comportamiento esperado"
+    },
+    {
+      "role": "locked_out_user",
+      "envVarEmail": "QA_USER_LOCKED_OUT_USER_USERNAME",
+      "envVarPassword": "QA_USER_PASSWORD",
+      "description": "Usuario bloqueado: el login debe ser rechazado"
+    },
+    {
+      "role": "problem_user",
+      "envVarEmail": "QA_USER_PROBLEM_USER_USERNAME",
+      "envVarPassword": "QA_USER_PASSWORD",
+      "description": "Usuario con defectos intencionales de UI y funcionalidad"
+    },
+    {
+      "role": "performance_glitch_user",
+      "envVarEmail": "QA_USER_PERFORMANCE_GLITCH_USER_USERNAME",
+      "envVarPassword": "QA_USER_PASSWORD",
+      "description": "Usuario con demoras de rendimiento intencionales"
+    },
+    {
+      "role": "error_user",
+      "envVarEmail": "QA_USER_ERROR_USER_USERNAME",
+      "envVarPassword": "QA_USER_PASSWORD",
+      "description": "Usuario con errores intencionales en acciones"
+    },
+    {
+      "role": "visual_user",
+      "envVarEmail": "QA_USER_VISUAL_USER_USERNAME",
+      "envVarPassword": "QA_USER_PASSWORD",
+      "description": "Usuario con defectos visuales intencionales"
+    }
+  ],
+  "parallelLanes": {
+    "enabled": false,
+    "lanes": [
+      {
+        "id": "1",
+        "account": "QA_USER",
+        "storageState": ".auth/user-default.json",
+        "mcpNamespace": null,
+        "runnerProject": "chromium",
+        "capabilities": []
+      }
+    ]
+  },
+  "integrations": {
+    "playwright": {
+      "enabled": true,
+      "automationRoot": "qa/07-automation/e2e",
+      "workers": {
+        "local": 2,
+        "ci": 1
+      },
+      "timeout": 30000,
+      "navigationTimeout": 60000,
+      "actionTimeout": 10000,
+      "retries": {
+        "local": 0,
+        "ci": 2
+      },
+      "browsers": [
+        "chromium"
+      ]
+    },
+    "azureDevOps": {
+      "enabled": false,
+      "organization": "{{ADO_ORG}}",
+      "project": "{{ADO_PROJECT}}",
+      "testPlanId": null,
+      "suiteId": null,
+      "variableGroup": "{{ADO_VARIABLE_GROUP}}",
+      "pipelineFile": "qa/08-azure-integration/pipelines/azure-pipeline-qa.yml",
+      "moduleRegistry": "qa/08-azure-integration/module-registry.json",
+      "reporterPackage": "@alex_neo/playwright-azure-reporter",
+      "sprintCycle": {
+        "enabled": false,
+        "sprintDurationDays": 8,
+        "manualTestingTimeboxDays": 2,
+        "dateFormat": "dd-mm-aaaa",
+        "timezone": "America/Santiago",
+        "approvalThresholdPercent": 85
+      }
+    }
+  },
+  "agentSettings": {
+    "instructionsPath": "qa/00-guides",
+    "credentialPolicy": "env-vars-only",
+    "credentialPlaceholder": "<PLACEHOLDER>",
+    "screenshotPath": "qa/07-automation/e2e/diagnosis",
+    "sessionSummaryLocation": "qa/",
+    "tc_per_submodule_target": {
+      "min": 10,
+      "max": 30
+    }
+  }
+}
