@@ -75,7 +75,7 @@ Sin tareas ADO: los items del sprint son las reglas de negocio (RN) y los flujos
 | P3 | Caso borde, cosmético o de baja frecuencia | 3 | 3 | 0 | 0 |
 | **Total** | | **26** | **25** | **1** | **0** |
 
-Candidatos DEF conocidos de las etapas 1 y 2 en este módulo: **6** (TC-CHK-FLW-007, TC-CHK-FLW-015, TC-CHK-FLW-020, TC-CHK-FLW-022, TC-CHK-FLW-023, TC-CHK-FLW-024). Se ejecutan con la aserción de la regla; si la desviación se confirma, la etapa 5 los marca con `test.fail()` y crea el archivo `DEF-CHK-NNN` (regla 10).
+Candidatos DEF conocidos de las etapas 1 y 2 en este módulo: **6** (TC-CHK-FLW-007, TC-CHK-FLW-015, TC-CHK-FLW-020, TC-CHK-FLW-022, TC-CHK-FLW-023, TC-CHK-FLW-024). Se ejecutan con la aserción de la regla; si la desviación se confirma, la etapa 5 los marca con `test.fail()` y crea el archivo `DEF-SD-NNN` (regla 10).
 
 ## 5. TestSuites (agrupación funcional)
 
@@ -259,7 +259,7 @@ La columna TC-ID muestra el código de submódulo y el número de cada TC (p. ej
 - Suite destino: `qa/07-automation/e2e/tests/checkout/`.
 - TC-CHK-FLW-019 y TC-CHK-FLW-026 requieren `acceptDownloads: true`; TC-CHK-FLW-019 es `Ambos` (la descarga y el nombre se automatizan; la revisión visual del documento es manual).
 - No asertar la hora de "Order Date" del PDF: depende de la zona horaria del runner.
-- TC-CHK-FLW-022 a 024 son candidatos DEF por usuario: `test.fail()` + `DEF-CHK-NNN` en la etapa 5 si se confirman.
+- TC-CHK-FLW-022 a 024 son candidatos DEF por usuario: `test.fail()` + `DEF-SD-NNN` en la etapa 5 si se confirman.
 - Nombre de los tests: `[{TC-ID}] {título} @{prioridad}` (`conventions.testNamingPattern`).
 - Credenciales y URL siempre desde `process.env` (regla 3); nunca escribir la contraseña en código, evidencias ni reportes.
 - Los timeouts se amplían solo de forma local y explícita en los TC que lo indican; no se modifica el timeout global.

@@ -69,7 +69,7 @@ Se documenta como TC independiente porque combina dos usuarios en contextos sepa
 - [ ] Ningún botón del listado tiene la clase `btn_inventory_misaligned`
 - [ ] La revisión manual de las capturas no encuentra diferencias visuales
 
-La parte automatizada asserta la regla (regla 10). Si la etapa 5 confirma la desviación, el test se marca con `test.fail()` y se crea `qa/06-defects/open/DEF-INV-NNN_*.md`. Los precios aleatorios del listado de `visual_user` los cubre TC-INV-CAT-025, no este TC.
+La parte automatizada asserta la regla (regla 10). Si la etapa 5 confirma la desviación, el test se marca con `test.fail()` y se crea `qa/06-defects/open/DEF-SD-NNN_*.md`. Los precios aleatorios del listado de `visual_user` los cubre TC-INV-CAT-025, no este TC.
 
 ---
 
@@ -77,7 +77,7 @@ La parte automatizada asserta la regla (regla 10). Si la etapa 5 confirma la des
 
 | Problema | DEF-ID | Estado | Impacto en este TC |
 |-------|-------|--------|------------------|
-| Imagen de Backpack `sl-404`, ícono del carrito desplazado (x=1034, y=39 frente a x=1220, y=10) y botón con `btn_inventory_misaligned` (observado en la etapa 1) | Pendiente (se crea en la etapa 5 si se confirma) | Candidato | `test.fail()` con la aserción de la regla |
+| Imagen de Backpack `sl-404`, ícono del carrito desplazado (x=1034, y=39 frente a x=1220, y=10) y botón con `btn_inventory_misaligned` (observado en la etapa 1) | DEF-SD-008 | Abierto (confirmado en la etapa 5) | `test.fail()` con la aserción de la regla |
 
 ---
 

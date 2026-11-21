@@ -75,7 +75,7 @@ Verificar que el botón "Generate PDF order" de la confirmación descarga un com
 
 | Problema | ID | Estado | Impacto en este TC |
 |-------|-------|--------|------------------|
-| El nombre del archivo usa hora UTC y el campo "Order Date" del PDF usa la hora local del navegador | REC (a registrar en la etapa 5) | Hallazgo sin regla violada | Ninguno: no se asserta la hora del nombre contra la hora local |
+| El nombre del archivo usa hora UTC y el campo "Order Date" del PDF usa la hora local del navegador | REC-SD-006 | Recomendación (sin regla violada) | Ninguno: no se asserta la hora del nombre contra la hora local |
 
 ---
 
