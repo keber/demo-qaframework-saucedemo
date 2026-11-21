@@ -10,12 +10,12 @@
 
 | Module | Submodule | TCs Total | TCs Automated | Plan | ADO Suite | Status | Last Run |
 |---|---|---|---|---|---|---|---|
-| Autenticación (AUTH) | Login y sesión (LOG) | 24 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
-| Catálogo de productos (INV) | Listado y detalle (CAT) | 28 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
-| Catálogo de productos (INV) | Dynamic Catalog (DYN) | 13 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
-| Carrito de compras (CART) | Carrito (CRT) | 19 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
-| Checkout (CHK) | Flujo de compra (FLW) | 26 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
-| Navegación y menú (NAV) | Menú lateral, encabezado y footer (MENU) | 16 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
+| Autenticación (AUTH) | Login y sesión (LOG) | 24 | - | ✅ | - | ⚠️ Etapa 4 completada (casos de prueba) | - |
+| Catálogo de productos (INV) | Listado y detalle (CAT) | 28 | - | ✅ | - | ⚠️ Etapa 4 completada (casos de prueba) | - |
+| Catálogo de productos (INV) | Dynamic Catalog (DYN) | 13 | - | ✅ | - | ⚠️ Etapa 4 completada (casos de prueba) | - |
+| Carrito de compras (CART) | Carrito (CRT) | 19 | - | ✅ | - | ⚠️ Etapa 4 completada (casos de prueba) | - |
+| Checkout (CHK) | Flujo de compra (FLW) | 26 | - | ✅ | - | ⚠️ Etapa 4 completada (casos de prueba) | - |
+| Navegación y menú (NAV) | Menú lateral, encabezado y footer (MENU) | 16 | - | ✅ | - | ⚠️ Etapa 4 completada (casos de prueba) | - |
 
 **Legend**: ✅ Done · ⚠️ Partial · 🔲 Not started · ⛔ Blocked
 
@@ -110,4 +110,5 @@ _No sprints completed yet._
 | Memory Index | `qa/memory/INDEX.md` |
 | Agent Next Steps | `qa/AGENT-NEXT-STEPS.md` |
 | Planes de pruebas Sprint 1 | `qa/02-test-plans/sprints/Sprint-1/` |
+| Casos de prueba independientes (track `Ambos`) | `qa/03-test-cases/` |
 | Automation Config | `qa/07-automation/playwright.config.ts` |
