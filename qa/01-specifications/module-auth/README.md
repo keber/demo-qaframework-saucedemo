@@ -22,4 +22,4 @@ Login (/) -> /inventory.html; logout desde el menú (NAV) devuelve a /.
 | Etapa | Estado |
 |---|---|
 | 1 - Análisis | ✅ 2026-11-21 |
-| 2 - Especificación | 🔲 Pendiente |
+| 2 - Especificación | ✅ 2026-11-21 (trazabilidad RN/FL -> TC, gaps PENDING-BROWSER cerrados) |

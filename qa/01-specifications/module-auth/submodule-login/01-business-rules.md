@@ -76,10 +76,19 @@
 
 - **Type**: State Machine
 - **Trigger**: Paso del tiempo tras el login
-- **Behavior**: La cookie `session-username` se crea con una expiración de aproximadamente 10 minutos (observado en los atributos de la cookie). No se ejercitó la espera completa en esta sesión
-- **Notes**: Origen `PENDING-BROWSER` para el TC que la cubre
+- **Behavior**: La cookie `session-username` se crea con una expiración fija de 600 s (10 minutos) desde el login. La expiración no se renueva con la actividad (tras navegar a los 120 s quedaban 479 s). Al vencer, el navegador elimina la cookie y cualquier ruta interna muestra el login con el error de RN-AUTH-007
+- **Notes**: Verificado en la etapa 2 (2026-11-21) esperando el plazo completo: a los ~620 s del login la cookie ya no existía y `/cart.html` mostró "Epic sadface: You can only access '/cart.html' when you are logged in." con URL final `/`
+
+### RN-AUTH-012: Ayuda de credenciales en la página de login
+
+- **Type**: Validation
+- **Trigger**: Abrir el login sin sesión
+- **Behavior**: `login-credentials` muestra "Accepted usernames are:" seguido de los 6 usuarios (`standard_user`, `locked_out_user`, `problem_user`, `performance_glitch_user`, `error_user`, `visual_user`) y `login-password` muestra "Password for all users:" seguido de la contraseña publicada por el sitio
+- **Notes**: Agregada en la etapa 2 para trazar TC-AUTH-LOG-024. La contraseña se documenta como `<PLACEHOLDER>` y no se asserta su valor (regla 3)
 
 ## Desviaciones observadas (candidatos para la etapa 5)
+
+> Etapa 2: la expiración absoluta (no deslizante) de 10 minutos corta la sesión aunque el usuario esté activo. No viola una regla explícita; se registra como posible REC de usabilidad en la etapa 5 si se confirma relevante.
 
 | Hallazgo | Regla relacionada | Clasificación propuesta |
 |---|---|---|
