@@ -264,8 +264,11 @@ Generada en la etapa 2 a partir del campo Rule de cada TC (RN -> TC) y del recor
 1. Escribir `QA_USER_LOCKED_OUT_USER_USERNAME`
 2. Escribir `QA_USER_PASSWORD`
 3. Clic en `login-button`
+4. Navegar directamente a `/inventory.html`
 
-**Expected result**: Se muestra "Epic sadface: Sorry, this user has been locked out.", la URL sigue en `/` y no existe la cookie `session-username`
+**Expected result**: Se muestra "Epic sadface: Sorry, this user has been locked out.", la URL sigue en `/` y no se muestra el listado; al navegar a `/inventory.html` el acceso sigue rechazado: "Epic sadface: You can only access '/inventory.html' when you are logged in." y no existe `inventory-list`
+
+> [REVISED - 2026-11-21] Etapa 5b: se quitó del resultado esperado la condición "no existe la cookie `session-username`", que ninguna regla de negocio respalda (RN-AUTH-005 solo exige rechazar el acceso). Se agregó el paso 4, que verifica el rechazo del acceso. La cookie inerte creada por la app queda registrada como REC-SD-012 (antes DEF-SD-019, número retirado).
 
 ### TC-AUTH-LOG-011: Cerrar el mensaje de error
 
