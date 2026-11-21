@@ -2,9 +2,9 @@
 
 **Module code**: CHK  
 **Submodule code**: FLW  
-**Last updated**: 2026-11-21
+**Last updated**: 2026-11-21 (etapa 2)
 
-> Origen de cada TC según la sesión de exploración del 2026-11-21. Los TC marcados como "candidato DEF" describen el comportamiento que exige la regla; si la app no lo cumple, la etapa 5 usa `test.fail()` + archivo DEF (regla 10), nunca una aserción invertida.
+> Origen de cada TC según las sesiones de exploración del 2026-11-21 (etapa 1 y etapa 2). Los TC marcados como "candidato DEF" describen el comportamiento que exige la regla; si la app no lo cumple, la etapa 5 usa `test.fail()` + archivo DEF (regla 10), nunca una aserción invertida.
 
 ## Summary
 
@@ -13,10 +13,10 @@
 | P0 | 5 | 5 | 0 |
 | P1 | 10 | 10 | 0 |
 | P2 | 8 | 8 | 0 |
-| P3 | 3 | 2 | 1 |
-| **Total** | **26** | **25** | **1** |
+| P3 | 3 | 3 | 0 |
+| **Total** | **26** | **26** | **0** |
 
-Origen: UI-OBSERVED 25 · PENDING-BROWSER 1
+Origen: UI-OBSERVED 26 (TC-CHK-FLW-026 verificado en vivo en la etapa 2)
 
 ## Cobertura obligatoria
 
@@ -30,6 +30,39 @@ Origen: UI-OBSERVED 25 · PENDING-BROWSER 1
 - [x] Exportación/descarga: PDF de la orden (TC-CHK-FLW-019)
 - [ ] Paginación/búsqueda - no aplica
 
+## Matriz de trazabilidad
+
+Generada en la etapa 2 a partir del campo Rule de cada TC (RN -> TC) y del recorrido de cada flujo (FL -> TC). Los números son el sufijo de `TC-CHK-FLW-NNN`.
+
+| Regla | Título | TC |
+|---|---|---|
+| RN-CHK-001 | Nombre obligatorio | 001, 002, 003, 006 |
+| RN-CHK-002 | Apellido obligatorio | 001, 004, 022, 023 |
+| RN-CHK-003 | Código postal obligatorio | 001, 005 |
+| RN-CHK-004 | Campos obligatorios no aceptan solo espacios | 007 |
+| RN-CHK-005 | Cierre del mensaje de error | 008 |
+| RN-CHK-006 | Cancelar en el paso 1 | 009 |
+| RN-CHK-007 | Resumen con los productos del carrito | 001, 010 |
+| RN-CHK-008 | Cálculo del subtotal | 011, 014, 025 |
+| RN-CHK-009 | Cálculo del impuesto (8 %) | 012, 014, 025 |
+| RN-CHK-010 | Cálculo del total | 001, 013, 014, 025 |
+| RN-CHK-011 | Formato monetario de los totales | 015 |
+| RN-CHK-012 | Cancelar en el paso 2 | 016 |
+| RN-CHK-013 | Finalizar la compra | 001, 017, 024 |
+| RN-CHK-014 | Volver al catálogo tras la compra | 018 |
+| RN-CHK-015 | Comprobante PDF | 019, 026 |
+| RN-CHK-016 | El resumen requiere completar el paso 1 | 020 |
+| RN-CHK-017 | Checkout requiere sesión | 021 |
+
+Reglas de otros submódulos verificadas aquí: RN-CART-009 (017).
+
+| Flujo | Título | TC |
+|---|---|---|
+| FL-CHK-001 | Compra completa (happy path) | 001, 002, 009, 010, 011, 012, 013, 014, 015, 016, 017, 018, 019, 022, 024, 025, 026 |
+| FL-CHK-002 | Corrección de datos en el paso 1 | 003, 004, 005, 006, 007, 008, 023 |
+
+TC sin flujo propio en este submódulo: TC-CHK-FLW-020 (acceso directo al paso 2) y TC-CHK-FLW-021 (sin sesión) siguen la ruta de acceso directo de FL-AUTH-003.
+
 ---
 
 ### TC-CHK-FLW-001: Compra completa con standard_user
@@ -41,7 +74,7 @@ Origen: UI-OBSERVED 25 · PENDING-BROWSER 1
 | Origin | UI-OBSERVED |
 | Automation | Yes |
 | Playwright | (completar tras la automatización) |
-| Rule | FL-CHK-001 |
+| Rule | RN-CHK-001 a RN-CHK-003, RN-CHK-007, RN-CHK-010, RN-CHK-013 |
 
 **Preconditions**:
 - Sesión iniciada con `QA_USER_STANDARD_USER_USERNAME` / `QA_USER_PASSWORD` (`<PLACEHOLDER>`)
@@ -579,18 +612,20 @@ Origen: UI-OBSERVED 25 · PENDING-BROWSER 1
 |-------|-------|
 | Priority | P3 |
 | Type | Functional |
-| Origin | PENDING-BROWSER |
-| Automation | No |
+| Origin | UI-OBSERVED |
+| Automation | Yes |
 | Playwright | (completar tras la automatización) |
 | Rule | RN-CHK-015 |
 
 **Preconditions**:
 - Sesión iniciada con `QA_USER_STANDARD_USER_USERNAME` / `QA_USER_PASSWORD` (`<PLACEHOLDER>`)
-- PDF descargado
+- `cart-contents` = `[4,0]`; checkout completado con nombre, apellido y `postalCode` = `8320000` conocidos
+- Contexto con `acceptDownloads: true`
 
 **Steps**:
-1. Abrir el PDF
+1. Clic en `generate-pdf-order` y guardar la descarga
+2. Extraer el texto del PDF
 
-**Expected result**: Incluye los productos comprados y los totales de la orden
+**Expected result**: El PDF tiene 1 página y su texto contiene "Order Receipt", "{firstName} {lastName}", "8320000", "Sauce Labs Backpack $29.99", "Sauce Labs Bike Light $9.99", "Item total $39.98", "Tax $3.20", "Total $43.18" y "Thank you for your order!"
 
-**Notes**: Contenido no validado en la etapa 1; requiere parser de PDF o revisión manual
+**Notes**: Verificado en la etapa 2 con un parser de PDF. La etapa 5 debe agregar un parser como devDependency. No asertar la hora de "Order Date" (zona horaria del runner); ver REC de zona horaria en 01-business-rules.md

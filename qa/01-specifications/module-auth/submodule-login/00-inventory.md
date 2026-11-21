@@ -36,7 +36,7 @@ La aplicación es una SPA React. Todas las vistas comparten el título de pesta�
 
 | Mecanismo | Clave | Valor | Notas |
 |---|---|---|---|
-| Cookie | `session-username` | nombre del usuario logueado | Dominio `www.saucedemo.com`, expira a los ~10 minutos. Se elimina al hacer logout |
+| Cookie | `session-username` | nombre del usuario logueado | Dominio `www.saucedemo.com`, expira 600 s después del login, sin renovación por actividad (verificado en la etapa 2). Se elimina al hacer logout |
 | localStorage | `cart-contents` | arreglo JSON de ids de producto, p. ej. `[4,0,2]` | No se elimina al hacer logout (ver módulo CART) |
 | localStorage | `backtrace-guid`, `backtrace-last-active` | telemetría | Ajeno a la lógica de negocio |
 

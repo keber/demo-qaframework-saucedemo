@@ -10,12 +10,12 @@
 
 | Module | Submodule | TCs Total | TCs Automated | Plan | ADO Suite | Status | Last Run |
 |---|---|---|---|---|---|---|---|
-| Autenticación (AUTH) | Login y sesión (LOG) | 24 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
-| Catálogo de productos (INV) | Listado y detalle (CAT) | 27 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
-| Catálogo de productos (INV) | Dynamic Catalog (DYN) | 13 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
-| Carrito de compras (CART) | Carrito (CRT) | 19 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
-| Checkout (CHK) | Flujo de compra (FLW) | 26 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
-| Navegación y menú (NAV) | Menú lateral, encabezado y footer (MENU) | 16 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
+| Autenticación (AUTH) | Login y sesión (LOG) | 24 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
+| Catálogo de productos (INV) | Listado y detalle (CAT) | 28 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
+| Catálogo de productos (INV) | Dynamic Catalog (DYN) | 13 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
+| Carrito de compras (CART) | Carrito (CRT) | 19 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
+| Checkout (CHK) | Flujo de compra (FLW) | 26 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
+| Navegación y menú (NAV) | Menú lateral, encabezado y footer (MENU) | 16 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
 
 **Legend**: ✅ Done · ⚠️ Partial · 🔲 Not started · ⛔ Blocked
 
@@ -49,7 +49,7 @@ npx playwright test --last-failed
 
 | ID | Description | Affects | Opened | Status |
 |---|---|---|---|---|
-| - | Sin bloqueos activos. Defectos candidatos de la etapa 1 en la sección "Desviaciones observadas" de cada `01-business-rules.md` | - | - | - |
+| - | Sin bloqueos activos. Defectos candidatos de las etapas 1 y 2 en la sección "Desviaciones observadas" de cada `01-business-rules.md` | - | - | - |
 
 ---
 

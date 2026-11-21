@@ -34,6 +34,11 @@
 - Nombre + apellido -> "Error: Postal Code is required"
 - Solo espacios en los 3 -> esperado "Error: First Name is required"
 
+### Scenario: contenido del PDF (TC-CHK-FLW-026)
+- Carrito `[4,0]`, cliente con nombre y apellido conocidos y postalCode `8320000`
+- Texto esperado tras extraerlo del PDF: "Order Receipt", "{firstName} {lastName}", "8320000", "Sauce Labs Backpack $29.99", "Sauce Labs Bike Light $9.99", "Item total $39.98", "Tax $3.20", "Total $43.18", "Thank you for your order!"
+- Extracción de texto: requiere un parser de PDF como devDependency de `qa/07-automation/e2e` (decisión de la etapa 5); no asertar la hora de "Order Date" (depende de la zona horaria del runner)
+
 ### Scenario: carrito vacío
 - Sin `cart-contents`; esperado: no poder iniciar checkout (RN-CART-008)
 

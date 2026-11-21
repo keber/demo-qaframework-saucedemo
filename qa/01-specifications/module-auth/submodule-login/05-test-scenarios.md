@@ -2,9 +2,9 @@
 
 **Module code**: AUTH  
 **Submodule code**: LOG  
-**Last updated**: 2026-11-21
+**Last updated**: 2026-11-21 (etapa 2)
 
-> Origen de cada TC según la sesión de exploración del 2026-11-21. Los TC marcados como "candidato DEF" describen el comportamiento que exige la regla; si la app no lo cumple, la etapa 5 usa `test.fail()` + archivo DEF (regla 10), nunca una aserción invertida.
+> Origen de cada TC según las sesiones de exploración del 2026-11-21 (etapa 1 y etapa 2). Los TC marcados como "candidato DEF" describen el comportamiento que exige la regla; si la app no lo cumple, la etapa 5 usa `test.fail()` + archivo DEF (regla 10), nunca una aserción invertida.
 
 ## Summary
 
@@ -13,10 +13,10 @@
 | P0 | 4 | 4 | 0 |
 | P1 | 8 | 8 | 0 |
 | P2 | 8 | 8 | 0 |
-| P3 | 4 | 3 | 1 |
-| **Total** | **24** | **23** | **1** |
+| P3 | 4 | 4 | 0 |
+| **Total** | **24** | **24** | **0** |
 
-Origen: UI-OBSERVED 23 · PENDING-BROWSER 1
+Origen: UI-OBSERVED 24 (TC-AUTH-LOG-023 verificado en vivo en la etapa 2)
 
 ## Cobertura obligatoria
 
@@ -29,6 +29,32 @@ Origen: UI-OBSERVED 23 · PENDING-BROWSER 1
 - [x] Transición de estado: login -> sesión -> logout (TC-AUTH-LOG-017)
 - [ ] Exportación/descarga - no aplica
 - [ ] Paginación/búsqueda - no aplica
+
+## Matriz de trazabilidad
+
+Generada en la etapa 2 a partir del campo Rule de cada TC (RN -> TC) y del recorrido de cada flujo (FL -> TC). Los números son el sufijo de `TC-AUTH-LOG-NNN`.
+
+| Regla | Título | TC |
+|---|---|---|
+| RN-AUTH-001 | Usuario obligatorio | 003, 005, 012 |
+| RN-AUTH-002 | Contraseña obligatoria | 004 |
+| RN-AUTH-003 | Credenciales inválidas | 006, 007 |
+| RN-AUTH-004 | Usuario sensible a mayúsculas y espacios | 008, 009 |
+| RN-AUTH-005 | Usuario bloqueado | 010 |
+| RN-AUTH-006 | Login exitoso | 001, 002, 016, 019, 020, 021 |
+| RN-AUTH-007 | Rutas internas protegidas | 014, 015, 016, 022 |
+| RN-AUTH-008 | Cierre del mensaje de error | 011 |
+| RN-AUTH-009 | Logout termina la sesión | 017, 018 |
+| RN-AUTH-010 | Contraseña enmascarada | 013 |
+| RN-AUTH-011 | Expiración de la sesión | 023 |
+| RN-AUTH-012 | Ayuda de credenciales en la página de login | 024 |
+
+| Flujo | Título | TC |
+|---|---|---|
+| FL-AUTH-001 | Login exitoso | 001, 002, 003, 004, 005, 006, 007, 008, 009, 010, 012, 013, 019, 020, 021, 024 |
+| FL-AUTH-002 | Corrección tras un error de login | 011 |
+| FL-AUTH-003 | Acceso directo a una ruta protegida sin sesión | 014, 015, 016, 022, 023 |
+| FL-AUTH-004 | Logout | 017, 018 |
 
 ---
 
@@ -491,8 +517,8 @@ Origen: UI-OBSERVED 23 · PENDING-BROWSER 1
 |-------|-------|
 | Priority | P3 |
 | Type | Functional |
-| Origin | PENDING-BROWSER |
-| Automation | No |
+| Origin | UI-OBSERVED |
+| Automation | Yes |
 | Playwright | (completar tras la automatización) |
 | Rule | RN-AUTH-011 |
 
@@ -500,12 +526,13 @@ Origen: UI-OBSERVED 23 · PENDING-BROWSER 1
 - Sesión iniciada con `QA_USER_STANDARD_USER_USERNAME` / `QA_USER_PASSWORD` (`<PLACEHOLDER>`)
 
 **Steps**:
-1. Esperar más de 10 minutos sin actividad
-2. Navegar a `/cart.html`
+1. Leer la cookie `session-username` con `context.cookies()` y verificar que `expires` está entre 590 y 610 s después del login
+2. Simular el vencimiento: `context.clearCookies({ name: 'session-username' })` (equivale a lo que hace el navegador al vencer el plazo)
+3. Navegar a `/cart.html`
 
-**Expected result**: Se muestra el login con el error de ruta protegida
+**Expected result**: La cookie expira 600 s (+/- 10 s) después del login y, sin ella, se muestra el login con "Epic sadface: You can only access '/cart.html' when you are logged in."
 
-**Notes**: Expiración deducida de los atributos de la cookie; no se esperó el plazo completo. Alternativa automatizable: avanzar el reloj o borrar la cookie
+**Notes**: Verificado en la etapa 2 con la espera real completa (~620 s): la cookie desaparece y la ruta interna muestra el error. La expiración es absoluta, no se renueva con la actividad. El test automatizado no espera 10 minutos: valida el atributo `expires` y simula el vencimiento borrando la cookie. `page.clock` no sirve porque la expiración de la cookie la gestiona el navegador, no el JavaScript de la página
 
 ### TC-AUTH-LOG-024: La página de login lista los usuarios aceptados
 
@@ -516,7 +543,7 @@ Origen: UI-OBSERVED 23 · PENDING-BROWSER 1
 | Origin | UI-OBSERVED |
 | Automation | Yes |
 | Playwright | (completar tras la automatización) |
-| Rule | - |
+| Rule | RN-AUTH-012 |
 
 **Preconditions**:
 - Contexto de navegador nuevo, sin cookie `session-username`

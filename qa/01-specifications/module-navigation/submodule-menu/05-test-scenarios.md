@@ -30,6 +30,31 @@ Origen: UI-OBSERVED 16
 - [ ] Exportación/descarga - no aplica
 - [ ] Paginación/búsqueda - no aplica
 
+## Matriz de trazabilidad
+
+Generada en la etapa 2 a partir del campo Rule de cada TC (RN -> TC) y del recorrido de cada flujo (FL -> TC). Los números son el sufijo de `TC-NAV-MENU-NNN`.
+
+| Regla | Título | TC |
+|---|---|---|
+| RN-NAV-001 | Abrir y cerrar el menú lateral | 001, 002 |
+| RN-NAV-002 | Menú disponible en todas las vistas internas | 004, 013, 016 |
+| RN-NAV-003 | All Items | 005 |
+| RN-NAV-004 | About | 006, 014 |
+| RN-NAV-005 | Logout | 007 |
+| RN-NAV-006 | Reset App State vacía el carrito | 008, 010, 015 |
+| RN-NAV-007 | Reset App State actualiza los botones del catálogo | 009 |
+| RN-NAV-008 | Enlaces sociales del footer | 011 |
+| RN-NAV-009 | Texto de copyright | 012 |
+| RN-NAV-010 | Opciones del menú | 003 |
+
+Reglas de otros submódulos verificadas aquí: RN-AUTH-009 (007).
+
+| Flujo | Título | TC |
+|---|---|---|
+| FL-NAV-001 | Navegar con el menú lateral | 001, 002, 003, 004, 005, 006, 007, 013, 014, 016 |
+| FL-NAV-002 | Reiniciar el estado de la aplicación | 008, 009, 010, 015 |
+| FL-NAV-003 | Enlaces del footer | 011, 012 |
+
 ---
 
 ### TC-NAV-MENU-001: Abrir y cerrar el menú lateral

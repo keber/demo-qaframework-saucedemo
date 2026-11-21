@@ -6,9 +6,9 @@
 
 | Submódulo | Código | Carpeta | TCs | Alcance |
 |---|---|---|---|---|
-| Listado y detalle | CAT | `submodule-catalog/` | 27 | Listado, ordenamiento, agregar/quitar, detalle de producto |
+| Listado y detalle | CAT | `submodule-catalog/` | 28 | Listado, ordenamiento, agregar/quitar, detalle de producto |
 | Dynamic Catalog | DYN | `submodule-dynamic-catalog/` | 13 | Vistas Lazy Load, Spinner y Slider del menú (descubiertas en la exploración) |
-| **Total** | | | **40** | |
+| **Total** | | | **41** | |
 
 ## Flujo E2E
 
@@ -23,4 +23,4 @@ Login -> /inventory.html (ordenar, agregar) -> /inventory-item.html?id={id} -> c
 | Etapa | Estado |
 |---|---|
 | 1 - Análisis | ✅ 2026-11-21 |
-| 2 - Especificación | 🔲 Pendiente |
+| 2 - Especificación | ✅ 2026-11-21 (trazabilidad RN/FL -> TC, gaps PENDING-BROWSER cerrados) |

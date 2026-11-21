@@ -2,9 +2,9 @@
 
 **Module code**: INV  
 **Submodule code**: DYN  
-**Last updated**: 2026-11-21
+**Last updated**: 2026-11-21 (etapa 2)
 
-> Origen de cada TC según la sesión de exploración del 2026-11-21. Los TC marcados como "candidato DEF" describen el comportamiento que exige la regla; si la app no lo cumple, la etapa 5 usa `test.fail()` + archivo DEF (regla 10), nunca una aserción invertida.
+> Origen de cada TC según las sesiones de exploración del 2026-11-21 (etapa 1 y etapa 2). Los TC marcados como "candidato DEF" describen el comportamiento que exige la regla; si la app no lo cumple, la etapa 5 usa `test.fail()` + archivo DEF (regla 10), nunca una aserción invertida.
 
 ## Summary
 
@@ -16,7 +16,7 @@
 | P3 | 6 | 6 | 0 |
 | **Total** | **13** | **13** | **0** |
 
-Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
+Origen: UI-OBSERVED 13 (los 3 TC `PENDING-BROWSER` de la etapa 1 se verificaron en vivo en la etapa 2)
 
 ## Cobertura obligatoria
 
@@ -29,6 +29,29 @@ Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
 - [x] Transición de estado: carga diferida, spinner, slider (TC-INV-DYN-003, 005, 007)
 - [ ] Exportación/descarga - no aplica
 - [x] Paginación: scroll infinito de Lazy Load (TC-INV-DYN-003)
+
+## Matriz de trazabilidad
+
+Generada en la etapa 2 a partir del campo Rule de cada TC (RN -> TC) y del recorrido de cada flujo (FL -> TC). Los números son el sufijo de `TC-INV-DYN-NNN`.
+
+| Regla | Título | TC |
+|---|---|---|
+| RN-INV-014 | Submenú desplegable | 001, 013 |
+| RN-INV-015 | Rutas del Dynamic Catalog protegidas | 009, 010 |
+| RN-INV-016 | Carga diferida (Lazy Load) | 002, 003, 012 |
+| RN-INV-017 | Indicador de carga (Spinner) | 005, 006, 012 |
+| RN-INV-018 | Navegación del Slider | 007, 008, 012 |
+| RN-INV-019 | Precios del Dynamic Catalog iguales al catálogo | 004, 012 |
+| RN-INV-020 | Vistas de solo lectura | 011 |
+| RN-INV-021 | Mismo comportamiento para todos los usuarios habilitados | 012 |
+
+| Flujo | Título | TC |
+|---|---|---|
+| FL-INV-004 | Abrir una vista del Dynamic Catalog | 001, 002, 005, 006, 011, 012, 013 |
+| FL-INV-005 | Scroll con carga diferida | 003, 004 |
+| FL-INV-006 | Recorrer el Slider | 007, 008 |
+
+TC sin flujo propio en este submódulo: TC-INV-DYN-009 y 010 (sin sesión) siguen la ruta de error de FL-INV-004 (RN-INV-015), equivalente a FL-AUTH-003.
 
 ---
 
@@ -131,7 +154,7 @@ Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
 
 **Expected result**: Se ve `dynamic-catalog-spinner` y luego `dynamic-catalog-spinner-grid` con 6 `spinner-item-{n}`; título "Dynamic Catalog - Spinner"
 
-**Notes**: Carga medida ~2.5-3 s
+**Notes**: Carga medida entre ~0.9 y ~3.6 s; esperar la grilla con timeout de 10 s
 
 ### TC-INV-DYN-006: El spinner reaparece al recargar
 
@@ -223,7 +246,7 @@ Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
 |-------|-------|
 | Priority | P2 |
 | Type | Security |
-| Origin | PENDING-BROWSER |
+| Origin | UI-OBSERVED |
 | Automation | Yes |
 | Playwright | (completar tras la automatización) |
 | Rule | RN-INV-015 |
@@ -234,9 +257,9 @@ Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
 **Steps**:
 1. Navegar a `/dynamic-catalog-lazy-load.html` y a `/dynamic-catalog-spinner.html`
 
-**Expected result**: Login con el error de ruta protegida para cada ruta
+**Expected result**: Para cada ruta se muestra el login con "Epic sadface: You can only access '{ruta}' when you are logged in.", donde `{ruta}` es la ruta pedida
 
-**Notes**: Comportamiento inferido de la ruta Slider; no ejercitado para estas dos rutas
+**Notes**: Verificado en la etapa 2 para `/dynamic-catalog-lazy-load.html` y `/dynamic-catalog-spinner.html`; la URL termina en `/`, así que se asserta el mensaje y no la URL
 
 ### TC-INV-DYN-011: Las vistas del Dynamic Catalog son de solo lectura
 
@@ -264,20 +287,23 @@ Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
 |-------|-------|
 | Priority | P3 |
 | Type | Regression |
-| Origin | PENDING-BROWSER |
+| Origin | UI-OBSERVED |
 | Automation | Yes |
 | Playwright | (completar tras la automatización) |
-| Rule | RN-INV-016 a RN-INV-019 |
+| Rule | RN-INV-021, RN-INV-016 a RN-INV-019 |
 
 **Preconditions**:
-- Sesión con `problem_user`, `error_user`, `visual_user` y `performance_glitch_user`
+- Un contexto por usuario, con sesión de `QA_USER_PROBLEM_USER_USERNAME`, `QA_USER_ERROR_USER_USERNAME`, `QA_USER_VISUAL_USER_USERNAME` y `QA_USER_PERFORMANCE_GLITCH_USER_USERNAME` / `QA_USER_PASSWORD` (`<PLACEHOLDER>`)
+- Listener `page.on('dialog')` y `page.on('pageerror')` registrados
 
 **Steps**:
-1. Abrir las 3 vistas con cada usuario
+1. Abrir Lazy Load desde el menú y hacer 3 scrolls hasta el centinela
+2. Abrir Spinner y esperar la grilla
+3. Abrir Slider y hacer clic en `dynamic-catalog-slider-dot-4`
 
-**Expected result**: Mismo contenido y comportamiento que standard_user
+**Expected result**: Para cada usuario: Lazy Load con 12 tarjetas iniciales y más de 12 tras el scroll; Spinner con los 6 productos y sus precios de referencia ($9.99, $15.99, $7.99, $15.99, $29.99, $49.99); Slider muestra "Sauce Labs Backpack" $29.99 con el punto 4 en `aria-current="true"`; ninguna imagen con `sl-404`; ningún `alert` ni `pageerror`
 
-**Notes**: No explorado en la etapa 1
+**Notes**: Verificado en la etapa 2 con los 4 usuarios: sin desviaciones. `performance_glitch_user` requiere timeout explícito en el login (~5.1 s). Parametrizar por usuario en lugar de 4 TC separados
 
 ### TC-INV-DYN-013: Cerrar el submenú con un segundo clic
 
@@ -285,7 +311,7 @@ Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
 |-------|-------|
 | Priority | P3 |
 | Type | Functional |
-| Origin | PENDING-BROWSER |
+| Origin | UI-OBSERVED |
 | Automation | Yes |
 | Playwright | (completar tras la automatización) |
 | Rule | RN-INV-014 |
@@ -297,6 +323,6 @@ Origen: UI-OBSERVED 10 · PENDING-BROWSER 3
 **Steps**:
 1. Clic de nuevo en `dynamic-catalog-sidebar-link`
 
-**Expected result**: `aria-expanded="false"` y submenú oculto
+**Expected result**: `aria-expanded="false"`, `dynamic-catalog-submenu` ya no está en el DOM (`toHaveCount(0)`) y la URL no cambia
 
-**Notes**: No ejercitado en la etapa 1
+**Notes**: Verificado en la etapa 2. El estado desplegado se conserva al cerrar y reabrir el menú lateral sin recargar: partir de un contexto nuevo

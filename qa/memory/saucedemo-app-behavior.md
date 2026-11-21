@@ -1,6 +1,6 @@
 # Comportamiento de saucedemo por usuario y patrones de DOM
 
-> Fuente: exploración en vivo con Playwright (Node, chromium headless) durante la etapa 1, 2026-11-21.
+> Fuente: exploración en vivo con Playwright (Node, chromium headless) durante las etapas 1 y 2, 2026-11-21.
 > Cargar en: generación de specs, automatización y estabilización de cualquier módulo.
 
 ## Arquitectura relevante para la automatización
@@ -46,6 +46,15 @@ Impuesto 8 % redondeado a centavos: [4,0] -> $39.98 / $3.20 / $43.18; [4] -> $29
 - `/checkout-step-two.html` accesible sin pasar por el paso 1.
 - Reset App State no actualiza los botones del listado hasta recargar.
 - Carrito compartido entre usuarios del mismo navegador.
+
+## Hallazgos de la etapa 2 (2026-11-21)
+
+- Dynamic Catalog: idéntico para los 5 usuarios habilitados (sin `sl-404`, precios reales, sin `alert`). Los defectos por usuario del listado no aplican ahí.
+- Submenú Dynamic Catalog: un segundo clic lo pliega y retira `dynamic-catalog-submenu` del DOM; el estado desplegado se conserva al cerrar/reabrir el menú lateral sin recargar. Leer `aria-expanded` antes de hacer clic o usar contexto nuevo (un clic "a ciegas" lo cierra y el test se cuelga esperando el enlace).
+- Sesión: `session-username` expira 600 s después del login y NO se renueva con la actividad (verificado esperando el plazo real). Suites largas con un solo login pueden perder la sesión a los 10 min: hacer login por test o refrescar el storageState. Para probar la expiración, validar `expires` y borrar la cookie; `page.clock` no afecta la expiración de cookies.
+- Rutas `/dynamic-catalog-*.html` sin sesión: error de ruta protegida y URL final `/`.
+- Spinner: entre ~0.9 y ~3.6 s; esperar la grilla, nunca un tiempo fijo.
+- PDF de la orden: 1 página, texto extraíble (pypdf o equivalente) con "Order Receipt", nombre y apellido, código postal, filas "{producto} ${precio}", "Item total", "Tax", "Total" y "Thank you for your order!". El nombre del archivo usa hora UTC y "Order Date" la hora local del navegador (candidato REC).
 
 ## Funcionalidad no listada en el config
 
