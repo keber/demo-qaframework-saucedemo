@@ -6,6 +6,6 @@
 | File | Topic | When to load |
 |---|---|---|
 | `ci-pipeline-findings.md` | CI pipeline issues, root causes, applied fixes, failure triage categories | Diagnosing CI failures; reviewing pipeline changes |
-| `e2e-stabilization-patterns.md` | Flakiness patterns, crash-recovery techniques, strict-mode conflicts, reference timeouts | Investigating intermittent failures; refactoring fragile specs |
+| `e2e-stabilization-patterns.md` | Flakiness patterns, crash-recovery techniques, strict-mode conflicts, reference timeouts; saucedemo: renovación de sesión por TTL, sesiones por persona, patrones FLK-SD-01 a 05 (etapa 5) | Investigating intermittent failures; refactoring fragile specs |
 | `data-volatility-strategies.md` | Strategies for handling volatile test data (filter values, row counts, search inputs) | Fixing hardcoded-data failures; choosing an assertion resilience approach |
-| `saucedemo-app-behavior.md` | Comportamiento por usuario (problem, error, visual, performance_glitch, locked_out), patrones de DOM de la SPA, estado en cookie/localStorage, ids y precios, impuesto 8 %, defectos candidatos; etapa 2: Dynamic Catalog por usuario, submenú, contenido del PDF, expiración de sesión | Cualquier tarea de specs, automatización o estabilización de saucedemo |
+| `saucedemo-app-behavior.md` | Comportamiento por usuario (problem, error, visual, performance_glitch, locked_out), patrones de DOM de la SPA, estado en cookie/localStorage, ids y precios, impuesto 8 %, defectos candidatos; etapa 2: Dynamic Catalog por usuario, submenú, contenido del PDF, expiración de sesión; etapa 5: defectos confirmados, DEF-SD-019, NAV-015 no reproducido, 404 de rutas profundas | Cualquier tarea de specs, automatización o estabilización de saucedemo |
