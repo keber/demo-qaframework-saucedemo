@@ -1,0 +1,475 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fontspec}
+% IBM Plex Sans from the Tectonic bundle: reproducible output on any machine.
+% Ligatures=TeXOff keeps ASCII quotes and hyphens literal (no typographic substitution).
+\setmainfont{IBMPlexSans}[Extension=.otf, UprightFont=*-Regular,
+  BoldFont=*-Bold, ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic, Ligatures=TeXOff]
+\setmonofont{IBMPlexMono}[Extension=.otf, UprightFont=*-Regular,
+  BoldFont=*-Bold, Scale=MatchLowercase]
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\addto\extrasspanish{\def\%{\char37\relax}}
+\usepackage[top=2.2cm,bottom=2.4cm,left=1.8cm,right=1.8cm,headheight=14pt]{geometry}
+\usepackage[table]{xcolor}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, /pgf/number format/assume math mode=true}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+% Neutral palette (latex-pdf skill template); no corporate branding.
+\definecolor{primary}{RGB}{31,78,121}
+\definecolor{secondary}{RGB}{46,125,50}
+\definecolor{accent}{RGB}{230,126,34}
+\definecolor{muted}{RGB}{110,110,110}
+\definecolor{ink}{HTML}{1F2328}
+\definecolor{zebra}{HTML}{F3F6F9}
+\definecolor{highlight}{HTML}{E3ECF5}
+\definecolor{rulecolor}{HTML}{D5DCE3}
+
+\color{ink}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\renewcommand{\arraystretch}{1.45}
+\setlist[itemize]{label=\textbullet, leftmargin=1.2em, itemsep=2pt}
+\setlength{\LTpre}{4pt}
+\setlength{\LTpost}{6pt}
+
+\newcommand{\gennote}{Generado por Claude aplicando @keber/qa-framework 1.14.0-rc.9}
+\fancypagestyle{main}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhead[L]{\color{muted}\footnotesize saucedemo (Swag Labs) · QA Sprint 1}%
+  \fancyhead[R]{\color{muted}\footnotesize \reporttitle}%
+  \fancyfoot[L]{\color{muted}\scriptsize \gennote}%
+  \fancyfoot[R]{\color{muted}\footnotesize Página \thepage{} de \pageref*{LastPage}}%
+}
+\fancypagestyle{first}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[L]{\color{muted}\scriptsize \gennote}%
+  \fancyfoot[R]{\color{muted}\footnotesize Página \thepage{} de \pageref*{LastPage}}%
+}
+\pagestyle{main}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{primary}}{\thesection.}{0.5em}{}
+  [{\color{rulecolor}\titlerule}]
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{ink}}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\arrayrulecolor{rulecolor}
+\newcommand{\tabhead}{\rowcolor{primary}}
+\newcommand{\hcell}[1]{\textcolor{white}{\bfseries #1}}
+\newcommand{\zebrarows}{\rowcolors{2}{zebra}{white}}
+\newcommand{\status}[1]{\textcolor{secondary}{\bfseries #1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\newtcolorbox{infonote}{colback=primary!5, colframe=primary, boxrule=0pt,
+  leftrule=3pt, arc=0pt, left=8pt, right=8pt, top=5pt, bottom=5pt, fontupper=\small}
+
+% Cover block: kicker, title, subtitle and rule (full width, no logo).
+\newcommand{\reportcover}[3]{%
+  \thispagestyle{first}%
+  {\color{primary}\small\bfseries #1}\par\vspace{4pt}
+  {\raggedright\fontsize{22}{28}\selectfont\bfseries\color{ink} #2\par}\vspace{6pt}
+  {\small\color{muted} #3}\par\vspace{6pt}
+  {\color{primary}\rule{\textwidth}{1pt}}\par
+}
+
+\newcommand{\reporttitle}{Plan de Pruebas}
+\hypersetup{pdftitle={Plan de Pruebas - saucedemo Sprint 1},
+  pdfauthor={Claude (@keber/qa-framework 1.14.0-rc.9)}, pdflang={es-CL}}
+
+\begin{document}
+\small
+
+\reportcover
+  {QA · SAUCEDEMO (SWAG LABS) · SPRINT 1}
+  {Plan de Pruebas}
+  {Etapas 3 y 4 del pipeline (plan y casos de prueba) · 5 planes consolidados · Fecha de informe: 21-11-2026}
+
+{\zebrarows
+\begin{tabularx}{\textwidth}{|L{0.24\textwidth}|Y|}
+\hline
+\tabhead \hcell{Campo} & \hcell{Valor} \\ \hline
+Proyecto & saucedemo (Swag Labs), Sprint 1 \\ \hline
+Planes consolidados & AUTH, INV, CART, CHK y NAV (\texttt{qa/02-test-plans/sprints/Sprint-1/}) \\ \hline
+Casos de prueba & 126 TC en 6 submódulos; P0: 17 (13,5\%), P1: 45 (35,7\%), P2: 37 (29,4\%), P3: 27 (21,4\%) \\ \hline
+Fecha de planificación & 21-11-2026 \\ \hline
+Ventana QA & Por definir (\texttt{sprintCycle} deshabilitado en la configuración) \\ \hline
+Azure DevOps & No aplica (\texttt{integrations.azureDevOps.enabled: false}) \\ \hline
+\end{tabularx}}
+
+\begin{infonote}
+Documento generado por Claude aplicando @keber/qa-framework 1.14.0-rc.9 a partir de los 5 planes del Sprint 1 y de los casos de \texttt{qa/03-test-cases/}. Las tablas se derivan de la «Tabla de Pruebas» de cada plan. Sin credenciales: la contraseña se referencia solo como \texttt{QA\_USER\_PASSWORD}.
+\end{infonote}
+
+\section{Objetivo y alcance}
+Verificar que login, catálogo, carrito, checkout y navegación de Swag Labs cumplen las reglas de negocio especificadas en la etapa 2, para los 6 usuarios de prueba publicados por el sitio, mediante pruebas E2E automatizadas con Playwright.
+
+\textbf{En alcance}
+\begin{itemize}
+  \item Autenticación: validaciones del formulario, usuario bloqueado, rutas protegidas, cookie de sesión, logout y expiración (24 TC).
+  \item Catálogo: listado, ordenamiento, agregar y quitar, detalle, producto inexistente, comportamiento por usuario y Dynamic Catalog (41 TC).
+  \item Carrito: badge, contenido, quitar, persistencia, aislamiento entre usuarios y acceso (19 TC).
+  \item Checkout: validaciones del paso 1, resumen y totales con impuesto del 8 \%, confirmación, comprobante PDF y control del flujo (26 TC).
+  \item Navegación: menú lateral, Reset App State, encabezado y footer (16 TC).
+\end{itemize}
+
+\textbf{Fuera de alcance}
+\begin{itemize}
+  \item Integración con Azure DevOps (Test Plans, Test Suites, Bugs).
+  \item Pruebas de carga (k6) y pruebas de API: la aplicación no expone API propia.
+  \item Navegadores distintos de Chromium.
+  \item Hallazgos sin regla de negocio (p. ej. longitud máxima del usuario, cookie forjada con \texttt{standard\_user}): se registran como REC, no como TC.
+\end{itemize}
+
+\section{Estrategia de prueba}
+\begin{itemize}
+  \item \textbf{Nivel:} pruebas E2E de interfaz sobre la aplicación desplegada; sin pruebas unitarias ni de API (no hay backend propio).
+  \item \textbf{Técnicas:} partición de equivalencia (credenciales y campos obligatorios), transición de estados (carrito, sesión, pasos del checkout), pruebas por usuario contra las mismas reglas y regresión de vistas adyacentes.
+  \item \textbf{Orden:} suite SMOKE (P0) primero; si falla un P0 de login o catálogo se detiene el módulo; luego P1, P2 y P3.
+  \item \textbf{Aislamiento:} contexto de navegador nuevo por test, sin dependencias de orden entre TC.
+  \item \textbf{Polaridad:} cada test asserta lo que exige la regla, no lo que hace la aplicación. Las desviaciones se documentan con \texttt{test.fail()} + archivo DEF; los hallazgos sin regla violada, como REC.
+  \item \textbf{Clasificación:} «Automatizado» si es determinista y observable desde el navegador; «Ambos» si una parte requiere inspección humana; «Manual» si no es automatizable (ningún TC del sprint).
+\end{itemize}
+
+\section{Ambiente}
+{\zebrarows
+\begin{tabularx}{\textwidth}{|L{0.24\textwidth}|Y|}
+\hline
+\tabhead \hcell{Elemento} & \hcell{Valor} \\ \hline
+Aplicación & Swag Labs, SPA React pública, sin API propia; estado en cookie \texttt{session-username} y \texttt{localStorage} \\ \hline
+URL base & \texttt{\{QA\_BASE\_URL\}} (variable \texttt{QA\_BASE\_URL}); único ambiente público \\ \hline
+Navegador & Chromium (Playwright), viewport de escritorio 1280x720 \\ \hline
+Herramienta & \texttt{@playwright/test} en \texttt{qa/07-automation/e2e}; proyectos \texttt{chromium} y \texttt{login-flow} \\ \hline
+Timeouts & Test 30 s, navegación 60 s, acción 10 s \\ \hline
+Reintentos y workers & 0 reintentos y 2 workers en local; 2 reintentos y 1 worker en CI \\ \hline
+Variables & \texttt{qa/07-automation/e2e/.env} (no versionado): \texttt{QA\_BASE\_URL}, \texttt{QA\_USER\_PASSWORD} y 6 variables \texttt{QA\_USER\_*\_USERNAME} \\ \hline
+\end{tabularx}}
+
+\section{Criterios de entrada y salida}
+\begin{minipage}[t]{0.485\textwidth}\raggedright
+\textbf{Criterios de entrada}
+\begin{itemize}
+  \item Especificaciones de la etapa 2 aprobadas, con matriz de trazabilidad.
+  \item 0 TC \texttt{PENDING-CODE}, \texttt{PENDING-BROWSER} o \texttt{BLOCKED-PERMISSIONS} en el alcance.
+  \item \texttt{\{QA\_BASE\_URL\}} accesible desde la máquina o el agente de CI.
+  \item \texttt{.env} completo con la URL, la contraseña y los 6 usuarios.
+  \item Dependencias instaladas (\texttt{npm install}, \texttt{npx playwright install chromium}).
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}\raggedright
+\textbf{Criterios de salida}
+\begin{itemize}
+  \item 100 \% de los TC P0 y P1 ejecutados; P2 y P3 ejecutados o justificados.
+  \item Cada TC en un estado válido: \texttt{test()} en verde, \texttt{test.fail()} con archivo DEF, o \texttt{test.skip()} con \texttt{PENDING-CODE}.
+  \item 0 tests fallando sin clasificar y 0 \texttt{test.fail()} sin archivo DEF.
+  \item Hallazgos sin regla violada registrados como REC.
+  \item \texttt{qa/README.md} actualizado.
+\end{itemize}
+\end{minipage}
+
+\section{Matriz de usuarios de prueba}
+Número de TC que usan cada usuario por módulo (sección 6.2 de cada plan). Un TC parametrizado cuenta para cada usuario que recorre; los TC sin usuario explícito parten de un contexto sin sesión o usan credenciales inválidas.
+
+{\zebrarows
+\begin{tabularx}{\textwidth}{|Y|r|r|r|r|r|r|}
+\hline
+\tabhead \hcell{Usuario} & \hcell{AUTH} & \hcell{INV} & \hcell{CART} & \hcell{CHK} & \hcell{NAV} & \hcell{Total} \\ \hline
+\texttt{standard\_\allowbreak{}user} & 11 & 30 & 16 & 21 & 13 & 91 \\ \hline
+\texttt{locked\_\allowbreak{}out\_\allowbreak{}user} & 2 & - & - & - & - & 2 \\ \hline
+\texttt{problem\_\allowbreak{}user} & 1 & 5 & 1 & 1 & 1 & 9 \\ \hline
+\texttt{performance\_\allowbreak{}glitch\_\allowbreak{}user} & 2 & 2 & - & 1 & - & 5 \\ \hline
+\texttt{error\_\allowbreak{}user} & 1 & 3 & 1 & 2 & 1 & 8 \\ \hline
+\texttt{visual\_\allowbreak{}user} & 1 & 3 & 2 & 1 & - & 7 \\ \hline
+\end{tabularx}}
+
+\clearpage
+\section{Distribución de los casos de prueba}
+\subsection{Por módulo y prioridad}
+{\zebrarows
+\begin{tabularx}{\textwidth}{|Y|r|r|r|r|r|r|}
+\hline
+\tabhead \hcell{Módulo} & \hcell{P0} & \hcell{P1} & \hcell{P2} & \hcell{P3} & \hcell{Total} & \hcell{\% del total} \\ \hline
+AUTH & 4 & 8 & 8 & 4 & 24 & 19,0\% \\ \hline
+INV & 3 & 15 & 12 & 11 & 41 & 32,5\% \\ \hline
+CART & 4 & 9 & 4 & 2 & 19 & 15,1\% \\ \hline
+CHK & 5 & 10 & 8 & 3 & 26 & 20,6\% \\ \hline
+NAV & 1 & 3 & 5 & 7 & 16 & 12,7\% \\ \hline
+\textbf{Total} & \textbf{17} & \textbf{45} & \textbf{37} & \textbf{27} & \textbf{126} & 100\% \\ \hline
+\end{tabularx}}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar stacked, bar width=26pt, width=0.95\textwidth, height=6.4cm,
+  symbolic x coords={AUTH-LOG,INV-CAT,INV-DYN,CART-CRT,CHK-FLW,NAV-MENU}, xtick=data,
+  ymin=0, ymax=32, ylabel={Casos de prueba},
+  tick label style={font=\footnotesize}, label style={font=\footnotesize},
+  legend style={at={(0.5,-0.16)}, anchor=north, legend columns=4, draw=none, font=\footnotesize},
+  axis line style={muted}, major grid style={rulecolor}, ymajorgrids,
+  point meta=rawy, nodes near coords={\pgfmathfloattofixed{\pgfplotspointmeta}\ifdim\pgfmathresult pt>1.5pt\pgfmathprintnumber{\pgfplotspointmeta}\fi},
+  every node near coord/.append style={font=\scriptsize}, enlarge x limits=0.1]
+\addplot+[fill=primary, draw=primary, every node near coord/.append style={color=white}] coordinates {(AUTH-LOG,4) (INV-CAT,3) (INV-DYN,0) (CART-CRT,4) (CHK-FLW,5) (NAV-MENU,1)};
+\addplot+[fill=primary!60, draw=primary!60, every node near coord/.append style={color=white}] coordinates {(AUTH-LOG,8) (INV-CAT,14) (INV-DYN,1) (CART-CRT,9) (CHK-FLW,10) (NAV-MENU,3)};
+\addplot+[fill=primary!28, draw=primary!28, every node near coord/.append style={color=ink}] coordinates {(AUTH-LOG,8) (INV-CAT,6) (INV-DYN,6) (CART-CRT,4) (CHK-FLW,8) (NAV-MENU,5)};
+\addplot+[fill=muted!25, draw=muted!25, every node near coord/.append style={color=ink}] coordinates {(AUTH-LOG,4) (INV-CAT,5) (INV-DYN,6) (CART-CRT,2) (CHK-FLW,3) (NAV-MENU,7)};
+\legend{P0, P1, P2, P3}
+\end{axis}
+\end{tikzpicture}
+\caption{Casos de prueba por submódulo, apilados por prioridad.}
+\end{figure}
+
+\subsection{Por tipo}
+Etiqueta funcional de la tabla de pruebas (Smoke: happy path P0; Confirmación: confirma una regla RN; Regresión: comportamiento por usuario o vista adyacente) y modo de ejecución.
+
+{\zebrarows
+\begin{tabularx}{\textwidth}{|Y|r|r|r|r|r|r|}
+\hline
+\tabhead \hcell{Submódulo} & \hcell{Smoke} & \hcell{Confirmación} & \hcell{Regresión} & \hcell{Automatizado} & \hcell{Ambos} & \hcell{Total} \\ \hline
+AUTH-LOG & 4 & 19 & 1 & 24 & 0 & 24 \\ \hline
+INV-CAT & 3 & 16 & 9 & 27 & 1 & 28 \\ \hline
+INV-DYN & 0 & 12 & 1 & 13 & 0 & 13 \\ \hline
+CART-CRT & 4 & 13 & 2 & 19 & 0 & 19 \\ \hline
+CHK-FLW & 5 & 17 & 4 & 25 & 1 & 26 \\ \hline
+NAV-MENU & 1 & 12 & 3 & 16 & 0 & 16 \\ \hline
+\textbf{Total} & 17 & 89 & 20 & 124 & 2 & 126 \\ \hline
+\end{tabularx}}
+
+\subsection{Suites funcionales}
+Las 25 suites de los planes se corresponden con bloques \texttt{test.describe()} en la automatización.
+
+{\zebrarows
+\begin{longtable}{|c|L{0.5\textwidth}|r|r|r|r|r|}
+\hline
+\tabhead \hcell{Módulo} & \hcell{Suite} & \hcell{TC} & \hcell{P0} & \hcell{P1} & \hcell{P2} & \hcell{P3} \\ \hline
+\endfirsthead
+\hline
+\tabhead \hcell{Módulo} & \hcell{Suite} & \hcell{TC} & \hcell{P0} & \hcell{P1} & \hcell{P2} & \hcell{P3} \\ \hline
+\endhead
+AUTH & Login y acceso exitoso & 6 & 1 & 1 & 4 & 0 \\ \hline
+AUTH & Validaciones y mensajes de error & 11 & 0 & 5 & 3 & 3 \\ \hline
+AUTH & Usuario bloqueado y rutas protegidas & 4 & 2 & 1 & 1 & 0 \\ \hline
+AUTH & Logout y ciclo de vida de la sesión & 3 & 1 & 1 & 0 & 1 \\ \hline
+CART & Badge del carrito & 2 & 1 & 1 & 0 & 0 \\ \hline
+CART & Contenido y edición del carrito & 7 & 2 & 2 & 1 & 2 \\ \hline
+CART & Navegación desde el carrito & 3 & 1 & 2 & 0 & 0 \\ \hline
+CART & Persistencia y aislamiento & 4 & 0 & 3 & 1 & 0 \\ \hline
+CART & Acceso y usuarios no estándar & 3 & 0 & 1 & 2 & 0 \\ \hline
+CHK & Compra completa (happy path) & 3 & 2 & 0 & 1 & 0 \\ \hline
+CHK & Paso 1 - Información del cliente & 8 & 0 & 4 & 3 & 1 \\ \hline
+CHK & Paso 2 - Resumen y totales & 7 & 3 & 2 & 1 & 1 \\ \hline
+CHK & Comprobante PDF & 2 & 0 & 0 & 1 & 1 \\ \hline
+CHK & Acceso y control del flujo & 2 & 0 & 1 & 1 & 0 \\ \hline
+CHK & Comportamiento por usuario & 4 & 0 & 3 & 1 & 0 \\ \hline
+INV & Listado y ordenamiento & 8 & 1 & 5 & 0 & 2 \\ \hline
+INV & Agregar y quitar desde el catálogo & 5 & 2 & 2 & 1 & 0 \\ \hline
+INV & Detalle de producto & 5 & 0 & 2 & 2 & 1 \\ \hline
+INV & Dynamic Catalog & 10 & 0 & 0 & 5 & 5 \\ \hline
+INV & Acceso sin sesión & 3 & 0 & 2 & 1 & 0 \\ \hline
+INV & Comportamiento por usuario & 10 & 0 & 4 & 3 & 3 \\ \hline
+NAV & Menú lateral y encabezado & 8 & 1 & 2 & 3 & 2 \\ \hline
+NAV & Reset App State & 4 & 0 & 1 & 1 & 2 \\ \hline
+NAV & Footer & 2 & 0 & 0 & 0 & 2 \\ \hline
+NAV & Acceso y usuarios no estándar & 2 & 0 & 0 & 1 & 1 \\ \hline
+\end{longtable}}
+
+\section{Cronograma de etapas del pipeline}
+El ciclo de sprint no está configurado (\texttt{sprintCycle.enabled: false}), por lo que no hay ventana QA con fechas planificadas. Las etapas se ejecutaron en orden, cada una con su prerrequisito cumplido, el 21-11-2026.
+
+{\zebrarows
+\begin{tabularx}{\textwidth}{|c|L{0.16\textwidth}|L{0.25\textwidth}|Y|L{0.13\textwidth}|}
+\hline
+\tabhead \hcell{Etapa} & \hcell{Tarea} & \hcell{Comando} & \hcell{Prerrequisito y resultado} & \hcell{Estado} \\ \hline
+1 & Análisis de módulos & \texttt{/qa-module-analysis} & Sin prerrequisito; \texttt{00-inventory.md} de 6 submódulos & \status{Completada} \\ \hline
+2 & Especificaciones & \texttt{/qa-spec-generation} & Inventario; 6 archivos por submódulo y trazabilidad & \status{Completada} \\ \hline
+3 & Plan de pruebas & \texttt{/qa-test-plan} & \texttt{05-test-scenarios.md}; 5 planes, 126 TC & \status{Completada} \\ \hline
+4 & Casos de prueba & \texttt{/qa-test-cases} & Plan; steps expandidos y 2 documentos de TC «Ambos» & \status{Completada} \\ \hline
+5 & Automatización & \texttt{/qa-automation} & Specs aprobadas; 142 tests, ejecución 15:58 UTC & \status{Completada} \\ \hline
+5b & Estabilización & \texttt{/qa-test-stabilization} & Tests a estabilizar; 6 ejecuciones, oficial 16:47 UTC & \status{Completada} \\ \hline
+6 & Mantenimiento & \texttt{/qa-maintenance} & Cambio de la aplicación entregado & Pendiente (a demanda) \\ \hline
+\end{tabularx}}
+
+\needspace{12\baselineskip}
+\section{Riesgos del plan}
+{\zebrarows
+\begin{longtable}{|L{0.35\textwidth}|c|L{0.44\textwidth}|}
+\hline
+\tabhead \hcell{Riesgo} & \hcell{Impacto} & \hcell{Mitigación} \\ \hline
+\endfirsthead
+\hline
+\tabhead \hcell{Riesgo} & \hcell{Impacto} & \hcell{Mitigación} \\ \hline
+\endhead
+Sitio público de terceros: caídas, latencia o cambios sin aviso & Alto & Reintentos solo en CI; diagnóstico con trazas antes de modificar aserciones \\ \hline
+Estado del carrito compartido entre tests y usuarios & Alto & Contexto nuevo por test; TC-CART-CRT-012 comparte contexto a propósito \\ \hline
+Precios aleatorios de \texttt{visual\_user} & Alto & Comparar contra el catálogo de referencia y el formato \texttt{\$N.NN} \\ \hline
+Redondeo de impuestos con esperados fijos & Alto & Esperado calculado con fórmula (TC-CHK-FLW-014) \\ \hline
+Expiración real de la sesión (10 min) & Alto & Validar \texttt{expires} y simular el vencimiento (TC-AUTH-LOG-023) \\ \hline
+Candidatos DEF en validaciones de checkout y carrito & Alto & Aserción de la regla y \texttt{test.fail()} + DEF \\ \hline
+Extracción de texto del PDF requiere dependencia nueva & Medio & Parser de PDF como \texttt{devDependency} (TC-CHK-FLW-026) \\ \hline
+Demora de \texttt{performance\_\allowbreak glitch\_\allowbreak user} y \texttt{alert} de \texttt{error\_user} & Medio & Timeout explícito por test; manejador de \texttt{dialog} \\ \hline
+Enlaces externos y animación del menú lateral & Medio / Bajo & Asertar \texttt{href}; esperar visibilidad del menú antes de interactuar \\ \hline
+Telemetría de terceros en la red & Bajo & No asertar tráfico de terceros \\ \hline
+\end{longtable}}
+
+\clearpage
+\appendix
+\section{Anexo: lista completa de casos de prueba}
+126 TC ordenados por submódulo e ID. Prioridad, tipo y modo de ejecución tal como figuran en la «Tabla de Pruebas» de cada plan.
+
+{\zebrarows\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|r|L{0.15\textwidth}|L{0.44\textwidth}|c|L{0.1\textwidth}|L{0.11\textwidth}|}
+\hline
+\tabhead \hcell{N} & \hcell{ID} & \hcell{Título} & \hcell{Prio.} & \hcell{Tipo} & \hcell{Ejecución} \\ \hline
+\endfirsthead
+\hline
+\tabhead \hcell{N} & \hcell{ID} & \hcell{Título} & \hcell{Prio.} & \hcell{Tipo} & \hcell{Ejecución} \\ \hline
+\endhead
+\multicolumn{6}{|l|}{\cellcolor{highlight}\textbf{AUTH-LOG - Autenticación / Login y sesión}} \\ \hline
+1 & TC-AUTH-LOG-001 & Login exitoso con standard\_\allowbreak{}user & P0 & Smoke & Automatizado \\ \hline
+2 & TC-AUTH-LOG-002 & Login enviando el formulario con la tecla Enter & P2 & Confirmación & Automatizado \\ \hline
+3 & TC-AUTH-LOG-003 & Usuario y contraseña vacíos & P1 & Confirmación & Automatizado \\ \hline
+4 & TC-AUTH-LOG-004 & Contraseña vacía & P1 & Confirmación & Automatizado \\ \hline
+5 & TC-AUTH-LOG-005 & Usuario vacío con contraseña informada & P1 & Confirmación & Automatizado \\ \hline
+6 & TC-AUTH-LOG-006 & Usuario inexistente & P1 & Confirmación & Automatizado \\ \hline
+7 & TC-AUTH-LOG-007 & Contraseña incorrecta para un usuario válido & P1 & Confirmación & Automatizado \\ \hline
+8 & TC-AUTH-LOG-008 & Usuario en mayúsculas es rechazado & P2 & Confirmación & Automatizado \\ \hline
+9 & TC-AUTH-LOG-009 & Usuario con espacio inicial es rechazado & P3 & Confirmación & Automatizado \\ \hline
+10 & TC-AUTH-LOG-010 & Usuario bloqueado no puede iniciar sesión & P0 & Smoke & Automatizado \\ \hline
+11 & TC-AUTH-LOG-011 & Cerrar el mensaje de error & P2 & Confirmación & Automatizado \\ \hline
+12 & TC-AUTH-LOG-012 & Campos marcados visualmente ante un error & P3 & Confirmación & Automatizado \\ \hline
+13 & TC-AUTH-LOG-013 & La contraseña se muestra enmascarada & P2 & Confirmación & Automatizado \\ \hline
+14 & TC-AUTH-LOG-014 & Acceso sin sesión a /\allowbreak{}inventory.html & P0 & Smoke & Automatizado \\ \hline
+15 & TC-AUTH-LOG-015 & Acceso sin sesión al resto de rutas internas & P1 & Confirmación & Automatizado \\ \hline
+16 & TC-AUTH-LOG-016 & Login después de intentar acceder a una ruta protegida & P2 & Confirmación & Automatizado \\ \hline
+17 & TC-AUTH-LOG-017 & Logout cierra la sesión & P0 & Smoke & Automatizado \\ \hline
+18 & TC-AUTH-LOG-018 & Atrás del navegador tras el logout no muestra contenido & P1 & Confirmación & Automatizado \\ \hline
+19 & TC-AUTH-LOG-019 & Login de los usuarios habilitados no estándar & P1 & Confirmación & Automatizado \\ \hline
+20 & TC-AUTH-LOG-020 & performance\_\allowbreak{}glitch\_\allowbreak{}user inicia sesión pese a la demora & P2 & Regresión & Automatizado \\ \hline
+21 & TC-AUTH-LOG-021 & Cookie de sesión creada con el nombre del usuario & P2 & Confirmación & Automatizado \\ \hline
+22 & TC-AUTH-LOG-022 & Cookie de sesión con usuario bloqueado o inexistente es rechazada & P2 & Confirmación & Automatizado \\ \hline
+23 & TC-AUTH-LOG-023 & Expiración de la sesión a los 10 minutos & P3 & Confirmación & Automatizado \\ \hline
+24 & TC-AUTH-LOG-024 & La página de login lista los usuarios aceptados & P3 & Confirmación & Automatizado \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{highlight}\textbf{INV-CAT - Catálogo de productos / Listado y detalle}} \\ \hline
+25 & TC-INV-CAT-001 & El listado muestra 6 productos completos & P0 & Smoke & Automatizado \\ \hline
+26 & TC-INV-CAT-002 & Nombres y precios coinciden con el catálogo de referencia & P1 & Confirmación & Automatizado \\ \hline
+27 & TC-INV-CAT-003 & Orden por defecto A-Z & P1 & Confirmación & Automatizado \\ \hline
+28 & TC-INV-CAT-004 & Ordenar por nombre Z-A & P1 & Confirmación & Automatizado \\ \hline
+29 & TC-INV-CAT-005 & Ordenar por precio de menor a mayor & P1 & Confirmación & Automatizado \\ \hline
+30 & TC-INV-CAT-006 & Ordenar por precio de mayor a menor & P1 & Confirmación & Automatizado \\ \hline
+31 & TC-INV-CAT-007 & El orden vuelve a A-Z al recargar & P3 & Confirmación & Automatizado \\ \hline
+32 & TC-INV-CAT-008 & Agregar un producto desde el listado & P0 & Smoke & Automatizado \\ \hline
+33 & TC-INV-CAT-009 & Agregar los 6 productos & P1 & Confirmación & Automatizado \\ \hline
+34 & TC-INV-CAT-010 & Quitar un producto desde el listado & P0 & Smoke & Automatizado \\ \hline
+35 & TC-INV-CAT-011 & El nombre abre el detalle del mismo producto & P1 & Confirmación & Automatizado \\ \hline
+36 & TC-INV-CAT-012 & La imagen abre el detalle del mismo producto & P2 & Confirmación & Automatizado \\ \hline
+37 & TC-INV-CAT-013 & El detalle muestra los mismos datos que el listado para los 6 productos & P1 & Confirmación & Automatizado \\ \hline
+38 & TC-INV-CAT-014 & Agregar y quitar desde el detalle & P1 & Confirmación & Automatizado \\ \hline
+39 & TC-INV-CAT-015 & El detalle refleja un producto que ya está en el carrito & P2 & Confirmación & Automatizado \\ \hline
+40 & TC-INV-CAT-016 & Volver al listado desde el detalle & P2 & Confirmación & Automatizado \\ \hline
+41 & TC-INV-CAT-017 & Detalle de un producto inexistente & P3 & Confirmación & Automatizado \\ \hline
+42 & TC-INV-CAT-018 & Catálogo sin sesión redirige al login & P1 & Confirmación & Automatizado \\ \hline
+43 & TC-INV-CAT-019 & problem\_\allowbreak{}user ve la imagen propia de cada producto & P2 & Regresión & Automatizado \\ \hline
+44 & TC-INV-CAT-020 & problem\_\allowbreak{}user puede ordenar el listado & P2 & Regresión & Automatizado \\ \hline
+45 & TC-INV-CAT-021 & problem\_\allowbreak{}user puede agregar y quitar los 6 productos & P1 & Regresión & Automatizado \\ \hline
+46 & TC-INV-CAT-022 & problem\_\allowbreak{}user abre el detalle del producto elegido & P1 & Regresión & Automatizado \\ \hline
+47 & TC-INV-CAT-023 & error\_\allowbreak{}user puede ordenar sin errores & P2 & Regresión & Automatizado \\ \hline
+48 & TC-INV-CAT-024 & error\_\allowbreak{}user puede agregar y quitar los 6 productos & P1 & Regresión & Automatizado \\ \hline
+49 & TC-INV-CAT-025 & visual\_\allowbreak{}user ve precios reales y con 2 decimales & P1 & Regresión & Automatizado \\ \hline
+50 & TC-INV-CAT-026 & visual\_\allowbreak{}user ve imágenes y controles en su posición & P3 & Regresión & Ambos \\ \hline
+51 & TC-INV-CAT-027 & performance\_\allowbreak{}glitch\_\allowbreak{}user ve el mismo catálogo que standard\_\allowbreak{}user & P3 & Regresión & Automatizado \\ \hline
+52 & TC-INV-CAT-028 & El selector de orden ofrece las 4 opciones estáticas & P3 & Confirmación & Automatizado \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{highlight}\textbf{INV-DYN - Catálogo de productos / Dynamic Catalog}} \\ \hline
+53 & TC-INV-DYN-001 & Desplegar el submenú Dynamic Catalog & P2 & Confirmación & Automatizado \\ \hline
+54 & TC-INV-DYN-002 & Abrir Lazy Load & P2 & Confirmación & Automatizado \\ \hline
+55 & TC-INV-DYN-003 & El scroll carga más productos & P2 & Confirmación & Automatizado \\ \hline
+56 & TC-INV-DYN-004 & Precios de Lazy Load iguales al catálogo & P3 & Confirmación & Automatizado \\ \hline
+57 & TC-INV-DYN-005 & Spinner visible durante la carga & P2 & Confirmación & Automatizado \\ \hline
+58 & TC-INV-DYN-006 & El spinner reaparece al recargar & P3 & Confirmación & Automatizado \\ \hline
+59 & TC-INV-DYN-007 & El punto del slider muestra su producto & P2 & Confirmación & Automatizado \\ \hline
+60 & TC-INV-DYN-008 & El slider avanza automáticamente & P3 & Confirmación & Automatizado \\ \hline
+61 & TC-INV-DYN-009 & Slider sin sesión redirige al login & P1 & Confirmación & Automatizado \\ \hline
+62 & TC-INV-DYN-010 & Lazy Load y Spinner sin sesión redirigen al login & P2 & Confirmación & Automatizado \\ \hline
+63 & TC-INV-DYN-011 & Las vistas del Dynamic Catalog son de solo lectura & P3 & Confirmación & Automatizado \\ \hline
+64 & TC-INV-DYN-012 & Dynamic Catalog con usuarios no estándar & P3 & Regresión & Automatizado \\ \hline
+65 & TC-INV-DYN-013 & Cerrar el submenú con un segundo clic & P3 & Confirmación & Automatizado \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{highlight}\textbf{CART-CRT - Carrito de compras / Carrito}} \\ \hline
+66 & TC-CART-CRT-001 & Sin badge con el carrito vacío & P1 & Confirmación & Automatizado \\ \hline
+67 & TC-CART-CRT-002 & El badge suma y resta al agregar y quitar & P0 & Smoke & Automatizado \\ \hline
+68 & TC-CART-CRT-003 & El carrito lista los productos agregados & P0 & Smoke & Automatizado \\ \hline
+69 & TC-CART-CRT-004 & Encabezados de la página del carrito & P3 & Confirmación & Automatizado \\ \hline
+70 & TC-CART-CRT-005 & Quitar un producto desde el carrito & P0 & Smoke & Automatizado \\ \hline
+71 & TC-CART-CRT-006 & Quitar el último producto deja el carrito vacío & P1 & Confirmación & Automatizado \\ \hline
+72 & TC-CART-CRT-007 & El producto quitado en el carrito vuelve a "Add to cart" en el listado & P1 & Confirmación & Automatizado \\ \hline
+73 & TC-CART-CRT-008 & Continue Shopping vuelve al catálogo sin cambiar el carrito & P1 & Confirmación & Automatizado \\ \hline
+74 & TC-CART-CRT-009 & Checkout abre el paso 1 & P0 & Smoke & Automatizado \\ \hline
+75 & TC-CART-CRT-010 & El carrito se conserva al recargar & P1 & Confirmación & Automatizado \\ \hline
+76 & TC-CART-CRT-011 & El carrito se conserva tras logout y login del mismo usuario & P2 & Confirmación & Automatizado \\ \hline
+77 & TC-CART-CRT-012 & Otro usuario no ve el carrito del anterior & P1 & Confirmación & Automatizado \\ \hline
+78 & TC-CART-CRT-013 & No se puede iniciar checkout con el carrito vacío & P1 & Confirmación & Automatizado \\ \hline
+79 & TC-CART-CRT-014 & El nombre del producto en el carrito abre su detalle & P2 & Confirmación & Automatizado \\ \hline
+80 & TC-CART-CRT-015 & El carrito queda vacío al completar la compra & P1 & Confirmación & Automatizado \\ \hline
+81 & TC-CART-CRT-016 & Carrito sin sesión redirige al login & P1 & Confirmación & Automatizado \\ \hline
+82 & TC-CART-CRT-017 & problem\_\allowbreak{}user y error\_\allowbreak{}user pueden quitar productos desde el carrito & P2 & Regresión & Automatizado \\ \hline
+83 & TC-CART-CRT-018 & visual\_\allowbreak{}user ve en el carrito el precio real & P2 & Regresión & Automatizado \\ \hline
+84 & TC-CART-CRT-019 & La cantidad por producto es siempre 1 y no es editable & P3 & Confirmación & Automatizado \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{highlight}\textbf{CHK-FLW - Checkout / Flujo de compra}} \\ \hline
+85 & TC-CHK-FLW-001 & Compra completa con standard\_\allowbreak{}user & P0 & Smoke & Automatizado \\ \hline
+86 & TC-CHK-FLW-002 & Elementos del paso 1 & P2 & Confirmación & Automatizado \\ \hline
+87 & TC-CHK-FLW-003 & Los tres campos vacíos & P1 & Confirmación & Automatizado \\ \hline
+88 & TC-CHK-FLW-004 & Falta el apellido & P1 & Confirmación & Automatizado \\ \hline
+89 & TC-CHK-FLW-005 & Falta el código postal & P1 & Confirmación & Automatizado \\ \hline
+90 & TC-CHK-FLW-006 & Falta el nombre con el resto informado & P1 & Confirmación & Automatizado \\ \hline
+91 & TC-CHK-FLW-007 & Campos con solo espacios son rechazados & P2 & Confirmación & Automatizado \\ \hline
+92 & TC-CHK-FLW-008 & Cerrar el error del paso 1 & P3 & Confirmación & Automatizado \\ \hline
+93 & TC-CHK-FLW-009 & Cancelar en el paso 1 vuelve al carrito & P2 & Confirmación & Automatizado \\ \hline
+94 & TC-CHK-FLW-010 & El resumen muestra productos, pago y envío & P1 & Confirmación & Automatizado \\ \hline
+95 & TC-CHK-FLW-011 & Subtotal igual a la suma de precios & P0 & Smoke & Automatizado \\ \hline
+96 & TC-CHK-FLW-012 & Impuesto del 8 \% redondeado a centavos & P0 & Smoke & Automatizado \\ \hline
+97 & TC-CHK-FLW-013 & Total igual a subtotal más impuesto & P0 & Smoke & Automatizado \\ \hline
+98 & TC-CHK-FLW-014 & Totales con 1 y con 6 productos & P1 & Confirmación & Automatizado \\ \hline
+99 & TC-CHK-FLW-015 & Totales siempre con 2 decimales & P3 & Confirmación & Automatizado \\ \hline
+100 & TC-CHK-FLW-016 & Cancelar en el paso 2 vuelve al catálogo con el carrito intacto & P2 & Confirmación & Automatizado \\ \hline
+101 & TC-CHK-FLW-017 & Finalizar muestra la confirmación y vacía el carrito & P0 & Smoke & Automatizado \\ \hline
+102 & TC-CHK-FLW-018 & Back Home vuelve al catálogo & P2 & Confirmación & Automatizado \\ \hline
+103 & TC-CHK-FLW-019 & Generar el PDF de la orden & P2 & Confirmación & Ambos \\ \hline
+104 & TC-CHK-FLW-020 & El resumen no es accesible sin completar el paso 1 & P2 & Confirmación & Automatizado \\ \hline
+105 & TC-CHK-FLW-021 & Checkout sin sesión redirige al login & P1 & Confirmación & Automatizado \\ \hline
+106 & TC-CHK-FLW-022 & problem\_\allowbreak{}user puede completar el paso 1 & P1 & Regresión & Automatizado \\ \hline
+107 & TC-CHK-FLW-023 & error\_\allowbreak{}user no avanza sin apellido & P1 & Regresión & Automatizado \\ \hline
+108 & TC-CHK-FLW-024 & error\_\allowbreak{}user puede finalizar la compra & P1 & Regresión & Automatizado \\ \hline
+109 & TC-CHK-FLW-025 & visual\_\allowbreak{}user y performance\_\allowbreak{}glitch\_\allowbreak{}user calculan los totales con precios reales & P2 & Regresión & Automatizado \\ \hline
+110 & TC-CHK-FLW-026 & El PDF contiene los datos de la orden & P3 & Confirmación & Automatizado \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{highlight}\textbf{NAV-MENU - Navegación y menú / Menú, encabezado y footer}} \\ \hline
+111 & TC-NAV-MENU-001 & Abrir y cerrar el menú lateral & P1 & Confirmación & Automatizado \\ \hline
+112 & TC-NAV-MENU-002 & Cerrar el menú con Escape & P3 & Confirmación & Automatizado \\ \hline
+113 & TC-NAV-MENU-003 & Opciones del menú y su orden & P2 & Confirmación & Automatizado \\ \hline
+114 & TC-NAV-MENU-004 & Menú, carrito y footer en todas las vistas internas & P2 & Confirmación & Automatizado \\ \hline
+115 & TC-NAV-MENU-005 & All Items desde el carrito & P1 & Confirmación & Automatizado \\ \hline
+116 & TC-NAV-MENU-006 & About lleva al sitio de Sauce Labs & P2 & Confirmación & Automatizado \\ \hline
+117 & TC-NAV-MENU-007 & Logout desde el menú & P0 & Smoke & Automatizado \\ \hline
+118 & TC-NAV-MENU-008 & Reset App State vacía el carrito & P1 & Confirmación & Automatizado \\ \hline
+119 & TC-NAV-MENU-009 & Reset App State actualiza los botones del listado & P2 & Regresión & Automatizado \\ \hline
+120 & TC-NAV-MENU-010 & El menú queda abierto tras Reset App State & P3 & Confirmación & Automatizado \\ \hline
+121 & TC-NAV-MENU-011 & Enlaces sociales del footer & P3 & Confirmación & Automatizado \\ \hline
+122 & TC-NAV-MENU-012 & Texto de copyright del footer & P3 & Confirmación & Automatizado \\ \hline
+123 & TC-NAV-MENU-013 & Logo del encabezado & P3 & Confirmación & Automatizado \\ \hline
+124 & TC-NAV-MENU-014 & problem\_\allowbreak{}user: About apunta al sitio correcto & P2 & Regresión & Automatizado \\ \hline
+125 & TC-NAV-MENU-015 & error\_\allowbreak{}user: Reset App State sin errores & P3 & Regresión & Automatizado \\ \hline
+126 & TC-NAV-MENU-016 & La página de login no muestra menú ni carrito & P3 & Confirmación & Automatizado \\ \hline
+\end{longtable}}
+
+\end{document}

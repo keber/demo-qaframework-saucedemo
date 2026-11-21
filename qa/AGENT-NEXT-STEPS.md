@@ -1,44 +1,33 @@
-# ✅ @keber/qa-framework installed successfully
+# AGENT-NEXT-STEPS - Sprint activo
 
-> This file was generated automatically by the postinstall script.
-> Read it and follow the steps below, then delete this file.
+> Este archivo contiene solo el sprint activo (regla 9 de `.claude/rules/qa-framework.md`).
+> Al cerrar el sprint, mover el checklist a `## Sprint History` de `qa/README.md` y dejar aquí solo el siguiente.
 
-## What was scaffolded
+## Estado de la instalación (completado)
 
-- `qa/` folder structure with spec templates and agent instructions
-- `.github/instructions/qa-framework.instructions.md` with QA agent behavior rules (framework-owned, safe to upgrade)
-- `.claude/rules/qa-framework.md` and `.claude/commands/qa-*.md` - equivalent Claude Code artifacts (framework-owned, safe to upgrade)
+- [x] Framework `@keber/qa-framework` instalado y estructura `qa/` generada
+- [x] Módulos configurados en `qa/qa-framework.config.json` (AUTH, INV, CART, CHK, NAV)
+- [x] `qa/07-automation/e2e/.env` creado (no versionado); credenciales solo por variables de entorno
+- Fuera de alcance: Azure DevOps (`integrations.azureDevOps.enabled: false`), k6 y track de API
+- No se crea `AGENTS.md` en este proyecto
 
-## Required next steps
+## Sprint 1 - cerrado (2026-11-21)
 
-### 1. Configure your project modules
-Edit `qa/qa-framework.config.json` and add your project modules under the `"modules"` array.
+Checklist completo y resultados en `qa/README.md` (sección `## Sprint History`).
 
-### 2. Optional integrations
+## Sprint 2 - Mantenimiento y seguimiento (sin iniciar)
 
-**Azure DevOps integration:**
-```bash
-npm install @keber/ado-qa
-```
+Aplicación bajo prueba: `{{QA_BASE_URL}}` (Swag Labs). Prerrequisito de la etapa 6: un cambio entregado en la aplicación o en las reglas de negocio.
 
-**Playwright E2E automation:**
-```bash
-npm install @playwright/test
-cd qa/07-automation/e2e && npm install && npx playwright install chromium
-```
+### Checklist del sprint
 
-**Playwright API/integration automation:**
-```bash
-cd qa/07-automation/integration && npm install
-```
+- [ ] Revisar con el responsable de la especificación las recomendaciones abiertas REC-SD-001 a REC-SD-013 (en especial REC-SD-012 y REC-SD-013); si alguna pasa a ser regla de negocio, moverla a `qa/06-defects/open/` como `DEF-SD-NNN` nuevo y actualizar el TC (etapa 6, `/qa-maintenance`)
+- [ ] Ante cada cambio entregado en saucedemo: ejecutar `cd qa/07-automation/e2e && npm run test:all`; un test con `expectOpenDefect` que pase ("no longer reproduces") indica que el defecto se corrigió: verificar contra la regla, mover el `DEF-SD-NNN` a `qa/06-defects/resolved/` y quitar el marcador
+- [ ] Mantener la estabilidad: cualquier fallo intermitente nuevo se clasifica con `/qa-test-stabilization` y se registra como patrón `FLK-SD-NN` en `qa/memory/e2e-stabilization-patterns.md`
+- [ ] Cierre: actualizar `qa/README.md` (estado de módulos y Sprint History) y recortar este archivo
 
-### 3. Credentials
-- Copy `qa/07-automation/e2e/.env.example` -> `qa/07-automation/e2e/.env` and fill in credentials
-- Copy `qa/07-automation/integration/.env.example` -> `qa/07-automation/integration/.env` and fill in credentials
-- Add both `.env` files and both `.auth/` folders to `.gitignore`
+### Entradas (referencia)
 
-### 4. Optional: review rulebook (AGENTS.md)
-If the repository has no `AGENTS.md` at its root, copy `qa/00-standards/agents-md-template.md`
-to `AGENTS.md` and fill in its placeholders with the user. It gives reviewers rule IDs to cite,
-a register of tracked exceptions and a list of what NOT to report. If an `AGENTS.md` already
-exists, do not replace it: offer to merge the sections it lacks. The framework never edits it.
+- Última ejecución oficial: `qa/05-test-execution/automated/` (carpeta `*_sprint-1-etapa-5b`)
+- Reporte de estabilización: `qa/07-automation/STABILIZATION-REPORT-2026-11-21.md`
+- Defectos abiertos: `qa/06-defects/open/` (DEF-SD-001 a DEF-SD-018; DEF-SD-019 retirado -> REC-SD-012)

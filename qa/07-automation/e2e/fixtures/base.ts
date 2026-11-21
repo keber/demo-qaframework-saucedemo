@@ -1,130 +1,93 @@
 /**
- * fixtures/base.ts
+ * fixtures/base.ts - saucedemo
  *
- * Playwright test wrapper with TTL-aware session refresh.
- * Import this file instead of `@playwright/test` when the app uses a
- * server-side session that may expire during long runs.
+ * Playwright test wrapper with:
+ *   - `qaUser` option: which saucedemo persona the test starts as. Default
+ *     'standard_user'; 'anonymous' starts without any session (empty storageState).
+ *       test.use({ qaUser: 'problem_user' });
+ *   - TTL-aware storageState: the `session-username` cookie lives 600 s from the
+ *     login and is not renewed by activity. Before each test the persona's
+ *     storageState is checked and, when the cookie has less than
+ *     QA_SESSION_REFRESH_MARGIN_S (default 150 s) left, it is renewed by running
+ *     scripts/saucedemo-session.js as a CHILD PROCESS. The login therefore never runs
+ *     inside the test runner, where trace/video/screenshot could record it.
+ *   - performance_glitch_user tests run with test.slow() (triple timeout, FLK-SD-07).
+ *   - `newPersonaContext(browser, user)` for the few TCs that need a second context
+ *     (another persona side by side, or "a new context" step of the plan).
+ *
+ * Tests never log in themselves (references/session-and-opt-in-projects.md). The
+ * login-flow tests live in *.login.spec.ts and import @playwright/test directly.
  */
 
-import { test as base, devices } from '@playwright/test';
-import { SESSION_TTL_MS } from '../playwright.config';
-import * as dotenv from 'dotenv';
-import * as fs from 'fs';
+import { test as base, expect } from '@playwright/test';
+import type { Browser, BrowserContext } from '@playwright/test';
+import { spawnSync } from 'child_process';
 import * as path from 'path';
 
-dotenv.config();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const session = require('../scripts/saucedemo-session.js');
 
-const authTimestamps = new Map<string, number>();
+export type SauceUser =
+  | 'standard_user'
+  | 'problem_user'
+  | 'performance_glitch_user'
+  | 'error_user'
+  | 'visual_user';
 
-function stateFileForProject(storageState: unknown): string {
-  if (typeof storageState === 'string' && storageState) {
-    return path.resolve(__dirname, '..', storageState);
-  }
-  return path.resolve(__dirname, '../.auth/user-default.json');
-}
+export type QaUser = SauceUser | 'anonymous';
 
-function credentialsForState(stateFile: string): { email: string; password: string } {
-  if (stateFile.includes('user-2')) {
-    return {
-      email: process.env.QA_USER2_EMAIL ?? '',
-      password: process.env.QA_USER2_PASSWORD ?? '',
-    };
-  }
+export const EMPTY_STATE = { cookies: [], origins: [] };
 
-  return {
-    email: process.env.QA_USER_EMAIL ?? '',
-    password: process.env.QA_USER_PASSWORD ?? '',
-  };
-}
+const E2E_ROOT = path.resolve(__dirname, '..');
 
-function lastAuthTime(stateFile: string): number {
-  if (!authTimestamps.has(stateFile)) {
-    try {
-      authTimestamps.set(stateFile, fs.statSync(stateFile).mtimeMs);
-    } catch {
-      authTimestamps.set(stateFile, 0);
-    }
-  }
-  return authTimestamps.get(stateFile) ?? 0;
-}
-
-async function reauth(browser: import('@playwright/test').Browser, stateFile: string): Promise<void> {
-  const { email, password } = credentialsForState(stateFile);
-  const baseURL = process.env.QA_BASE_URL ?? '';
-  const loginPath = process.env.QA_LOGIN_PATH ?? '/login';
-  const emailSelector = process.env.QA_LOGIN_EMAIL_SELECTOR ?? 'input[type="email"]';
-  const passwordSelector = process.env.QA_LOGIN_PASSWORD_SELECTOR ?? 'input[type="password"]';
-  const submitSelector = process.env.QA_LOGIN_SUBMIT_SELECTOR ?? 'button[type="submit"]';
-  const successSelector = process.env.QA_LOGIN_SUCCESS_SELECTOR ?? '.dashboard, .main-content, [data-testid="app-shell"]';
-
-  const context = await browser.newContext({ ...devices['Desktop Chrome'], baseURL });
-  const page = await context.newPage();
-
-  try {
-    await page.goto(loginPath, { waitUntil: 'load', timeout: 60_000 });
-    await page.locator(emailSelector).fill(email);
-    // Trace safety: Playwright records fill() argument values in traces, and this
-    // project runs with trace/video 'retain-on-failure'. This reauth path runs for
-    // every test whose session exceeded the TTL, so a fill() here would leak the
-    // plaintext password into far more failure artifacts than the one-time global
-    // setup does. Setting the value through evaluate() keeps it out of the trace.
-    // Do not "simplify" this back to fill().
-    // The input/change events are required because assigning .value directly does
-    // not notify SPA frameworks (Blazor/Radzen bind on those events).
-    // evaluate() has no auto-wait, so the explicit waitFor replaces the one that
-    // locator().fill() performed implicitly.
-    await page.locator(passwordSelector).waitFor({ state: 'visible', timeout: 30_000 });
-    await page.evaluate(
-      ([selector, pwd]) => {
-        const input = document.querySelector(selector) as HTMLInputElement | null;
-        if (!input) {
-          throw new Error(`[qa-framework] Password input not found for selector: ${selector}`);
-        }
-        input.value = pwd;
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-      },
-      [passwordSelector, password] as const
-    );
-    await page.locator(submitSelector).click();
-    await page.waitForSelector(successSelector, { timeout: 30_000 });
-
-    const dir = path.dirname(stateFile);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
-    await context.storageState({ path: stateFile });
-    authTimestamps.set(stateFile, Date.now());
-    console.log(`[session-refresh] storageState renewed: ${stateFile}`);
-  } finally {
-    await context.close();
-  }
-}
-
-export const test = base.extend<{ authStatePath: string }>({
-  authStatePath: async ({}, use, testInfo) => {
-    await use(stateFileForProject(testInfo.project.use.storageState));
-  },
-
-  context: async ({ browser }, use, testInfo) => {
-    const stateFile = stateFileForProject(testInfo.project.use.storageState);
-    if (Date.now() - lastAuthTime(stateFile) > SESSION_TTL_MS) {
-      await reauth(browser, stateFile).catch((error) => {
-        console.error(`[session-refresh] reauth failed: ${(error as Error).message}`);
-      });
-    }
-
-    const context = await browser.newContext({
-      ...devices['Desktop Chrome'],
-      storageState: stateFile,
-      baseURL: process.env.QA_BASE_URL,
+/** Returns the path of a fresh storageState for `user`, renewing it when needed. */
+export function ensureSession(user: SauceUser, stateFile: string = session.stateFileFor(user)): string {
+  if (session.needsRefresh(stateFile)) {
+    const result = spawnSync(process.execPath, [path.join(E2E_ROOT, 'scripts/saucedemo-session.js'), user, stateFile], {
+      cwd: E2E_ROOT,
+      encoding: 'utf8',
+      timeout: 120_000,
     });
+    if (result.status !== 0) {
+      // Never echo stdout/stderr blindly: the script prints only names, but be strict.
+      throw new Error(`[session-refresh] could not renew the session of ${user} (exit ${result.status}).`);
+    }
+  }
+  return path.resolve(E2E_ROOT, stateFile);
+}
 
-    await use(context);
-    await context.close();
+/** A new browser context authenticated as `user` (or anonymous), with the suite baseURL. */
+export async function newPersonaContext(
+  browser: Browser,
+  user: QaUser,
+  options: Parameters<Browser['newContext']>[0] = {}
+): Promise<BrowserContext> {
+  return browser.newContext({
+    baseURL: process.env.QA_BASE_URL,
+    ...options,
+    storageState: user === 'anonymous' ? EMPTY_STATE : ensureSession(user),
+  });
+}
+
+export const test = base.extend<{ qaUser: QaUser }>({
+  qaUser: ['standard_user', { option: true }],
+
+  storageState: async ({ qaUser }, use, testInfo) => {
+    // performance_glitch_user delays every view by design (~5 s per render). Its multi-view
+    // tests reached 23-27 s of the 30 s budget under load in stage 5b (FLK-SD-07), so they
+    // get the triple timeout of test.slow(). Assertions and waits are unchanged.
+    if (qaUser === 'performance_glitch_user') testInfo.slow();
+    if (qaUser === 'anonymous') {
+      await use(EMPTY_STATE);
+      return;
+    }
+    // standard_user reuses the default lane storageState of the project (lane table).
+    const projectState = testInfo.project.use.storageState;
+    const stateFile =
+      qaUser === 'standard_user' && typeof projectState === 'string' ? projectState : session.stateFileFor(qaUser);
+    await use(ensureSession(qaUser, stateFile));
   },
 });
 
-export { expect } from '@playwright/test';
-export type { Page, Browser, BrowserContext } from '@playwright/test';
+export { expect };
+export type { Page, Browser, BrowserContext, Locator } from '@playwright/test';
