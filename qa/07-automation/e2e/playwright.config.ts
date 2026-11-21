@@ -18,7 +18,9 @@ if (fs.existsSync('.env')) {
   }
 }
 
-export const SESSION_TTL_MS = Number(process.env.QA_SESSION_TTL_MS ?? 2 * 60 * 60 * 1000);
+// saucedemo: the `session-username` cookie expires 600 s after the login and is not
+// renewed by activity. fixtures/base.ts renews storageStates before they expire.
+export const SESSION_TTL_MS = Number(process.env.QA_SESSION_TTL_MS ?? 600 * 1000);
 
 // -------------------------------------------------------------------
 // Base URL (credentials are deliberately NOT checked here)
@@ -194,19 +196,27 @@ export default defineConfig({
   // Use any subdir pattern your project standardizes on, e.g.:
   // testMatch: ['**/*.spec.ts'],
 
+  // ------ Timeouts (qa-framework.config.json -> integrations.playwright) ------
+  timeout: 30_000,
+
   // ------ Parallelism ------
-  // Keep fullyParallel:false when tests share storageState / session data.
-  fullyParallel: false,
-  workers:       1,
+  // saucedemo has no server session: every test gets its own browser context and the
+  // persona storageStates are read-only files (renewed atomically by fixtures/base.ts),
+  // so tests can run in parallel without destroying each other's session.
+  fullyParallel: true,
+  workers:       process.env.CI ? 1 : 2,
 
   // ------ Retry strategy ------
-  retries: process.env.CI ? 1 : 0,
+  retries: process.env.CI ? 2 : 0,
 
   // ------ Reporter ------
   reporter: [
     ['html',  { open: 'never' }],
     ['list'],
-    // Uncomment for ADO:
+    // Machine-readable results; scripts/summarize-results.js turns them into the
+    // summary versioned under qa/05-test-execution/automated/. Gitignored.
+    ['json',  { outputFile: 'results/results.json' }],
+    // ADO reporter disabled: integrations.azureDevOps.enabled is false for saucedemo.
     // ['@alex_neo/playwright-azure-reporter', adoReporterConfig],
   ],
 
@@ -219,8 +229,11 @@ export default defineConfig({
     screenshot:         'only-on-failure',
     video:              'retain-on-failure',
     trace:              'retain-on-failure',
-    actionTimeout:      15_000,
-    navigationTimeout:  30_000,
+    actionTimeout:      10_000,
+    navigationTimeout:  60_000,
+    // saucedemo exposes `data-test` attributes: page.getByTestId() targets them.
+    testIdAttribute:    'data-test',
+    locale:             'es-CL',
   },
 
   // ------ Auth setup ------
@@ -245,6 +258,6 @@ export default defineConfig({
   ],
 
   // ------ Output directories ------
-  outputDir:         'test-results/',
+  outputDir:         '../../05-test-execution/automated/test-results',
   snapshotPathTemplate: '{testDir}/__snapshots__/{testFilePath}/{arg}{ext}',
 });
