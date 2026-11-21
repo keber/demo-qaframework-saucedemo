@@ -88,6 +88,52 @@ Regla clave del framework aplicada: **los tests afirman lo que exige la especifi
   <img src="reports/snapshots/ejecucion-p2.png" alt="Resultados por submódulo" width="48%">
 </p>
 
+## Auditoría de la suite (qa-suite-audit)
+
+**Reporte HTML publicado:** https://keber.github.io/demo-qaframework-saucedemo/
+
+### Origen y propósito
+
+Después de generar la suite, se auditó con [`@keber/qa-suite-audit`](https://www.npmjs.com/package/@keber/qa-suite-audit) 0.1.0, una herramienta de auditoría repetible y basada en evidencia para suites de pruebas automatizadas. Implementa la rúbrica de 7 criterios publicada por Adriana Troche Robles en [Calidad sin Humo](https://calidadsinhumo.com/guias/rubrica-para-juzgar-una-suite-de-tests/): Oráculo, Sensibilidad, Determinismo, Diagnóstico, Cobertura de reglas de negocio, Vida en CI y Mantenibilidad, en una escala de 0 a 3.
+
+El propósito es responder con evidencia si la suite generada **sirve**, más allá de que esté en verde. La herramienta separa tres roles:
+
+1. **Scripts** que extraen evidencia del repositorio (`audit/input.json`).
+2. **Un agente** (aquí, un sub-agente de Claude) que asigna cada nivel citando esa evidencia y dentro de los límites que ella permite (`audit/verdict.json`).
+3. **Un validador** que rechaza un veredicto sin citas, fuera de límites o escrito contra otra evidencia.
+
+La versión 0.1.0 lee solo el repositorio (sin API de CI ni historial de ejecuciones), por lo que de los 21 puntos de la rúbrica original son alcanzables como máximo 16.
+
+```bash
+npx qa-suite-audit evidence . --out audit/input.json
+npx qa-suite-audit validate audit/input.json audit/verdict.json
+npx qa-suite-audit report audit/input.json audit/verdict.json --format html --out audit/report.html
+```
+
+### Resultados generales
+
+**Tipo de suite:** regresión. **Resultado: 12 / 16 alcanzables** (veredicto `VALID`). Con la evidencia disponible, el máximo posible era 14, porque el repositorio no tiene pipeline de CI.
+
+| Dimensión | Nivel | Motivo principal |
+|---|---|---|
+| D1 Oráculo | 2 / 3 | Las aserciones verifican valores de las reglas (p. ej. el impuesto del 8 %), pero las reglas se derivaron en gran parte del comportamiento observado de la propia app |
+| D2 Sensibilidad | 2 / 3 | No hay mutation testing configurado (límite en 2); los defectos fijados fallan la corrida si dejan de reproducirse |
+| D3 Determinismo | 2 / 2 | Sin esperas fijas y con esperas por condición; el máximo alcanzable sin medición de flakiness en CI |
+| D4 Diagnóstico | 2 / 3 | Trace, video y screenshot en fallos; los títulos llevan ID de caso, no de regla |
+| D5 Cobertura de reglas | 2 / 2 | Las 72 reglas de negocio detectadas tienen test; no hay tests huérfanos |
+| D6 Vida en CI | 0 / 1 | No hay pipeline en el repositorio |
+| D7 Mantenibilidad | 2 / 2 | 82 % de selectores semánticos (`data-test`), 85 % de tests a través de page objects o helpers |
+
+Ninguna dimensión eliminatoria (D1, D2) quedó en 0. Las preguntas que solo el equipo puede responder (mutation testing, medición de flakiness entre corridas, exclusiones deliberadas, pipeline externo, retiro de tests) quedan listadas en el reporte sin responder, como exige el protocolo.
+
+**Límites de la herramienta observados en esta auditoría** (se reportan; la evidencia no se editó):
+
+- No detecta los 18 `test.fail()` invocados desde el helper `expectOpenDefect()`.
+- Marca como "sin aserción" un test que usa `expect.poll()`.
+- No lee la tabla de trazabilidad de flujos (`FL-*`) de los `05-test-scenarios.md`, por lo que la cobertura real probablemente es mayor que la reportada.
+
+Archivos: [`audit/verdict.json`](audit/verdict.json), [`audit/report.txt`](audit/report.txt), [`audit/report.html`](audit/report.html).
+
 ## Estructura del repositorio
 
 ```
@@ -102,6 +148,8 @@ Regla clave del framework aplicada: **los tests afirman lo que exige la especifi
 │   ├── memory/                # Aprendizajes del proyecto
 │   └── qa-framework.config.json
 ├── reports/                   # Informes LaTeX + PDF + snapshots
+├── audit/                     # Evidencia, veredicto y reportes de qa-suite-audit
+├── docs/                      # Reporte HTML de la auditoría (GitHub Pages)
 ├── .claude/ y .github/        # Reglas, comandos y skills instalados por el framework
 └── package.json
 ```

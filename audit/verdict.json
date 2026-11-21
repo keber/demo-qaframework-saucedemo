@@ -1,0 +1,105 @@
+{
+  "schema": "verdict/v2",
+  "repo": "saucedemo",
+  "evidenceDigest": "bdce37a1333edc924c9622181bbb414d52123b501d9211f67807b1515679518a",
+  "suiteType": {
+    "type": "regression",
+    "citations": ["D0.suite-type-signals", "D2.expected-failures", "D5.covered-rules"],
+    "reasoning": "D0.suite-type-signals shows every e2e test in auth, cart, checkout, inventory and navigation carrying a case id linked to a declared rule (128 of 128), with zero defect ids in titles and zero snapshot assertions. Reading the tests confirms expected values come from the specification: e.g. checkout-flow.spec.ts:200 asserts 'Tax: $3.20' from RN-CHK-009. About 18 e2e tests pin open defects DEF-SD-001..018 through the expectOpenDefect() helper (fixtures/defects.ts), but they still assert what the spec requires and only invert the result at runtime, so they are regression tests with a defect marker, not a defect harness; the signals miss them because the defect id lives in the body and test.fail() is called inside the helper. The three integration directories (9 tests, no case ids) are the framework's API scaffold: self-tests of the read-only client guard and placeholder tests that skip until real endpoints exist, not characterization of the app, so they do not justify a mixed declaration."
+  },
+  "levels": [
+    {
+      "dimension": 1,
+      "level": 2,
+      "confidence": "medium",
+      "citations": ["D1.tc-id-coverage", "D1.spec-linkage", "D5.covered-rules", "D1.ext-id-coverage", "D1.risk-inventory"],
+      "observations": [
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:200",
+        "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md:58",
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:150",
+        "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md:27",
+        "qa/07-automation/e2e/tests/inventory/catalog.spec.ts:287",
+        "qa/07-automation/integration/tests/security/read-only-guard.spec.ts:26"
+      ],
+      "reasoning": "D1.tc-id-coverage is 128 of 137 and D1.spec-linkage resolves all 126 declared cases to a rule; D5.covered-rules covers all 72 RN rules. The sampled tests encode the rule rather than cite it: checkout-flow.spec.ts:200 asserts the 8 % tax value given in RN-CHK-009 (01-business-rules.md:58), checkout-flow.spec.ts:150 asserts the RN-CHK-004 expectation even though the app violates it (DEF-SD-011), and catalog.spec.ts:287 asserts RN-INV-011 under an open-defect marker instead of the observed sl-404 images. Held at 2 rather than 3 because 'every expected value' does not hold: the 9 integration tests (e.g. read-only-guard.spec.ts:26) carry no case id and trace to no rule, and the rule documents state they were copied literally from the UI with standard_user as baseline, so for most values the oracle is a formalised observation of the reference user rather than an independent requirement. No risk register exists (D1.risk-inventory present=false) and no external ids are used (D1.ext-id-coverage 0). Borderline toward 3 for the e2e suite alone."
+    },
+    {
+      "dimension": 2,
+      "level": 2,
+      "confidence": "medium",
+      "citations": ["D2.assertless-tests", "D2.indirect-assertions", "D2.weak-assertions", "D2.skipped-tests", "D2.expected-failures", "D2.mutation-config", "D2.assert-density", "D2.soft-assertions"],
+      "observations": [
+        "qa/07-automation/e2e/tests/inventory/dynamic-catalog.spec.ts:120",
+        "qa/07-automation/e2e/tests/auth/login.login.spec.ts:54",
+        "qa/07-automation/integration/tests/security/no-session.spec.ts:25",
+        "qa/07-automation/integration/tests/write/example-write-cycle.spec.ts:63",
+        "qa/07-automation/e2e/tests/inventory/catalog.spec.ts:299"
+      ],
+      "reasoning": "Capped at 2 by D2.sensitivity-measured (D2.mutation-config count 0). D2.assertless-tests flags 1 of 135, and that test is a false positive: dynamic-catalog.spec.ts:120 asserts through expect.poll(...).not.toBe(first). Both D2.indirect-assertions are real checks: login.login.spec.ts:54 delegates to expectCatalog(), which asserts URL and title, and no-session.spec.ts:25 delegates to expectUnauthenticated() in fixtures/contract.ts, which asserts status, JSON body and absent data. D2.weak-assertions has a single weak-only test, the scaffold write-cycle test at example-write-cycle.spec.ts:63, which skips without an approved write catalog; assertion density is 3.24 per active test and only 2 tests are skipped (manual-review placeholders). D2.expected-failures reads 0, but about 18 tests pin open defects via expectOpenDefect() (e.g. catalog.spec.ts:299); that helper fails the run if the assertions pass ('no longer reproduces') and rethrows InfraError unmarked, so those tests can still go red for the behaviour their title names. One sensitivity weakness: inside a defect block the 54 expect.soft calls are aggregated, so a partial fix (one of four soft checks starting to pass) stays green."
+    },
+    {
+      "dimension": 3,
+      "level": 2,
+      "confidence": "medium",
+      "citations": ["D3.fixed-waits", "D3.conditional-waits", "D3.retries-config", "D3.flaky-markers", "D3.serial-mode"],
+      "observations": [
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:150",
+        "qa/07-automation/e2e/tests/inventory/dynamic-catalog.spec.ts:120",
+        "qa/07-automation/e2e/tests/auth/login.login.spec.ts:172"
+      ],
+      "reasoning": "D3.fixed-waits is 0 and D3.conditional-waits is 15 (0.11 per test); D3.flaky-markers finds no admission of flakiness. Synchronisation is event-based: checkout-flow.spec.ts:150 waits through settleAfterContinue(), a race between the error becoming visible and the step-2 URL with a 5 s bound, then asserts the state; dynamic-catalog.spec.ts:120 polls the autoplay slider instead of sleeping; login.login.spec.ts:172 tests the 10-minute session expiry by checking the cookie TTL and clearing the cookie rather than waiting. Against it: D3.retries-config sets retries to 2 in CI for e2e with no comment explaining it as a load decision (the integration config does explain its retry policy), and the bounded negative-path waits with .catch(() => undefined) cost up to 5 s each when the expected navigation never happens. Level 3 is out of reach in v1 because flakiness across runs is not witnessed by the repository."
+    },
+    {
+      "dimension": 4,
+      "level": 2,
+      "confidence": "medium",
+      "citations": ["D4.failure-context", "D4.trace-config", "D4.reporter-config", "D4.artifact-retention", "D1.test-inventory"],
+      "observations": [
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:195",
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:210",
+        "qa/07-automation/e2e/tests/cart/cart.spec.ts:67",
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:107"
+      ],
+      "reasoning": "D4.trace-config shows trace and video retain-on-failure and screenshot only-on-failure for the e2e suite, with html, list and json reporters (D4.reporter-config). Titles in D1.test-inventory carry the case id, the priority and a business-language behaviour, e.g. checkout-flow.spec.ts:195 'Subtotal igual a la suma de precios', and defect tests add an open-defect annotation naming the DEF id and the violated RN rule. It stays at 2 rather than 3 because the report does not consistently name the broken rule without opening code: titles carry TC ids, not RN ids, so the rule is reached through 05-test-scenarios.md; some titles name UI structure rather than behaviour (cart.spec.ts:67 'Encabezados de la página del carrito', checkout-flow.spec.ts:107 'Elementos del paso 1'); D4.failure-context counts only 3 test.step calls in 2 tests (checkout-flow.spec.ts:210); and the integration suite and the opt-in login-flow project deliberately record no trace, screenshot or video."
+    },
+    {
+      "dimension": 5,
+      "level": 2,
+      "confidence": "high",
+      "citations": ["D5.rule-catalogue", "D5.covered-rules", "D5.uncovered-rules", "D5.orphan-tests", "D5.risk-coverage", "D5.negative-tests", "D5.skip-ratio"],
+      "observations": [
+        "qa/01-specifications/module-cart/submodule-cart/02-workflows.md:31",
+        "qa/01-specifications/module-navigation/submodule-menu/02-workflows.md:3",
+        "qa/07-automation/e2e/tests/auth/login-validation.spec.ts:61",
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:126"
+      ],
+      "reasoning": "D5.covered-rules is 72 of 89 (0.809) and covers every one of the 72 RN business rules; D5.orphan-tests is 0 and D5.skip-ratio 0.015. All 17 entries in D5.uncovered-rules are FL-* workflows from 02-workflows.md (e.g. FL-CART-002 at 02-workflows.md:31, FL-NAV-001 at 02-workflows.md:3), and reading the scenario documents shows they are mapped to TCs in a workflow-to-TC table in each 05-test-scenarios.md (e.g. module-navigation/submodule-menu/05-test-scenarios.md line 54), a format the adapter does not join; so they look uncovered by extraction, not by decision or oversight. D5.negative-tests lists 16 negative and 10 boundary tests; the sampled ones are genuine (login-validation.spec.ts:61 wrong password, checkout-flow.spec.ts:126 missing last name). D5.risk-coverage is empty because there is no risk register. Level 3 is unreachable in v1: nothing written states which rules are excluded on purpose."
+    },
+    {
+      "dimension": 6,
+      "level": 0,
+      "confidence": "high",
+      "citations": ["D6.pipeline-present", "D6.suite-invocation", "D6.pipeline-triggers"],
+      "observations": [],
+      "reasoning": "Determined at 0 by D6.runs-the-suite: D6.pipeline-present identified no pipeline definition (0 YAML files scanned) and D6.suite-invocation finds no pipeline that runs the suite, with no triggers in D6.pipeline-triggers. Whether the suite runs from a pipeline defined outside this repository is a team question and is not answered here."
+    },
+    {
+      "dimension": 7,
+      "level": 2,
+      "confidence": "medium",
+      "citations": ["D7.selector-mix", "D7.file-size", "D7.page-object-usage"],
+      "observations": [
+        "qa/07-automation/e2e/tests/inventory/catalog.spec.ts:30",
+        "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:46",
+        "qa/07-automation/e2e/tests/inventory/catalog.spec.ts:155"
+      ],
+      "reasoning": "D7.selector-mix gives a semantic share of 0.824, almost entirely getByTestId against data-test attributes (55) with 12 raw locators and a single getByRole; D7.file-size shows 14 files, at most 29 tests in one file and a median of 6.5, the largest being catalog.spec.ts at 458 lines. D7.page-object-usage reports 84.7 % of tests built on a layer (6 page objects, 2 fixtures, 8 helpers, 0 unresolved imports). Names describe behaviour in domain terms (catalog.spec.ts:155 'Agregar un producto desde el listado'). Duplication is mostly structural, per-file navigation helpers such as openCatalog() at catalog.spec.ts:30 and toStepOne() at checkout-flow.spec.ts:46, plus a few inline raw locators like '[data-test^=\"remove-\"]'; duplication itself is not extracted in v1. Level 3 needs review and retirement process evidence that v1 does not read."
+    }
+  ],
+  "obtained": 12,
+  "attainable": 16,
+  "eliminated": false,
+  "eliminatedBy": [],
+  "thresholdObjections": [],
+  "notes": "Result: 12 / 16 attainable (maximum possible given this evidence: 14, because D6 was determined at 0). Ceilings that applied: D2 capped at 2 by the calibrated threshold D2.sensitivity-measured (no mutation config committed); D3, D5 and D7 at their v1 structural ceiling of 2; D6 determined at 0 by the literal threshold D6.runs-the-suite (no pipeline in the repository). Neither eliminatory dimension (D1, D2) is at 0. Borderline: D1 is a judgement call between 2 and 3; the e2e suite alone reads as 3, and it was held at 2 for the untraced integration scaffold and because the rules were formalised from the reference user's observed UI. Evidence blind spots noticed (reported, evidence not edited): (1) D2.expected-failures and D0 expectedFailures/defectIds read 0, yet about 18 tests pin open defects DEF-SD-001..018 through expectOpenDefect()/openDefect() in fixtures/defects.ts, which call test.fail() at runtime inside the helper and keep the defect id in the body, not the title. (2) D2.assertless-tests flags dynamic-catalog.spec.ts:120, which asserts through expect.poll(); the scanner does not count it. (3) D5.uncovered-rules lists 17 FL-* workflows that the scenario documents map to TCs in a workflow table; the adapter's co-occurrence join does not read that table, so real coverage is likely closer to 89 of 89. (4) D7.selector-mix counts getByTestId as semantic; here that means data-test attributes, which are stable but not role or label based."
+}
