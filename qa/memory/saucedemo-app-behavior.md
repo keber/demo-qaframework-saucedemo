@@ -67,10 +67,16 @@ Leer `QA_USER_PASSWORD` y `QA_USER_*_USERNAME` con dotenv desde `qa/07-automatio
 
 ## Hallazgos de la etapa 5 (2026-11-21, ejecución automatizada)
 
-- Confirmados los 18 candidatos DEF de las etapas 1 y 2 (DEF-SD-001 a DEF-SD-018) y uno nuevo: el login rechazado de `locked_out_user` crea igualmente la cookie `session-username` = `locked_out_user` (DEF-SD-019, RN-AUTH-005); esa cookie no da acceso (TC-AUTH-LOG-022).
+- Confirmados los 18 candidatos DEF de las etapas 1 y 2 (DEF-SD-001 a DEF-SD-018) y uno nuevo: el login rechazado de `locked_out_user` crea igualmente la cookie `session-username` = `locked_out_user` (reportado como DEF-SD-019; en la etapa 5b se reclasificó como REC-SD-012 porque RN-AUTH-005 solo exige rechazar el acceso; DEF-SD-019 queda retirado); esa cookie no da acceso (TC-AUTH-LOG-010 y TC-AUTH-LOG-022).
 - NO se reproduce el error "wa.cesetRart is not a function" de Reset App State con `error_user`: el carrito se vacía sin `pageerror` (TC-NAV-MENU-015 en verde).
 - La carga directa de una ruta interna responde HTTP 404 con fallback de la SPA y deja en consola "Failed to load resource ... 404" y "Permissions policy violation: unload..." para todos los usuarios (REC-SD-011).
 - Placeholder de Lazy Load: el texto real es "Loading" + U+2026 (no tres puntos).
 - PDF de la orden: `pdf-parse` 1.1.1 falla con "bad XRef entry" en algunos PDF (pypdf y `pdfjs-dist` 4.10.38 los leen bien); el extractor de la suite es `pdfjs-dist` (`scripts/pdf-text.mjs`). El texto extraído separa o une producto y precio según el extractor: comparar sin espacios.
 - `visual_user`: en la ejecución el ícono del carrito quedó desplazado ~186 px en x y ~29 px en y respecto de `standard_user` (viewport Desktop Chrome 1280x720).
 - `getByTestId()` requiere `testIdAttribute: 'data-test'` en `playwright.config.ts`. En el detalle la imagen es `item-{slug}-img` (no `inventory-item-{slug}-img`).
+
+## Hallazgos de la etapa 5b (2026-11-21, estabilización)
+
+- Menú lateral (react-burger-menu): el panel cerrado `.bm-menu-wrap` recibe el atributo `hidden` por un temporizador ~0,3-0,8 s después del render. Un clic en el botón de menú dentro de esa ventana deja el panel con `aria-hidden="false"` y `hidden`: abierto pero invisible (REC-SD-013, patrón FLK-SD-06).
+- Los 18 defectos DEF-SD-001 a 018 siguen reproduciéndose por la aserción de la regla (verificado con `DEFECTS_DIAG=1` en la suite oficial).
+- Convención de IDs: defectos `DEF-SD-NNN` y recomendaciones `REC-SD-NNN` con numeración única de proyecto (`qa/00-standards/naming-conventions.md`).
