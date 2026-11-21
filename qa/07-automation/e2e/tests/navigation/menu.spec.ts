@@ -42,8 +42,10 @@ test.describe('NAV-MENU - Menú lateral y encabezado', () => {
   test('[TC-NAV-MENU-001] Abrir y cerrar el menú lateral @P1', async ({ page }) => {
     const { header } = await openCatalog(page);
     await expect(header.wrap).toHaveAttribute('aria-hidden', 'true');
+    await header.waitForClosedMenuSettled();
     await header.burger.click();
     await expect(header.wrap).toHaveAttribute('aria-hidden', 'false');
+    await expect(header.cross).toBeVisible();
     await header.cross.click();
     await expect(header.wrap).toHaveAttribute('aria-hidden', 'true');
   });
