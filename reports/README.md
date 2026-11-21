@@ -26,7 +26,7 @@ Informes finales del Sprint 1 de pruebas de Swag Labs (saucedemo.com), en LaTeX 
 
 ## Recompilar
 
-Desde la carpeta de cada informe (el logo `garcesfruit-logo.png` debe estar junto al `.tex`):
+Desde la carpeta de cada informe (cada `.tex` es autocontenido):
 
 ```bash
 tectonic informe-analisis-pruebas.tex
