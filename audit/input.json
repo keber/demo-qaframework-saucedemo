@@ -1,0 +1,1412 @@
+{
+  "schema": "judgment-input/v1",
+  "repo": "saucedemo",
+  "adapter": {
+    "name": "qa-framework",
+    "description": "rules in 01-business-rules.md, cases in 05-test-scenarios.md, linked by co-occurrence",
+    "specsRoot": "qa/01-specifications"
+  },
+  "evidenceDigest": "bdce37a1333edc924c9622181bbb414d52123b501d9211f67807b1515679518a",
+  "attainable": 16,
+  "maxPossibleGivenEvidence": 14,
+  "determinedDimensions": 1,
+  "openQuestions": 6,
+  "dimensions": [
+    {
+      "dimension": 1,
+      "name": "Oracle",
+      "eliminatory": true,
+      "ceiling": 3,
+      "ceilingReason": "reachable only where a rule inventory exists in the repository",
+      "bounds": {
+        "min": 0,
+        "max": 3
+      },
+      "determined": null,
+      "constraints": [],
+      "mustCite": [
+        "D1.tc-id-coverage",
+        "D1.ext-id-coverage",
+        "D1.spec-linkage",
+        "D5.covered-rules",
+        "D1.risk-inventory"
+      ],
+      "question": "Read a sample of tests against the rules they cite. Do the expected values encode the rule, or does the test merely carry the rule id while asserting whatever the system returns?"
+    },
+    {
+      "dimension": 2,
+      "name": "Sensitivity",
+      "eliminatory": true,
+      "ceiling": 3,
+      "ceilingReason": "level 3 needs measured sensitivity: mutation config in the repository (capped at 2 without it) or a rule broken on purpose, which v1 cannot read",
+      "bounds": {
+        "min": 0,
+        "max": 2
+      },
+      "determined": null,
+      "constraints": [
+        {
+          "threshold": "D2.sensitivity-measured",
+          "kind": "calibration",
+          "rule": "with no mutation testing configuration in the repository (D2.mutation-config empty), the dimension cannot exceed level 2; a config lifts the cap but never sets a floor",
+          "observed": "no mutation testing configuration found in the repository",
+          "effect": "capped at 2 - level 3 needs measured sensitivity; a rule broken on purpose leaves no trace v1 reads",
+          "capsAt": 2
+        }
+      ],
+      "mustCite": [
+        "D2.assertless-tests",
+        "D2.indirect-assertions",
+        "D2.weak-assertions",
+        "D2.skipped-tests",
+        "D2.expected-failures",
+        "D2.mutation-config"
+      ],
+      "question": "Read the tests that assert only through helpers. Do those helpers contain a real check, and does each test fail for the behavior its title names?"
+    },
+    {
+      "dimension": 3,
+      "name": "Determinism",
+      "eliminatory": false,
+      "ceiling": 2,
+      "ceilingReason": "level 3 asserts behavior across runs, which the repository cannot witness",
+      "bounds": {
+        "min": 0,
+        "max": 2
+      },
+      "determined": null,
+      "constraints": [],
+      "mustCite": [
+        "D3.fixed-waits",
+        "D3.conditional-waits"
+      ],
+      "question": "Read the fixed waits and the retries setting in context. Are they load tolerance decisions the config explains, or flake suppression?"
+    },
+    {
+      "dimension": 4,
+      "name": "Diagnosis",
+      "eliminatory": false,
+      "ceiling": 3,
+      "ceilingReason": "no structural limit in v1",
+      "bounds": {
+        "min": 0,
+        "max": 3
+      },
+      "determined": null,
+      "constraints": [],
+      "mustCite": [
+        "D4.failure-context"
+      ],
+      "question": "Read the test titles. Does a failure report name the business behavior that broke, or only the mechanism that was clicked?"
+    },
+    {
+      "dimension": 5,
+      "name": "Rule coverage",
+      "eliminatory": false,
+      "ceiling": 2,
+      "ceilingReason": "level 3 needs the deliberate exclusions written down; v1 extracts no such statement",
+      "bounds": {
+        "min": 0,
+        "max": 2
+      },
+      "determined": null,
+      "constraints": [],
+      "mustCite": [
+        "D5.rule-catalogue",
+        "D5.covered-rules",
+        "D5.uncovered-rules",
+        "D5.orphan-tests",
+        "D5.risk-coverage"
+      ],
+      "question": "Read the uncovered rules. Are they absent by decision or by oversight, and does anything in the repository say which?"
+    },
+    {
+      "dimension": 6,
+      "name": "Life in CI",
+      "eliminatory": false,
+      "ceiling": 1,
+      "ceilingReason": "levels 2 and 3 assert merge and deploy gating, which lives in the CI server policy",
+      "bounds": {
+        "min": 0,
+        "max": 0
+      },
+      "determined": 0,
+      "constraints": [
+        {
+          "threshold": "D6.runs-the-suite",
+          "kind": "literal",
+          "rule": "level 1 requires a pipeline that both invokes the runner and points at the resolved suite; otherwise level 0",
+          "observed": "0 pipeline(s) both invoke the runner and point at the suite",
+          "effect": "determined at 0",
+          "capsAt": 0
+        }
+      ],
+      "mustCite": [
+        "D6.pipeline-present",
+        "D6.suite-invocation",
+        "D6.pipeline-triggers"
+      ],
+      "question": null
+    },
+    {
+      "dimension": 7,
+      "name": "Maintainability",
+      "eliminatory": false,
+      "ceiling": 2,
+      "ceilingReason": "level 3 needs review and retirement process evidence; v1 does not read history",
+      "bounds": {
+        "min": 0,
+        "max": 2
+      },
+      "determined": null,
+      "constraints": [],
+      "mustCite": [
+        "D7.selector-mix",
+        "D7.file-size"
+      ],
+      "question": "Read the test names and the largest files. Do names describe behavior or implementation, and is duplication structural or incidental?"
+    }
+  ],
+  "teamQuestions": [
+    {
+      "id": "D2.sensitivity-measured",
+      "dimension": 2,
+      "question": "Is mutation testing run against this suite anywhere, and where is its configuration?",
+      "unlocks": 3,
+      "reason": "only a mutation testing configuration committed to this repository is read by this release, and none was found; a rule broken on purpose by hand also satisfies the rubric but leaves no trace this release can read",
+      "source": "cap",
+      "readByThisRelease": true
+    },
+    {
+      "id": "D3.flakiness-measured",
+      "dimension": 3,
+      "question": "Is the failure rate of these tests across runs measured anywhere, and where can it be read?",
+      "unlocks": 3,
+      "reason": "level 3 asserts behavior across runs, which the repository cannot witness",
+      "source": "ceiling",
+      "readByThisRelease": false
+    },
+    {
+      "id": "D5.deliberate-exclusions",
+      "dimension": 5,
+      "question": "Are any business rules left out of the suite on purpose, and where is that decision written down?",
+      "unlocks": 3,
+      "reason": "level 3 needs the deliberate exclusions written down; v1 extracts no such statement",
+      "source": "ceiling",
+      "readByThisRelease": false
+    },
+    {
+      "id": "D6.external-pipeline",
+      "dimension": 6,
+      "question": "Does this suite run from a pipeline defined outside this repository (another repository, a scheduled job or a release definition), and where is it defined?",
+      "unlocks": 1,
+      "reason": "levels 2 and 3 assert merge and deploy gating, which lives in the CI server policy",
+      "source": "ceiling",
+      "readByThisRelease": false
+    },
+    {
+      "id": "D7.review-retirement",
+      "dimension": 7,
+      "question": "Is there a process for reviewing and retiring tests, and where is it written down?",
+      "unlocks": 3,
+      "reason": "level 3 needs review and retirement process evidence; v1 does not read history",
+      "source": "ceiling",
+      "readByThisRelease": false
+    }
+  ],
+  "items": {
+    "source": {
+      "D1.test-inventory": {
+        "tests": 137,
+        "files": 14
+      },
+      "D1.tc-id-coverage": {
+        "withCaseId": 128,
+        "of": 137,
+        "ratio": 0.934
+      },
+      "D1.ext-id-coverage": {
+        "withExternalId": 0,
+        "of": 137,
+        "ratio": 0
+      },
+      "D2.assertless-tests": {
+        "count": 1,
+        "of": 135,
+        "tests": [
+          "qa/07-automation/e2e/tests/inventory/dynamic-catalog.spec.ts:120"
+        ]
+      },
+      "D2.indirect-assertions": {
+        "count": 2,
+        "of": 135,
+        "proxyCalls": 60,
+        "evidenceClass": "inferential",
+        "tests": [
+          "qa/07-automation/e2e/tests/auth/login.login.spec.ts:54",
+          "qa/07-automation/integration/tests/security/no-session.spec.ts:25"
+        ]
+      },
+      "D2.weak-assertions": {
+        "weakOnlyTests": 1,
+        "weakAssertions": 68,
+        "tests": [
+          "qa/07-automation/integration/tests/write/example-write-cycle.spec.ts:63"
+        ]
+      },
+      "D2.assert-density": {
+        "assertions": 437,
+        "perActiveTest": 3.237
+      },
+      "D2.soft-assertions": {
+        "count": 54
+      },
+      "D2.skipped-tests": {
+        "count": 2,
+        "of": 137,
+        "ratio": 0.015
+      },
+      "D2.only-markers": {
+        "count": 0
+      },
+      "D2.conditional-skips": {
+        "count": 4,
+        "tests": [
+          "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:273",
+          "qa/07-automation/e2e/tests/inventory/catalog.spec.ts:435",
+          "qa/07-automation/integration/tests/security/read-only-guard.spec.ts:35",
+          "qa/07-automation/integration/tests/security/read-only-guard.spec.ts:46"
+        ]
+      },
+      "D2.expected-failures": {
+        "count": 0,
+        "tests": []
+      },
+      "D3.fixed-waits": {
+        "count": 0,
+        "perTest": 0,
+        "tests": []
+      },
+      "D3.conditional-waits": {
+        "count": 15,
+        "perTest": 0.109
+      },
+      "D3.flaky-markers": {
+        "count": 0,
+        "tags": {
+          "count": 0,
+          "tests": []
+        },
+        "comments": {
+          "count": 0,
+          "at": []
+        }
+      },
+      "D4.failure-context": {
+        "steps": 3,
+        "testsWithSteps": 2
+      },
+      "D5.priority-distribution": {
+        "P0": 23,
+        "P1": 48,
+        "P2": 38,
+        "P3": 28
+      },
+      "D5.skip-ratio": {
+        "ratio": 0.015
+      },
+      "D5.negative-tests": {
+        "evidenceClass": "inferential",
+        "negative": {
+          "count": 16,
+          "tests": [
+            "qa/07-automation/e2e/tests/auth/login-validation.spec.ts:61",
+            "qa/07-automation/e2e/tests/auth/login-validation.spec.ts:73",
+            "qa/07-automation/e2e/tests/auth/login-validation.spec.ts:85",
+            "qa/07-automation/e2e/tests/auth/login.login.spec.ts:133",
+            "qa/07-automation/e2e/tests/auth/login.login.spec.ts:144",
+            "qa/07-automation/e2e/tests/auth/login.login.spec.ts:154",
+            "qa/07-automation/e2e/tests/auth/session.spec.ts:58",
+            "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:126",
+            "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:134",
+            "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:142",
+            "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:163",
+            "qa/07-automation/e2e/tests/inventory/catalog.spec.ts:344",
+            "qa/07-automation/e2e/tests/navigation/menu.spec.ts:161",
+            "qa/07-automation/integration/tests/security/read-only-guard.spec.ts:26",
+            "qa/07-automation/integration/tests/security/read-only-guard.spec.ts:35",
+            "qa/07-automation/integration/tests/security/read-only-guard.spec.ts:46"
+          ]
+        },
+        "boundary": {
+          "count": 10,
+          "tests": [
+            "qa/07-automation/e2e/tests/auth/login-validation.spec.ts:29",
+            "qa/07-automation/e2e/tests/auth/login-validation.spec.ts:41",
+            "qa/07-automation/e2e/tests/auth/login-validation.spec.ts:51",
+            "qa/07-automation/e2e/tests/cart/cart.spec.ts:162",
+            "qa/07-automation/e2e/tests/cart/cart.spec.ts:197",
+            "qa/07-automation/e2e/tests/cart/cart.spec.ts:34",
+            "qa/07-automation/e2e/tests/cart/cart.spec.ts:90",
+            "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:117",
+            "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:85",
+            "qa/07-automation/e2e/tests/navigation/menu.spec.ts:125"
+          ]
+        },
+        "of": 135,
+        "vocabulary": "NEGATIVE_VOCABULARY in src/extract-source.js (documented in docs/EVIDENCE-CATALOGUE.md, D5.negative-tests)"
+      },
+      "D7.selector-mix": {
+        "semantic": 1,
+        "testId": 55,
+        "raw": 12,
+        "semanticShare": 0.824
+      },
+      "D7.file-size": {
+        "files": 14,
+        "maxTestsInOneFile": 29,
+        "medianTestsPerFile": 6.5
+      },
+      "D7.page-object-usage": {
+        "evidenceClass": "inferential",
+        "layeredTests": {
+          "count": 116,
+          "of": 137,
+          "share": 0.847
+        },
+        "inlineTests": {
+          "count": 8
+        },
+        "layers": {
+          "files": [
+            "qa/07-automation/e2e/fixtures/base.ts",
+            "qa/07-automation/e2e/fixtures/catalog.ts",
+            "qa/07-automation/e2e/fixtures/defects.ts",
+            "qa/07-automation/e2e/page-objects/CartPage.ts",
+            "qa/07-automation/e2e/page-objects/CheckoutPage.ts",
+            "qa/07-automation/e2e/page-objects/DynamicCatalogPage.ts",
+            "qa/07-automation/e2e/page-objects/HeaderMenu.ts",
+            "qa/07-automation/e2e/page-objects/InventoryPage.ts",
+            "qa/07-automation/e2e/page-objects/LoginPage.ts",
+            "qa/07-automation/integration/fixtures/base.ts",
+            "qa/07-automation/integration/fixtures/contract.ts",
+            "qa/07-automation/integration/fixtures/project-exclusions.ts",
+            "qa/07-automation/integration/fixtures/read-catalog.ts",
+            "qa/07-automation/integration/fixtures/write-catalog.ts",
+            "qa/07-automation/integration/scripts/api-guard.js",
+            "qa/07-automation/integration/scripts/hard-exclusions.js"
+          ],
+          "kinds": {
+            "pageObject": 6,
+            "fixture": 2,
+            "helper": 8
+          },
+          "unresolvedImports": 0
+        },
+        "customFixtures": {
+          "count": 2,
+          "files": [
+            "qa/07-automation/e2e/fixtures/base.ts",
+            "qa/07-automation/integration/fixtures/base.ts"
+          ]
+        }
+      },
+      "D3.retries-config": {
+        "bySuite": {
+          "qa/07-automation/e2e": {
+            "config": "qa/07-automation/e2e/playwright.config.ts",
+            "retries": "process.env.CI ? 2 : 0"
+          },
+          "qa/07-automation/integration": {
+            "config": "qa/07-automation/integration/playwright.config.ts",
+            "retries": "writeRun ? 0 : process.env.CI ? 1 : 0"
+          }
+        }
+      },
+      "D3.serial-mode": {
+        "bySuite": {
+          "qa/07-automation/e2e": {
+            "config": "qa/07-automation/e2e/playwright.config.ts",
+            "fullyParallel": "true",
+            "workers": "process.env.CI ? 1 : 2",
+            "describeSerial": 0,
+            "configuredSerial": 0
+          },
+          "qa/07-automation/integration": {
+            "config": "qa/07-automation/integration/playwright.config.ts",
+            "fullyParallel": "false",
+            "workers": "1",
+            "describeSerial": 1,
+            "configuredSerial": 0
+          }
+        }
+      },
+      "D4.reporter-config": {
+        "bySuite": {
+          "qa/07-automation/e2e": {
+            "config": "qa/07-automation/e2e/playwright.config.ts",
+            "reporters": [
+              "html",
+              "list",
+              "json"
+            ]
+          },
+          "qa/07-automation/integration": {
+            "config": "qa/07-automation/integration/playwright.config.ts",
+            "reporters": [
+              "list",
+              "html"
+            ]
+          }
+        }
+      },
+      "D4.trace-config": {
+        "bySuite": {
+          "qa/07-automation/e2e": {
+            "config": "qa/07-automation/e2e/playwright.config.ts",
+            "trace": "retain-on-failure",
+            "screenshot": "only-on-failure",
+            "video": "retain-on-failure"
+          },
+          "qa/07-automation/integration": {
+            "config": "qa/07-automation/integration/playwright.config.ts",
+            "trace": null,
+            "screenshot": null,
+            "video": null
+          }
+        }
+      },
+      "D4.artifact-retention": {
+        "bySuite": {
+          "qa/07-automation/e2e": {
+            "config": "qa/07-automation/e2e/playwright.config.ts",
+            "outputDir": "../../05-test-execution/automated/test-results"
+          },
+          "qa/07-automation/integration": {
+            "config": "qa/07-automation/integration/playwright.config.ts",
+            "outputDir": "test-results/"
+          }
+        }
+      },
+      "D2.mutation-config": {
+        "count": 0,
+        "tools": []
+      },
+      "D0.suite-type-signals": {
+        "evidenceClass": "inferential",
+        "note": "signals only: the suite type is declared by the verdict, never computed here; every count is a number of tests",
+        "vocabulary": "DEFECT_ID in src/suite-type.js (documented in docs/EVIDENCE-CATALOGUE.md, D0.suite-type-signals)",
+        "suites": [
+          {
+            "suite": "qa/07-automation/e2e",
+            "testDir": "qa/07-automation/e2e/tests",
+            "directories": [
+              {
+                "directory": "auth",
+                "key": "qa/07-automation/e2e/auth",
+                "tests": 24,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 24
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 24
+                }
+              },
+              {
+                "directory": "cart",
+                "key": "qa/07-automation/e2e/cart",
+                "tests": 19,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 19
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 19
+                }
+              },
+              {
+                "directory": "checkout",
+                "key": "qa/07-automation/e2e/checkout",
+                "tests": 27,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 27
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 27
+                }
+              },
+              {
+                "directory": "inventory",
+                "key": "qa/07-automation/e2e/inventory",
+                "tests": 42,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 42
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 42
+                }
+              },
+              {
+                "directory": "navigation",
+                "key": "qa/07-automation/e2e/navigation",
+                "tests": 16,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 16
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 16
+                }
+              }
+            ]
+          },
+          {
+            "suite": "qa/07-automation/integration",
+            "testDir": "qa/07-automation/integration/tests",
+            "directories": [
+              {
+                "directory": ".",
+                "key": "qa/07-automation/integration/.",
+                "tests": 1,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 0
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 0
+                }
+              },
+              {
+                "directory": "security",
+                "key": "qa/07-automation/integration/security",
+                "tests": 6,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 0
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 0
+                }
+              },
+              {
+                "directory": "write",
+                "key": "qa/07-automation/integration/write",
+                "tests": 2,
+                "defectIds": {
+                  "count": 0,
+                  "examples": []
+                },
+                "expectedFailures": {
+                  "count": 0
+                },
+                "snapshotAssertions": {
+                  "count": 0
+                },
+                "caseIds": {
+                  "count": 0
+                },
+                "caseIdsLinkedToRules": {
+                  "count": 0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "rules": {
+      "D1.risk-inventory": {
+        "present": false,
+        "register": null,
+        "risks": 0
+      },
+      "D5.risk-coverage": {
+        "count": 0,
+        "of": 0,
+        "ratio": null,
+        "evidenceClass": "inferential",
+        "covered": [],
+        "uncovered": []
+      },
+      "D1.rule-inventory": {
+        "documents": 36,
+        "documentsExcluded": 6,
+        "layout": "framework",
+        "rulesDeclared": 89,
+        "present": true
+      },
+      "D1.spec-linkage": {
+        "casesDeclared": 126,
+        "casesWithRuleRef": 126,
+        "ratio": 1
+      },
+      "D1.automated-case-ids": {
+        "count": 126
+      },
+      "D5.rule-catalogue": {
+        "count": 89,
+        "rules": [
+          {
+            "id": "FL-AUTH-001",
+            "title": "Login exitoso",
+            "file": "qa/01-specifications/module-auth/submodule-login/02-workflows.md",
+            "line": 3
+          },
+          {
+            "id": "FL-AUTH-002",
+            "title": "Corrección tras un error de login",
+            "file": "qa/01-specifications/module-auth/submodule-login/02-workflows.md",
+            "line": 36
+          },
+          {
+            "id": "FL-AUTH-003",
+            "title": "Acceso directo a una ruta protegida sin sesión",
+            "file": "qa/01-specifications/module-auth/submodule-login/02-workflows.md",
+            "line": 57
+          },
+          {
+            "id": "FL-AUTH-004",
+            "title": "Logout",
+            "file": "qa/01-specifications/module-auth/submodule-login/02-workflows.md",
+            "line": 76
+          },
+          {
+            "id": "FL-CART-001",
+            "title": "Revisar el carrito y continuar al checkout",
+            "file": "qa/01-specifications/module-cart/submodule-cart/02-workflows.md",
+            "line": 3
+          },
+          {
+            "id": "FL-CART-002",
+            "title": "Quitar productos en el carrito",
+            "file": "qa/01-specifications/module-cart/submodule-cart/02-workflows.md",
+            "line": 31
+          },
+          {
+            "id": "FL-CART-003",
+            "title": "Persistencia entre sesiones",
+            "file": "qa/01-specifications/module-cart/submodule-cart/02-workflows.md",
+            "line": 52
+          },
+          {
+            "id": "FL-CHK-001",
+            "title": "Compra completa (happy path)",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/02-workflows.md",
+            "line": 3
+          },
+          {
+            "id": "FL-CHK-002",
+            "title": "Corrección de datos en el paso 1",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/02-workflows.md",
+            "line": 47
+          },
+          {
+            "id": "FL-INV-001",
+            "title": "Explorar y ordenar el catálogo",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/02-workflows.md",
+            "line": 3
+          },
+          {
+            "id": "FL-INV-002",
+            "title": "Agregar y quitar desde el listado",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/02-workflows.md",
+            "line": 29
+          },
+          {
+            "id": "FL-INV-003",
+            "title": "Consultar el detalle de un producto",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/02-workflows.md",
+            "line": 54
+          },
+          {
+            "id": "FL-INV-004",
+            "title": "Abrir una vista del Dynamic Catalog",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/02-workflows.md",
+            "line": 3
+          },
+          {
+            "id": "FL-INV-005",
+            "title": "Scroll con carga diferida",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/02-workflows.md",
+            "line": 30
+          },
+          {
+            "id": "FL-INV-006",
+            "title": "Recorrer el Slider",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/02-workflows.md",
+            "line": 51
+          },
+          {
+            "id": "FL-NAV-001",
+            "title": "Navegar con el menú lateral",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/02-workflows.md",
+            "line": 3
+          },
+          {
+            "id": "FL-NAV-002",
+            "title": "Reiniciar el estado de la aplicación",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/02-workflows.md",
+            "line": 27
+          },
+          {
+            "id": "FL-NAV-003",
+            "title": "Enlaces del footer",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/02-workflows.md",
+            "line": 49
+          },
+          {
+            "id": "RN-AUTH-001",
+            "title": "Usuario obligatorio",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 5
+          },
+          {
+            "id": "RN-AUTH-002",
+            "title": "Contraseña obligatoria",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 13
+          },
+          {
+            "id": "RN-AUTH-003",
+            "title": "Credenciales inválidas",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 20
+          },
+          {
+            "id": "RN-AUTH-004",
+            "title": "Usuario sensible a mayúsculas y espacios",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 27
+          },
+          {
+            "id": "RN-AUTH-005",
+            "title": "Usuario bloqueado",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 34
+          },
+          {
+            "id": "RN-AUTH-006",
+            "title": "Login exitoso",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 41
+          },
+          {
+            "id": "RN-AUTH-007",
+            "title": "Rutas internas protegidas",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 48
+          },
+          {
+            "id": "RN-AUTH-008",
+            "title": "Cierre del mensaje de error",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 56
+          },
+          {
+            "id": "RN-AUTH-009",
+            "title": "Logout termina la sesión",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 62
+          },
+          {
+            "id": "RN-AUTH-010",
+            "title": "Contraseña enmascarada",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 69
+          },
+          {
+            "id": "RN-AUTH-011",
+            "title": "Expiración de la sesión",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 75
+          },
+          {
+            "id": "RN-AUTH-012",
+            "title": "Ayuda de credenciales en la página de login",
+            "file": "qa/01-specifications/module-auth/submodule-login/01-business-rules.md",
+            "line": 82
+          },
+          {
+            "id": "RN-CART-001",
+            "title": "Badge refleja la cantidad de productos",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 3
+          },
+          {
+            "id": "RN-CART-002",
+            "title": "Contenido del carrito",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 9
+          },
+          {
+            "id": "RN-CART-003",
+            "title": "Cantidad unitaria por producto",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 15
+          },
+          {
+            "id": "RN-CART-004",
+            "title": "Quitar desde el carrito",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 21
+          },
+          {
+            "id": "RN-CART-005",
+            "title": "Persistencia del carrito en el navegador",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 27
+          },
+          {
+            "id": "RN-CART-006",
+            "title": "Seguir comprando",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 33
+          },
+          {
+            "id": "RN-CART-007",
+            "title": "Ir a checkout",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 39
+          },
+          {
+            "id": "RN-CART-008",
+            "title": "No se puede iniciar checkout con el carrito vacío",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 45
+          },
+          {
+            "id": "RN-CART-009",
+            "title": "El carrito se vacía al completar la compra",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 52
+          },
+          {
+            "id": "RN-CART-010",
+            "title": "Enlace al detalle desde el carrito",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 58
+          },
+          {
+            "id": "RN-CART-011",
+            "title": "Carrito aislado por usuario",
+            "file": "qa/01-specifications/module-cart/submodule-cart/01-business-rules.md",
+            "line": 64
+          },
+          {
+            "id": "RN-CHK-001",
+            "title": "Nombre obligatorio",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 5
+          },
+          {
+            "id": "RN-CHK-002",
+            "title": "Apellido obligatorio",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 13
+          },
+          {
+            "id": "RN-CHK-003",
+            "title": "Código postal obligatorio",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 20
+          },
+          {
+            "id": "RN-CHK-004",
+            "title": "Campos obligatorios no aceptan solo espacios",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 27
+          },
+          {
+            "id": "RN-CHK-005",
+            "title": "Cierre del mensaje de error",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 34
+          },
+          {
+            "id": "RN-CHK-006",
+            "title": "Cancelar en el paso 1",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 40
+          },
+          {
+            "id": "RN-CHK-007",
+            "title": "Resumen con los productos del carrito",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 46
+          },
+          {
+            "id": "RN-CHK-008",
+            "title": "Cálculo del subtotal",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 52
+          },
+          {
+            "id": "RN-CHK-009",
+            "title": "Cálculo del impuesto (8 %)",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 58
+          },
+          {
+            "id": "RN-CHK-010",
+            "title": "Cálculo del total",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 64
+          },
+          {
+            "id": "RN-CHK-011",
+            "title": "Formato monetario de los totales",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 70
+          },
+          {
+            "id": "RN-CHK-012",
+            "title": "Cancelar en el paso 2",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 77
+          },
+          {
+            "id": "RN-CHK-013",
+            "title": "Finalizar la compra",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 83
+          },
+          {
+            "id": "RN-CHK-014",
+            "title": "Volver al catálogo tras la compra",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 89
+          },
+          {
+            "id": "RN-CHK-015",
+            "title": "Comprobante PDF",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 95
+          },
+          {
+            "id": "RN-CHK-016",
+            "title": "El resumen requiere completar el paso 1",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 103
+          },
+          {
+            "id": "RN-CHK-017",
+            "title": "Checkout requiere sesión",
+            "file": "qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md",
+            "line": 110
+          },
+          {
+            "id": "RN-INV-001",
+            "title": "Catálogo de 6 productos",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 5
+          },
+          {
+            "id": "RN-INV-002",
+            "title": "Orden por defecto A-Z",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 11
+          },
+          {
+            "id": "RN-INV-003",
+            "title": "Ordenamiento por nombre",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 18
+          },
+          {
+            "id": "RN-INV-004",
+            "title": "Ordenamiento por precio",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 24
+          },
+          {
+            "id": "RN-INV-005",
+            "title": "Agregar al carrito desde el listado",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 31
+          },
+          {
+            "id": "RN-INV-006",
+            "title": "Quitar del carrito desde el listado",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 37
+          },
+          {
+            "id": "RN-INV-007",
+            "title": "Navegación al detalle",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 43
+          },
+          {
+            "id": "RN-INV-008",
+            "title": "Estado del carrito reflejado en el detalle",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 49
+          },
+          {
+            "id": "RN-INV-009",
+            "title": "Volver al listado",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 55
+          },
+          {
+            "id": "RN-INV-010",
+            "title": "Producto inexistente",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 61
+          },
+          {
+            "id": "RN-INV-011",
+            "title": "Imagen correcta por producto",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 68
+          },
+          {
+            "id": "RN-INV-012",
+            "title": "Precio consistente entre vistas",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 74
+          },
+          {
+            "id": "RN-INV-013",
+            "title": "Opciones de orden estáticas",
+            "file": "qa/01-specifications/module-inventory/submodule-catalog/01-business-rules.md",
+            "line": 80
+          },
+          {
+            "id": "RN-INV-014",
+            "title": "Submenú desplegable",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 3
+          },
+          {
+            "id": "RN-INV-015",
+            "title": "Rutas del Dynamic Catalog protegidas",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 10
+          },
+          {
+            "id": "RN-INV-016",
+            "title": "Carga diferida (Lazy Load)",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 18
+          },
+          {
+            "id": "RN-INV-017",
+            "title": "Indicador de carga (Spinner)",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 24
+          },
+          {
+            "id": "RN-INV-018",
+            "title": "Navegación del Slider",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 31
+          },
+          {
+            "id": "RN-INV-019",
+            "title": "Precios del Dynamic Catalog iguales al catálogo",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 38
+          },
+          {
+            "id": "RN-INV-020",
+            "title": "Vistas de solo lectura",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 44
+          },
+          {
+            "id": "RN-INV-021",
+            "title": "Mismo comportamiento para todos los usuarios habilitados",
+            "file": "qa/01-specifications/module-inventory/submodule-dynamic-catalog/01-business-rules.md",
+            "line": 50
+          },
+          {
+            "id": "RN-NAV-001",
+            "title": "Abrir y cerrar el menú lateral",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 3
+          },
+          {
+            "id": "RN-NAV-002",
+            "title": "Menú disponible en todas las vistas internas",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 9
+          },
+          {
+            "id": "RN-NAV-003",
+            "title": "All Items",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 15
+          },
+          {
+            "id": "RN-NAV-004",
+            "title": "About",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 21
+          },
+          {
+            "id": "RN-NAV-005",
+            "title": "Logout",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 27
+          },
+          {
+            "id": "RN-NAV-006",
+            "title": "Reset App State vacía el carrito",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 33
+          },
+          {
+            "id": "RN-NAV-007",
+            "title": "Reset App State actualiza los botones del catálogo",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 40
+          },
+          {
+            "id": "RN-NAV-008",
+            "title": "Enlaces sociales del footer",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 47
+          },
+          {
+            "id": "RN-NAV-009",
+            "title": "Texto de copyright",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 53
+          },
+          {
+            "id": "RN-NAV-010",
+            "title": "Opciones del menú",
+            "file": "qa/01-specifications/module-navigation/submodule-menu/01-business-rules.md",
+            "line": 59
+          }
+        ]
+      },
+      "D5.covered-rules": {
+        "count": 72,
+        "of": 89,
+        "ratio": 0.809,
+        "rules": [
+          "FL-CHK-001",
+          "RN-AUTH-001",
+          "RN-AUTH-002",
+          "RN-AUTH-003",
+          "RN-AUTH-004",
+          "RN-AUTH-005",
+          "RN-AUTH-006",
+          "RN-AUTH-007",
+          "RN-AUTH-008",
+          "RN-AUTH-009",
+          "RN-AUTH-010",
+          "RN-AUTH-011",
+          "RN-AUTH-012",
+          "RN-CART-001",
+          "RN-CART-002",
+          "RN-CART-003",
+          "RN-CART-004",
+          "RN-CART-005",
+          "RN-CART-006",
+          "RN-CART-007",
+          "RN-CART-008",
+          "RN-CART-009",
+          "RN-CART-010",
+          "RN-CART-011",
+          "RN-CHK-001",
+          "RN-CHK-002",
+          "RN-CHK-003",
+          "RN-CHK-004",
+          "RN-CHK-005",
+          "RN-CHK-006",
+          "RN-CHK-007",
+          "RN-CHK-008",
+          "RN-CHK-009",
+          "RN-CHK-010",
+          "RN-CHK-011",
+          "RN-CHK-012",
+          "RN-CHK-013",
+          "RN-CHK-014",
+          "RN-CHK-015",
+          "RN-CHK-016",
+          "RN-CHK-017",
+          "RN-INV-001",
+          "RN-INV-002",
+          "RN-INV-003",
+          "RN-INV-004",
+          "RN-INV-005",
+          "RN-INV-006",
+          "RN-INV-007",
+          "RN-INV-008",
+          "RN-INV-009",
+          "RN-INV-010",
+          "RN-INV-011",
+          "RN-INV-012",
+          "RN-INV-013",
+          "RN-INV-014",
+          "RN-INV-015",
+          "RN-INV-016",
+          "RN-INV-017",
+          "RN-INV-018",
+          "RN-INV-019",
+          "RN-INV-020",
+          "RN-INV-021",
+          "RN-NAV-001",
+          "RN-NAV-002",
+          "RN-NAV-003",
+          "RN-NAV-004",
+          "RN-NAV-005",
+          "RN-NAV-006",
+          "RN-NAV-007",
+          "RN-NAV-008",
+          "RN-NAV-009",
+          "RN-NAV-010"
+        ]
+      },
+      "D5.uncovered-rules": {
+        "count": 17,
+        "rules": [
+          "FL-AUTH-001",
+          "FL-AUTH-002",
+          "FL-AUTH-003",
+          "FL-AUTH-004",
+          "FL-CART-001",
+          "FL-CART-002",
+          "FL-CART-003",
+          "FL-CHK-002",
+          "FL-INV-001",
+          "FL-INV-002",
+          "FL-INV-003",
+          "FL-INV-004",
+          "FL-INV-005",
+          "FL-INV-006",
+          "FL-NAV-001",
+          "FL-NAV-002",
+          "FL-NAV-003"
+        ]
+      },
+      "D5.orphan-tests": {
+        "count": 0,
+        "note": "automated cases whose id is declared in no scenario document",
+        "cases": []
+      },
+      "D5.pending-markers": {
+        "count": 0,
+        "note": "markers for information the analysis could not confirm"
+      }
+    },
+    "pipelines": {
+      "D6.pipeline-present": {
+        "yamlScanned": 0,
+        "pipelinesIdentified": 0,
+        "files": []
+      },
+      "D6.suite-invocation": {
+        "pipelinesRunningTheSuite": 0,
+        "note": "a pipeline counts only when it invokes the runner (directly, or through an npm/yarn/pnpm script that expands to playwright test; an unresolvable npm test still counts) AND names a resolved suite directory",
+        "files": []
+      },
+      "D6.run-scope": {
+        "pipelines": [],
+        "filteredPipelines": 0,
+        "fullPipelines": 0,
+        "note": "scope is read from the pipeline text; a filter marked variable is set outside the repository and its effective scope is unknowable here"
+      },
+      "D6.pipeline-triggers": {
+        "push": 0,
+        "pullRequest": 0,
+        "schedule": 0,
+        "manual": 0
+      },
+      "D6.result-publication": {
+        "publishingResults": 0,
+        "publishingToTestPlans": 0
+      },
+      "D6.declared-gating": {
+        "pipelinesDeclaringPrTrigger": 0,
+        "evidenceClass": "declaration",
+        "note": "a pull request trigger is an intention; enforcement lives in the branch policy and is out of scope for v1"
+      }
+    }
+  },
+  "suiteFiles": [
+    "qa/07-automation/e2e/tests/auth/login-validation.spec.ts",
+    "qa/07-automation/e2e/tests/auth/login.login.spec.ts",
+    "qa/07-automation/e2e/tests/auth/session.spec.ts",
+    "qa/07-automation/e2e/tests/cart/cart-session.login.spec.ts",
+    "qa/07-automation/e2e/tests/cart/cart.spec.ts",
+    "qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts",
+    "qa/07-automation/e2e/tests/inventory/catalog.spec.ts",
+    "qa/07-automation/e2e/tests/inventory/dynamic-catalog.spec.ts",
+    "qa/07-automation/e2e/tests/navigation/menu.spec.ts",
+    "qa/07-automation/integration/tests/example.spec.ts",
+    "qa/07-automation/integration/tests/security/catalogs.spec.ts",
+    "qa/07-automation/integration/tests/security/no-session.spec.ts",
+    "qa/07-automation/integration/tests/security/read-only-guard.spec.ts",
+    "qa/07-automation/integration/tests/write/example-write-cycle.spec.ts"
+  ]
+}

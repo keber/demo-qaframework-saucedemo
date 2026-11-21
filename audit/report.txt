@@ -1,0 +1,75 @@
+Suite audit  saucedemo
+  adapter qa-framework   evidence bdce37a1333e   14 test file(s)
+  suite type regression
+
+  RESULT   12/16
+           v1 reads the repository only; 16 of 21 points are reachable at all
+
+  D1 Oracle           2/3  ##. 
+  D2 Sensitivity      2/3  ##.   calibrated threshold
+  D3 Determinism      2/2  ##  
+  D4 Diagnosis        2/3  ##. 
+  D5 Rule coverage    2/2  ##  
+  D6 Life in CI       0/1  .     settled by evidence
+  D7 Maintainability  2/2  ##  
+
+  QUESTIONS FOR THE TEAM
+    D2 D2.sensitivity-measured  [read by this release]
+       Is mutation testing run against this suite anywhere, and where is
+       its configuration?
+       lifts the bound to level 3 once the answer is committed to the
+       repository and the evidence is extracted again
+    D3 D3.flakiness-measured  [for the reader]
+       Is the failure rate of these tests across runs measured anywhere,
+       and where can it be read?
+       the bound stays; an answer records what a future extractor would
+       need (level 3 would then be allowed)
+    D5 D5.deliberate-exclusions  [for the reader]
+       Are any business rules left out of the suite on purpose, and where
+       is that decision written down?
+       the bound stays; an answer records what a future extractor would
+       need (level 3 would then be allowed)
+    D6 D6.external-pipeline  [for the reader]
+       Does this suite run from a pipeline defined outside this repository
+       (another repository, a scheduled job or a release definition), and
+       where is it defined?
+       the bound stays; an answer records what a future extractor would
+       need (level 1 would then be allowed)
+    D7 D7.review-retirement  [for the reader]
+       Is there a process for reviewing and retiring tests, and where is it
+       written down?
+       the bound stays; an answer records what a future extractor would
+       need (level 3 would then be allowed)
+    Questions marked read by this release lift their bound once the
+    answer is committed to the repository and the evidence is extracted
+    again. The others are for the reader of this report: they record
+    what a future extractor would need, and the bound stays where it is.
+
+  DECIDED BY CALIBRATION, NOT BY THE RUBRIC TEXT
+    D2 Sensitivity: no mutation testing configuration found in the repository
+       capped at 2 - level 3 needs measured sensitivity; a rule broken on purpose leaves no trace v1 reads
+    Move a value in thresholds.json and this result moves with it.
+
+  NOTES  Result: 12 / 16 attainable (maximum possible given this evidence:
+         14, because D6 was determined at 0). Ceilings that applied: D2
+         capped at 2 by the calibrated threshold D2.sensitivity-measured (no
+         mutation config committed); D3, D5 and D7 at their v1 structural
+         ceiling of 2; D6 determined at 0 by the literal threshold
+         D6.runs-the-suite (no pipeline in the repository). Neither
+         eliminatory dimension (D1, D2) is at 0. Borderline: D1 is a
+         judgement call between 2 and 3; the e2e suite alone reads as 3, and
+         it was held at 2 for the untraced integration scaffold and because
+         the rules were formalised from the reference user's observed UI.
+         Evidence blind spots noticed (reported, evidence not edited): (1)
+         D2.expected-failures and D0 expectedFailures/defectIds read 0, yet
+         about 18 tests pin open defects DEF-SD-001..018 through
+         expectOpenDefect()/openDefect() in fixtures/defects.ts, which call
+         test.fail() at runtime inside the helper and keep the defect id in
+         the body, not the title. (2) D2.assertless-tests flags
+         dynamic-catalog.spec.ts:120, which asserts through expect.poll();
+         the scanner does not count it. (3) D5.uncovered-rules lists 17 FL-*
+         workflows that the scenario documents map to TCs in a workflow
+         table; the adapter's co-occurrence join does not read that table, so
+         real coverage is likely closer to 89 of 89. (4) D7.selector-mix
+         counts getByTestId as semantic; here that means data-test
+         attributes, which are stable but not role or label based.

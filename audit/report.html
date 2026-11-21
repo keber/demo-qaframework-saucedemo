@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suite audit - saucedemo</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1b1b1f; --muted: #5f6368; --line: #e1e3e8;
+    --card: #f7f8fa; --accent: #2b5cd9; --warn: #9a5b00; --bad: #b3261e;
+    --fill: #2b5cd9; --empty: #d9dce3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16171a; --fg: #e8eaed; --muted: #9aa0a6; --line: #2c2e33;
+      --card: #1e2024; --accent: #7aa2f7; --warn: #e0a458; --bad: #f2837c;
+      --fill: #7aa2f7; --empty: #34363c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px; background: var(--bg); color: var(--fg);
+    font: 15px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .06em;
+       color: var(--muted); margin: 36px 0 12px; font-weight: 600; }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 28px; }
+  .headline { background: var(--card); border: 1px solid var(--line);
+              border-radius: 10px; padding: 20px 22px; }
+  .headline.fail { border-color: var(--bad); }
+  .score { font-size: 38px; font-weight: 650; letter-spacing: -.02em; }
+  .score small { font-size: 18px; color: var(--muted); font-weight: 400; }
+  .status { display: inline-block; margin-left: 12px; padding: 3px 10px;
+            border-radius: 999px; font-size: 12px; font-weight: 600;
+            background: var(--bad); color: #fff; vertical-align: 6px; }
+  .caveat { color: var(--muted); font-size: 13px; margin-top: 10px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line);
+           vertical-align: top; font-size: 14px; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px;
+       text-transform: uppercase; letter-spacing: .05em; }
+  td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .meter { display: inline-flex; gap: 3px; margin-left: 8px; vertical-align: 1px; }
+  .meter i { width: 9px; height: 9px; border-radius: 2px; background: var(--empty); }
+  .meter i.on { background: var(--fill); }
+  .tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 11px;
+         font-weight: 600; margin-right: 5px; border: 1px solid var(--line); color: var(--muted); }
+  .tag.bad { color: var(--bad); border-color: var(--bad); }
+  .tag.warn { color: var(--warn); border-color: var(--warn); }
+  .reason { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .cites { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+           font-size: 11.5px; color: var(--muted); margin-top: 6px; word-break: break-all; }
+  .panel { background: var(--card); border: 1px solid var(--line);
+           border-left: 3px solid var(--warn); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .panel h3 { margin: 0 0 6px; font-size: 14px; }
+  .panel p { margin: 4px 0; font-size: 13.5px; }
+  footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 12px; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+  @media (max-width: 560px) { th:nth-child(4), td:nth-child(4) { display: none; } }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>Suite audit - saucedemo</h1>
+  <p class="sub">
+    adapter <code>qa-framework</code> &middot;
+    evidence <code>bdce37a1333e</code> &middot;
+    14 test file(s)
+  </p>
+  <p class="sub">
+    suite type <strong>regression</strong>
+  </p>
+
+  <div class="headline">
+    <div class="score">12<small> / 16</small></div>
+    
+    <p class="caveat">
+      This reads the repository only. 16 of the rubric's 21 points are reachable at all;
+      the rest assert facts that live in run history and CI policy. The source rubric's verdict
+      bands are not applied, because they assume evidence this audit does not have.
+    </p>
+  </div>
+
+  <h2>Dimensions</h2>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Dimension</th><th class="num">Level</th><th>Ceiling</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num">D1</td>
+        <td>
+          <strong>Oracle</strong>
+          
+          <div class="reason">D1.tc-id-coverage is 128 of 137 and D1.spec-linkage resolves all 126 declared cases to a rule; D5.covered-rules covers all 72 RN rules. The sampled tests encode the rule rather than cite it: checkout-flow.spec.ts:200 asserts the 8 % tax value given in RN-CHK-009 (01-business-rules.md:58), checkout-flow.spec.ts:150 asserts the RN-CHK-004 expectation even though the app violates it (DEF-SD-011), and catalog.spec.ts:287 asserts RN-INV-011 under an open-defect marker instead of the observed sl-404 images. Held at 2 rather than 3 because 'every expected value' does not hold: the 9 integration tests (e.g. read-only-guard.spec.ts:26) carry no case id and trace to no rule, and the rule documents state they were copied literally from the UI with standard_user as baseline, so for most values the oracle is a formalised observation of the reference user rather than an independent requirement. No risk register exists (D1.risk-inventory present=false) and no external ids are used (D1.ext-id-coverage 0). Borderline toward 3 for the e2e suite alone.</div>
+          <div class="cites">cites D1.tc-id-coverage, D1.spec-linkage, D5.covered-rules, D1.ext-id-coverage, D1.risk-inventory</div>
+          <div class="cites">read qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:200, qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md:58, qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:150, qa/01-specifications/module-checkout/submodule-checkout-flow/01-business-rules.md:27, qa/07-automation/e2e/tests/inventory/catalog.spec.ts:287, qa/07-automation/integration/tests/security/read-only-guard.spec.ts:26</div>
+        </td>
+        <td class="num">2 / 3
+          <span class="meter"><i class="on"></i><i class="on"></i><i class=""></i></span></td>
+        <td class="reason">reachable only where a rule inventory exists in the repository</td>
+      </tr>
+      <tr>
+        <td class="num">D2</td>
+        <td>
+          <strong>Sensitivity</strong>
+          <span class="tag warn">calibrated</span>
+          <div class="reason">Capped at 2 by D2.sensitivity-measured (D2.mutation-config count 0). D2.assertless-tests flags 1 of 135, and that test is a false positive: dynamic-catalog.spec.ts:120 asserts through expect.poll(...).not.toBe(first). Both D2.indirect-assertions are real checks: login.login.spec.ts:54 delegates to expectCatalog(), which asserts URL and title, and no-session.spec.ts:25 delegates to expectUnauthenticated() in fixtures/contract.ts, which asserts status, JSON body and absent data. D2.weak-assertions has a single weak-only test, the scaffold write-cycle test at example-write-cycle.spec.ts:63, which skips without an approved write catalog; assertion density is 3.24 per active test and only 2 tests are skipped (manual-review placeholders). D2.expected-failures reads 0, but about 18 tests pin open defects via expectOpenDefect() (e.g. catalog.spec.ts:299); that helper fails the run if the assertions pass ('no longer reproduces') and rethrows InfraError unmarked, so those tests can still go red for the behaviour their title names. One sensitivity weakness: inside a defect block the 54 expect.soft calls are aggregated, so a partial fix (one of four soft checks starting to pass) stays green.</div>
+          <div class="cites">cites D2.assertless-tests, D2.indirect-assertions, D2.weak-assertions, D2.skipped-tests, D2.expected-failures, D2.mutation-config, D2.assert-density, D2.soft-assertions</div>
+          <div class="cites">read qa/07-automation/e2e/tests/inventory/dynamic-catalog.spec.ts:120, qa/07-automation/e2e/tests/auth/login.login.spec.ts:54, qa/07-automation/integration/tests/security/no-session.spec.ts:25, qa/07-automation/integration/tests/write/example-write-cycle.spec.ts:63, qa/07-automation/e2e/tests/inventory/catalog.spec.ts:299</div>
+        </td>
+        <td class="num">2 / 3
+          <span class="meter"><i class="on"></i><i class="on"></i><i class=""></i></span></td>
+        <td class="reason">level 3 needs measured sensitivity: mutation config in the repository (capped at 2 without it) or a rule broken on purpose, which v1 cannot read</td>
+      </tr>
+      <tr>
+        <td class="num">D3</td>
+        <td>
+          <strong>Determinism</strong>
+          
+          <div class="reason">D3.fixed-waits is 0 and D3.conditional-waits is 15 (0.11 per test); D3.flaky-markers finds no admission of flakiness. Synchronisation is event-based: checkout-flow.spec.ts:150 waits through settleAfterContinue(), a race between the error becoming visible and the step-2 URL with a 5 s bound, then asserts the state; dynamic-catalog.spec.ts:120 polls the autoplay slider instead of sleeping; login.login.spec.ts:172 tests the 10-minute session expiry by checking the cookie TTL and clearing the cookie rather than waiting. Against it: D3.retries-config sets retries to 2 in CI for e2e with no comment explaining it as a load decision (the integration config does explain its retry policy), and the bounded negative-path waits with .catch(() =&gt; undefined) cost up to 5 s each when the expected navigation never happens. Level 3 is out of reach in v1 because flakiness across runs is not witnessed by the repository.</div>
+          <div class="cites">cites D3.fixed-waits, D3.conditional-waits, D3.retries-config, D3.flaky-markers, D3.serial-mode</div>
+          <div class="cites">read qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:150, qa/07-automation/e2e/tests/inventory/dynamic-catalog.spec.ts:120, qa/07-automation/e2e/tests/auth/login.login.spec.ts:172</div>
+        </td>
+        <td class="num">2 / 2
+          <span class="meter"><i class="on"></i><i class="on"></i></span></td>
+        <td class="reason">level 3 asserts behavior across runs, which the repository cannot witness</td>
+      </tr>
+      <tr>
+        <td class="num">D4</td>
+        <td>
+          <strong>Diagnosis</strong>
+          
+          <div class="reason">D4.trace-config shows trace and video retain-on-failure and screenshot only-on-failure for the e2e suite, with html, list and json reporters (D4.reporter-config). Titles in D1.test-inventory carry the case id, the priority and a business-language behaviour, e.g. checkout-flow.spec.ts:195 'Subtotal igual a la suma de precios', and defect tests add an open-defect annotation naming the DEF id and the violated RN rule. It stays at 2 rather than 3 because the report does not consistently name the broken rule without opening code: titles carry TC ids, not RN ids, so the rule is reached through 05-test-scenarios.md; some titles name UI structure rather than behaviour (cart.spec.ts:67 'Encabezados de la página del carrito', checkout-flow.spec.ts:107 'Elementos del paso 1'); D4.failure-context counts only 3 test.step calls in 2 tests (checkout-flow.spec.ts:210); and the integration suite and the opt-in login-flow project deliberately record no trace, screenshot or video.</div>
+          <div class="cites">cites D4.failure-context, D4.trace-config, D4.reporter-config, D4.artifact-retention, D1.test-inventory</div>
+          <div class="cites">read qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:195, qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:210, qa/07-automation/e2e/tests/cart/cart.spec.ts:67, qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:107</div>
+        </td>
+        <td class="num">2 / 3
+          <span class="meter"><i class="on"></i><i class="on"></i><i class=""></i></span></td>
+        <td class="reason">no structural limit in v1</td>
+      </tr>
+      <tr>
+        <td class="num">D5</td>
+        <td>
+          <strong>Rule coverage</strong>
+          
+          <div class="reason">D5.covered-rules is 72 of 89 (0.809) and covers every one of the 72 RN business rules; D5.orphan-tests is 0 and D5.skip-ratio 0.015. All 17 entries in D5.uncovered-rules are FL-* workflows from 02-workflows.md (e.g. FL-CART-002 at 02-workflows.md:31, FL-NAV-001 at 02-workflows.md:3), and reading the scenario documents shows they are mapped to TCs in a workflow-to-TC table in each 05-test-scenarios.md (e.g. module-navigation/submodule-menu/05-test-scenarios.md line 54), a format the adapter does not join; so they look uncovered by extraction, not by decision or oversight. D5.negative-tests lists 16 negative and 10 boundary tests; the sampled ones are genuine (login-validation.spec.ts:61 wrong password, checkout-flow.spec.ts:126 missing last name). D5.risk-coverage is empty because there is no risk register. Level 3 is unreachable in v1: nothing written states which rules are excluded on purpose.</div>
+          <div class="cites">cites D5.rule-catalogue, D5.covered-rules, D5.uncovered-rules, D5.orphan-tests, D5.risk-coverage, D5.negative-tests, D5.skip-ratio</div>
+          <div class="cites">read qa/01-specifications/module-cart/submodule-cart/02-workflows.md:31, qa/01-specifications/module-navigation/submodule-menu/02-workflows.md:3, qa/07-automation/e2e/tests/auth/login-validation.spec.ts:61, qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:126</div>
+        </td>
+        <td class="num">2 / 2
+          <span class="meter"><i class="on"></i><i class="on"></i></span></td>
+        <td class="reason">level 3 needs the deliberate exclusions written down; v1 extracts no such statement</td>
+      </tr>
+      <tr>
+        <td class="num">D6</td>
+        <td>
+          <strong>Life in CI</strong>
+          <span class="tag">settled by evidence</span>
+          <div class="reason">Determined at 0 by D6.runs-the-suite: D6.pipeline-present identified no pipeline definition (0 YAML files scanned) and D6.suite-invocation finds no pipeline that runs the suite, with no triggers in D6.pipeline-triggers. Whether the suite runs from a pipeline defined outside this repository is a team question and is not answered here.</div>
+          <div class="cites">cites D6.pipeline-present, D6.suite-invocation, D6.pipeline-triggers</div>
+          
+        </td>
+        <td class="num">0 / 1
+          <span class="meter"><i class=""></i></span></td>
+        <td class="reason">levels 2 and 3 assert merge and deploy gating, which lives in the CI server policy</td>
+      </tr>
+      <tr>
+        <td class="num">D7</td>
+        <td>
+          <strong>Maintainability</strong>
+          
+          <div class="reason">D7.selector-mix gives a semantic share of 0.824, almost entirely getByTestId against data-test attributes (55) with 12 raw locators and a single getByRole; D7.file-size shows 14 files, at most 29 tests in one file and a median of 6.5, the largest being catalog.spec.ts at 458 lines. D7.page-object-usage reports 84.7 % of tests built on a layer (6 page objects, 2 fixtures, 8 helpers, 0 unresolved imports). Names describe behaviour in domain terms (catalog.spec.ts:155 'Agregar un producto desde el listado'). Duplication is mostly structural, per-file navigation helpers such as openCatalog() at catalog.spec.ts:30 and toStepOne() at checkout-flow.spec.ts:46, plus a few inline raw locators like '[data-test^=&quot;remove-&quot;]'; duplication itself is not extracted in v1. Level 3 needs review and retirement process evidence that v1 does not read.</div>
+          <div class="cites">cites D7.selector-mix, D7.file-size, D7.page-object-usage</div>
+          <div class="cites">read qa/07-automation/e2e/tests/inventory/catalog.spec.ts:30, qa/07-automation/e2e/tests/checkout/checkout-flow.spec.ts:46, qa/07-automation/e2e/tests/inventory/catalog.spec.ts:155</div>
+        </td>
+        <td class="num">2 / 2
+          <span class="meter"><i class="on"></i><i class="on"></i></span></td>
+        <td class="reason">level 3 needs review and retirement process evidence; v1 does not read history</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h2>Questions for the team</h2>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Question</th><th>What an answer does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num">D2</td>
+        <td>
+          Is mutation testing run against this suite anywhere, and where is its configuration?
+          <div class="reason">only a mutation testing configuration committed to this repository is read by this release, and none was found; a rule broken on purpose by hand also satisfies the rubric but leaves no trace this release can read</div>
+          <div class="cites">D2.sensitivity-measured</div>
+        </td>
+        <td><span class="tag warn">read by this release</span>
+          <div class="reason">lifts the bound to level 3 once the answer is committed to the repository and the evidence is extracted again</div></td>
+      </tr>
+      <tr>
+        <td class="num">D3</td>
+        <td>
+          Is the failure rate of these tests across runs measured anywhere, and where can it be read?
+          <div class="reason">level 3 asserts behavior across runs, which the repository cannot witness</div>
+          <div class="cites">D3.flakiness-measured</div>
+        </td>
+        <td><span class="tag">for the reader</span>
+          <div class="reason">the bound stays; an answer records what a future extractor would need (level 3 would then be allowed)</div></td>
+      </tr>
+      <tr>
+        <td class="num">D5</td>
+        <td>
+          Are any business rules left out of the suite on purpose, and where is that decision written down?
+          <div class="reason">level 3 needs the deliberate exclusions written down; v1 extracts no such statement</div>
+          <div class="cites">D5.deliberate-exclusions</div>
+        </td>
+        <td><span class="tag">for the reader</span>
+          <div class="reason">the bound stays; an answer records what a future extractor would need (level 3 would then be allowed)</div></td>
+      </tr>
+      <tr>
+        <td class="num">D6</td>
+        <td>
+          Does this suite run from a pipeline defined outside this repository (another repository, a scheduled job or a release definition), and where is it defined?
+          <div class="reason">levels 2 and 3 assert merge and deploy gating, which lives in the CI server policy</div>
+          <div class="cites">D6.external-pipeline</div>
+        </td>
+        <td><span class="tag">for the reader</span>
+          <div class="reason">the bound stays; an answer records what a future extractor would need (level 1 would then be allowed)</div></td>
+      </tr>
+      <tr>
+        <td class="num">D7</td>
+        <td>
+          Is there a process for reviewing and retiring tests, and where is it written down?
+          <div class="reason">level 3 needs review and retirement process evidence; v1 does not read history</div>
+          <div class="cites">D7.review-retirement</div>
+        </td>
+        <td><span class="tag">for the reader</span>
+          <div class="reason">the bound stays; an answer records what a future extractor would need (level 3 would then be allowed)</div></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="reason">Questions marked read by this release lift their bound once the answer is committed to the repository and the evidence is extracted again. The others are for the reader of this report: they record what a future extractor would need, and the bound stays where it is.</p>
+
+
+  <h2>Decided by calibration, not by the rubric</h2>
+  <div class="panel">
+    <h3>D2 Sensitivity</h3>
+    <p>no mutation testing configuration found in the repository</p>
+    <p><strong>capped at 2 - level 3 needs measured sensitivity; a rule broken on purpose leaves no trace v1 reads</strong></p>
+    <p class="reason">with no mutation testing configuration in the repository (D2.mutation-config empty), the dimension cannot exceed level 2; a config lifts the cap but never sets a floor</p>
+  </div>
+  <div class="panel">
+    <p>These boundaries are choices, recorded in <code>thresholds.json</code> with the rubric text
+    they interpret and what moving them costs. Change a value there and this result changes with it.
+    That is the point: a line somebody drew by hand should be visible to whoever reads the number.</p>
+  </div>
+
+
+
+
+
+  <h2>Notes</h2>
+  <div class="panel"><p>Result: 12 / 16 attainable (maximum possible given this evidence: 14, because D6 was determined at 0). Ceilings that applied: D2 capped at 2 by the calibrated threshold D2.sensitivity-measured (no mutation config committed); D3, D5 and D7 at their v1 structural ceiling of 2; D6 determined at 0 by the literal threshold D6.runs-the-suite (no pipeline in the repository). Neither eliminatory dimension (D1, D2) is at 0. Borderline: D1 is a judgement call between 2 and 3; the e2e suite alone reads as 3, and it was held at 2 for the untraced integration scaffold and because the rules were formalised from the reference user's observed UI. Evidence blind spots noticed (reported, evidence not edited): (1) D2.expected-failures and D0 expectedFailures/defectIds read 0, yet about 18 tests pin open defects DEF-SD-001..018 through expectOpenDefect()/openDefect() in fixtures/defects.ts, which call test.fail() at runtime inside the helper and keep the defect id in the body, not the title. (2) D2.assertless-tests flags dynamic-catalog.spec.ts:120, which asserts through expect.poll(); the scanner does not count it. (3) D5.uncovered-rules lists 17 FL-* workflows that the scenario documents map to TCs in a workflow table; the adapter's co-occurrence join does not read that table, so real coverage is likely closer to 89 of 89. (4) D7.selector-mix counts getByTestId as semantic; here that means data-test attributes, which are stable but not role or label based.</p></div>
+
+  <footer>
+    Evidence digest <code>bdce37a1333edc924c9622181bbb414d52123b501d9211f67807b1515679518a</code>.
+    A verdict is bound to one digest: if the suite changes, this report describes a repository
+    state that no longer exists and must be regenerated rather than edited.
+  </footer>
+
+</main>
+</body>
+</html>
