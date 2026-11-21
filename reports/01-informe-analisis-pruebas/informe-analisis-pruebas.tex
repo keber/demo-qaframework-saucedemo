@@ -1,0 +1,348 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fontspec}
+% IBM Plex Sans from the Tectonic bundle: reproducible output on any machine.
+% Ligatures=TeXOff keeps ASCII quotes and hyphens literal (no typographic substitution).
+\setmainfont{IBMPlexSans}[Extension=.otf, UprightFont=*-Regular,
+  BoldFont=*-Bold, ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic, Ligatures=TeXOff]
+\setmonofont{IBMPlexMono}[Extension=.otf, UprightFont=*-Regular,
+  BoldFont=*-Bold, Scale=MatchLowercase]
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\addto\extrasspanish{\def\%{\char37\relax}}
+\usepackage[top=2.2cm,bottom=2.4cm,left=1.8cm,right=1.8cm,headheight=14pt]{geometry}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, /pgf/number format/assume math mode=true}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+% Brand palette.
+\definecolor{gfred}{HTML}{ED1C23}
+\definecolor{gfblack}{HTML}{111111}
+\definecolor{gfzebra}{HTML}{F4F4F4}
+\definecolor{gfhighlight}{HTML}{FDE9E9}
+\definecolor{gfgreen}{HTML}{188038}
+\definecolor{gfmuted}{HTML}{777777}
+\definecolor{gfgrey}{HTML}{9A9A9A}
+\definecolor{gfsoft}{HTML}{D4D4D4}
+
+\color{gfblack}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\renewcommand{\arraystretch}{1.45}
+\setlist[itemize]{label=\textbullet, leftmargin=1.2em, itemsep=2pt}
+\setlength{\LTpre}{4pt}
+\setlength{\LTpost}{6pt}
+
+\newcommand{\gennote}{Generado por Claude aplicando @keber/qa-framework 1.14.0-rc.9}
+\fancypagestyle{gf}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhead[C]{\color{gfred}\rule{\textwidth}{0.8pt}}%
+  \fancyfoot[L]{\color{gfmuted}\scriptsize \gennote}%
+  \fancyfoot[R]{\color{gfmuted}\footnotesize Página \thepage{} de \pageref*{LastPage}}%
+}
+\fancypagestyle{gffirst}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[L]{\color{gfmuted}\scriptsize \gennote}%
+  \fancyfoot[R]{\color{gfmuted}\footnotesize Página \thepage{} de \pageref*{LastPage}}%
+}
+\pagestyle{gf}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{gfblack}}
+  {{\color{gfred}\rule[-0.2em]{3pt}{1.1em}}\hspace{0.6em}\thesection.}
+  {0.4em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{gfblack}}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\definecolor{gfrule}{HTML}{DDDDDD}
+\arrayrulecolor{gfrule}
+\newcommand{\gfhead}{\rowcolor{gfblack}}
+\newcommand{\hcell}[1]{\textcolor{white}{\bfseries #1}}
+\newcommand{\gfmark}{\rowcolor{gfhighlight}}
+\newcommand{\gfzebra}{\rowcolors{2}{gfzebra}{white}}
+\newcommand{\status}[1]{\textcolor{gfgreen}{\bfseries #1}}
+\newcommand{\statusbad}[1]{\textcolor{gfred}{\bfseries #1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\newtcolorbox{gfnote}{colback=gfzebra, colframe=gfred, boxrule=0pt,
+  leftrule=3pt, arc=0pt, left=8pt, right=8pt, top=5pt, bottom=5pt, fontupper=\small}
+
+\newcommand{\gfcover}[3]{%
+  \thispagestyle{gffirst}%
+  \begin{minipage}[t]{0.78\textwidth}
+    {\color{gfred}\small\bfseries #1}\par\vspace{4pt}
+    {\raggedright\fontsize{22}{28}\selectfont\bfseries #2\par}\vspace{6pt}
+    {\small #3}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.18\textwidth}
+    \vspace{0pt}\raggedleft\includegraphics[width=\linewidth]{garcesfruit-logo.png}
+  \end{minipage}\par\vspace{6pt}
+  {\color{gfred}\rule{\textwidth}{1pt}}\par
+}
+
+\hypersetup{pdftitle={Informe de Análisis de Pruebas - saucedemo Sprint 1},
+  pdfauthor={Claude (@keber/qa-framework 1.14.0-rc.9)}, pdflang={es-CL}}
+
+\begin{document}
+\small
+
+\gfcover
+  {QA · SAUCEDEMO (SWAG LABS) · SPRINT 1}
+  {Informe de Análisis de Pruebas}
+  {Etapas 1 y 2 del pipeline (análisis de módulos y especificación) · Fecha de informe: 21-11-2026}
+
+{\gfzebra
+\begin{tabularx}{\textwidth}{|L{0.24\textwidth}|Y|}
+\hline
+\gfhead \hcell{Campo} & \hcell{Valor} \\ \hline
+Sistema bajo prueba & Swag Labs (saucedemo.com), tienda e-commerce de demostración de Sauce Labs \\ \hline
+URL base & \texttt{\{QA\_BASE\_URL\}} = https://www.saucedemo.com \\ \hline
+Tecnología & SPA React, frontend estático sin API pública; estado en cookie y \texttt{localStorage} \\ \hline
+Alcance del análisis & 5 módulos, 6 submódulos, 71 reglas de negocio, 18 flujos, 126 escenarios de prueba \\ \hline
+Framework & @keber/qa-framework 1.14.0-rc.9 (\texttt{qa/qa-framework.config.json}) \\ \hline
+Fuentes & \texttt{qa/01-specifications/**}, \texttt{qa/memory/saucedemo-app-behavior.md}, \texttt{qa/qa-framework.config.json} \\ \hline
+\end{tabularx}}
+
+\begin{gfnote}
+Documento generado por Claude aplicando @keber/qa-framework 1.14.0-rc.9 a partir de los artefactos QA versionados del repositorio. Las cifras se derivan de los archivos fuente; las credenciales nunca se incluyen (la contraseña común se referencia solo como la variable \texttt{QA\_USER\_PASSWORD}).
+\end{gfnote}
+
+\section{Objetivo}
+Documentar el análisis funcional de Swag Labs que sustenta el Sprint 1 de pruebas: qué se prueba, con qué reglas de negocio se juzga el comportamiento, qué usuarios de prueba intervienen y qué riesgos condicionan el diseño de los casos. El análisis es la base de la planificación (etapa 3) y de la automatización (etapa 5): cada caso de prueba (TC) se traza a una regla de negocio (RN) o a un flujo (FL), y cada desviación observada se clasifica como candidato a defecto (DEF) o como recomendación (REC).
+
+\section{Sistema bajo prueba}
+Swag Labs es una tienda de demostración publicada por Sauce Labs que expone intencionalmente usuarios de prueba con comportamientos distintos. Características relevantes para las pruebas:
+\begin{itemize}
+  \item \textbf{Arquitectura:} SPA React sin API propia. Los clics que navegan cambian la URL antes de que el DOM nuevo esté listo, por lo que la automatización espera la URL y un elemento propio de la vista destino.
+  \item \textbf{Sesión:} cookie \texttt{session-username} con expiración fija de 600 s desde el login, que no se renueva con la actividad.
+  \item \textbf{Carrito:} \texttt{localStorage.cart-contents} (arreglo JSON de ids). No se borra con el logout y se comparte entre usuarios del mismo navegador.
+  \item \textbf{Catálogo:} 6 productos fijos (ids 0 a 5), con impuesto del 8 \% redondeado a centavos en el checkout.
+  \item \textbf{Ambiente:} único ambiente público (sin QA/UAT separados), con telemetría de terceros (\texttt{backtrace.io}).
+  \item \textbf{Funcionalidad no listada en la configuración:} menú «Dynamic Catalog» (Lazy Load, Spinner, Slider), documentado como submódulo INV-DYN, y botón «Generate PDF order» en la confirmación de compra.
+\end{itemize}
+
+{\gfzebra
+\begin{tabularx}{\textwidth}{|c|Y|r|}
+\hline
+\gfhead \hcell{id} & \hcell{Producto} & \hcell{Precio de referencia} \\ \hline
+0 & Sauce Labs Bike Light & \$9.99 \\ \hline
+1 & Sauce Labs Bolt T-Shirt & \$15.99 \\ \hline
+2 & Sauce Labs Onesie & \$7.99 \\ \hline
+3 & Test.allTheThings() T-Shirt (Red) & \$15.99 \\ \hline
+4 & Sauce Labs Backpack & \$29.99 \\ \hline
+5 & Sauce Labs Fleece Jacket & \$49.99 \\ \hline
+\end{tabularx}}
+
+\section{Módulos y submódulos}
+El alcance cubre los 5 módulos de la configuración del proyecto, divididos en 6 submódulos. Las cifras de reglas y flujos provienen de \texttt{01-business-rules.md} y \texttt{02-workflows.md}; las de TC, de \texttt{05-test-scenarios.md}.
+
+{\gfzebra
+\begin{tabularx}{\textwidth}{|L{0.25\textwidth}|Y|r|r|r|}
+\hline
+\gfhead \hcell{Módulo} & \hcell{Submódulo} & \hcell{RN} & \hcell{FL} & \hcell{TC} \\ \hline
+Autenticación (AUTH) & Login y sesión (LOG) & 12 & 4 & 24 \\ \hline
+Catálogo de productos (INV) & Listado y detalle (CAT) & 13 & 3 & 28 \\ \hline
+Catálogo de productos (INV) & Dynamic Catalog (DYN) & 8 & 3 & 13 \\ \hline
+Carrito de compras (CART) & Carrito (CRT) & 11 & 3 & 19 \\ \hline
+Checkout (CHK) & Flujo de compra (FLW) & 17 & 2 & 26 \\ \hline
+Navegación y menú (NAV) & Menú, encabezado y footer (MENU) & 10 & 3 & 16 \\ \hline
+\textbf{Total} & 6 submódulos & \textbf{71} & \textbf{18} & \textbf{126} \\ \hline
+\end{tabularx}}
+
+\section{Resumen de reglas de negocio}
+Las 71 reglas se especificaron en la etapa 2 a partir de exploración en vivo (origen \textit{UI-OBSERVED} en todos los escenarios). Cada regla describe el comportamiento exigido; si la aplicación no lo cumple, el test conserva la aserción de la regla y se marca como fallo esperado con su defecto (regla de polaridad del framework).
+
+{\gfzebra
+\begin{longtable}{|L{0.16\textwidth}|L{0.76\textwidth}|}
+\hline
+\gfhead \hcell{Regla} & \hcell{Título} \\ \hline
+\endfirsthead
+\hline
+\gfhead \hcell{Regla} & \hcell{Título} \\ \hline
+\endhead
+\multicolumn{2}{|l|}{\cellcolor{gfhighlight}\textbf{AUTH-LOG - Login y sesión}} \\ \hline
+RN-AUTH-001 & Usuario obligatorio \\ \hline
+RN-AUTH-002 & Contraseña obligatoria \\ \hline
+RN-AUTH-003 & Credenciales inválidas \\ \hline
+RN-AUTH-004 & Usuario sensible a mayúsculas y espacios \\ \hline
+RN-AUTH-005 & Usuario bloqueado \\ \hline
+RN-AUTH-006 & Login exitoso \\ \hline
+RN-AUTH-007 & Rutas internas protegidas \\ \hline
+RN-AUTH-008 & Cierre del mensaje de error \\ \hline
+RN-AUTH-009 & Logout termina la sesión \\ \hline
+RN-AUTH-010 & Contraseña enmascarada \\ \hline
+RN-AUTH-011 & Expiración de la sesión \\ \hline
+RN-AUTH-012 & Ayuda de credenciales en la página de login \\ \hline
+\multicolumn{2}{|l|}{\cellcolor{gfhighlight}\textbf{INV-CAT - Listado y detalle}} \\ \hline
+RN-INV-001 & Catálogo de 6 productos \\ \hline
+RN-INV-002 & Orden por defecto A-Z \\ \hline
+RN-INV-003 & Ordenamiento por nombre \\ \hline
+RN-INV-004 & Ordenamiento por precio \\ \hline
+RN-INV-005 & Agregar al carrito desde el listado \\ \hline
+RN-INV-006 & Quitar del carrito desde el listado \\ \hline
+RN-INV-007 & Navegación al detalle \\ \hline
+RN-INV-008 & Estado del carrito reflejado en el detalle \\ \hline
+RN-INV-009 & Volver al listado \\ \hline
+RN-INV-010 & Producto inexistente \\ \hline
+RN-INV-011 & Imagen correcta por producto \\ \hline
+RN-INV-012 & Precio consistente entre vistas \\ \hline
+RN-INV-013 & Opciones de orden estáticas \\ \hline
+\multicolumn{2}{|l|}{\cellcolor{gfhighlight}\textbf{INV-DYN - Dynamic Catalog}} \\ \hline
+RN-INV-014 & Submenú desplegable \\ \hline
+RN-INV-015 & Rutas del Dynamic Catalog protegidas \\ \hline
+RN-INV-016 & Carga diferida (Lazy Load) \\ \hline
+RN-INV-017 & Indicador de carga (Spinner) \\ \hline
+RN-INV-018 & Navegación del Slider \\ \hline
+RN-INV-019 & Precios del Dynamic Catalog iguales al catálogo \\ \hline
+RN-INV-020 & Vistas de solo lectura \\ \hline
+RN-INV-021 & Mismo comportamiento para todos los usuarios habilitados \\ \hline
+\multicolumn{2}{|l|}{\cellcolor{gfhighlight}\textbf{CART-CRT - Carrito}} \\ \hline
+RN-CART-001 & Badge refleja la cantidad de productos \\ \hline
+RN-CART-002 & Contenido del carrito \\ \hline
+RN-CART-003 & Cantidad unitaria por producto \\ \hline
+RN-CART-004 & Quitar desde el carrito \\ \hline
+RN-CART-005 & Persistencia del carrito en el navegador \\ \hline
+RN-CART-006 & Seguir comprando \\ \hline
+RN-CART-007 & Ir a checkout \\ \hline
+RN-CART-008 & No se puede iniciar checkout con el carrito vacío \\ \hline
+RN-CART-009 & El carrito se vacía al completar la compra \\ \hline
+RN-CART-010 & Enlace al detalle desde el carrito \\ \hline
+RN-CART-011 & Carrito aislado por usuario \\ \hline
+\multicolumn{2}{|l|}{\cellcolor{gfhighlight}\textbf{CHK-FLW - Flujo de compra}} \\ \hline
+RN-CHK-001 & Nombre obligatorio \\ \hline
+RN-CHK-002 & Apellido obligatorio \\ \hline
+RN-CHK-003 & Código postal obligatorio \\ \hline
+RN-CHK-004 & Campos obligatorios no aceptan solo espacios \\ \hline
+RN-CHK-005 & Cierre del mensaje de error \\ \hline
+RN-CHK-006 & Cancelar en el paso 1 \\ \hline
+RN-CHK-007 & Resumen con los productos del carrito \\ \hline
+RN-CHK-008 & Cálculo del subtotal \\ \hline
+RN-CHK-009 & Cálculo del impuesto (8 \%) \\ \hline
+RN-CHK-010 & Cálculo del total \\ \hline
+RN-CHK-011 & Formato monetario de los totales \\ \hline
+RN-CHK-012 & Cancelar en el paso 2 \\ \hline
+RN-CHK-013 & Finalizar la compra \\ \hline
+RN-CHK-014 & Volver al catálogo tras la compra \\ \hline
+RN-CHK-015 & Comprobante PDF \\ \hline
+RN-CHK-016 & El resumen requiere completar el paso 1 \\ \hline
+RN-CHK-017 & Checkout requiere sesión \\ \hline
+\multicolumn{2}{|l|}{\cellcolor{gfhighlight}\textbf{NAV-MENU - Menú, encabezado y footer}} \\ \hline
+RN-NAV-001 & Abrir y cerrar el menú lateral \\ \hline
+RN-NAV-002 & Menú disponible en todas las vistas internas \\ \hline
+RN-NAV-003 & All Items \\ \hline
+RN-NAV-004 & About \\ \hline
+RN-NAV-005 & Logout \\ \hline
+RN-NAV-006 & Reset App State vacía el carrito \\ \hline
+RN-NAV-007 & Reset App State actualiza los botones del catálogo \\ \hline
+RN-NAV-008 & Enlaces sociales del footer \\ \hline
+RN-NAV-009 & Texto de copyright \\ \hline
+RN-NAV-010 & Opciones del menú \\ \hline
+\end{longtable}}
+
+\section{Usuarios de prueba y comportamiento}
+La aplicación no tiene roles de autorización: los 6 usuarios comparten permisos y difieren en su comportamiento intencional. Todos usan la contraseña referenciada por \texttt{QA\_USER\_PASSWORD} (\texttt{<PLACEHOLDER>} en la documentación); el nombre de usuario se lee de \texttt{QA\_USER\_<ROL>\_USERNAME}.
+
+{\gfzebra
+\begin{longtable}{|L{0.2\textwidth}|L{0.72\textwidth}|}
+\hline
+\gfhead \hcell{Usuario} & \hcell{Comportamiento observado (etapas 1, 2 y 5)} \\ \hline
+\endfirsthead
+\hline
+\gfhead \hcell{Usuario} & \hcell{Comportamiento observado} \\ \hline
+\endhead
+\texttt{standard\_user} & Usuario de referencia: todas las reglas deben cumplirse. Solo presenta los defectos comunes a todos los usuarios (checkout con carrito vacío, campos con solo espacios, paso 2 accesible sin el paso 1, Reset App State sin actualizar botones, carrito compartido). \\ \hline
+\texttt{locked\_out\_user} & Login rechazado con «Epic sadface: Sorry, this user has been locked out.». No llega al catálogo. El login rechazado crea igualmente una cookie de sesión inerte (REC-SD-012). \\ \hline
+\texttt{problem\_user} & Imágenes \texttt{sl-404} en todo el listado; ordenar no tiene efecto; «Add to cart» solo funciona en 3 de 6 productos; «Remove» no funciona en listado ni detalle; el enlace del producto abre el id+1; en el checkout el apellido se escribe en el nombre; «About» apunta a una página 404. Quitar desde \texttt{/cart.html} sí funciona. \\ \hline
+\texttt{performance\_\allowbreak glitch\_\allowbreak user} & Login con demora intencional de unos 5,2 s; el resto medido es funcional. Exige timeouts explícitos por test, no un timeout global mayor. \\ \hline
+\texttt{error\_user} & Ordenar muestra un \texttt{alert} «Sorting is broken!» y no reordena; agregar falla en 3 productos; «Remove» falla en listado y detalle; el apellido no admite texto pero el paso 1 avanza; \texttt{finish} no hace nada. El error de consola de Reset App State observado en la etapa 1 no se reprodujo en la etapa 5. \\ \hline
+\texttt{visual\_user} & Precios del listado aleatorios en cada carga y a veces sin 2 decimales (detalle, carrito y checkout usan el precio real); imagen de Backpack \texttt{sl-404}; ícono del carrito desplazado; botón del último producto desalineado; el orden por precio usa el precio real. \\ \hline
+\end{longtable}}
+
+El Dynamic Catalog se exploró con los 5 usuarios habilitados y se comporta igual para todos: los defectos por usuario del listado no aplican ahí.
+
+\section{Riesgos identificados}
+Riesgos consolidados de los 5 planes del Sprint 1 (sección 8 de cada plan), con la mitigación que se trasladó al diseño de los casos.
+
+{\gfzebra
+\begin{longtable}{|L{0.35\textwidth}|c|L{0.44\textwidth}|}
+\hline
+\gfhead \hcell{Riesgo} & \hcell{Impacto} & \hcell{Mitigación} \\ \hline
+\endfirsthead
+\hline
+\gfhead \hcell{Riesgo} & \hcell{Impacto} & \hcell{Mitigación} \\ \hline
+\endhead
+Sitio público de terceros: caídas, latencia o cambios sin aviso (todos los módulos) & Alto & Reintentos solo en CI (2); diagnosticar con trazas antes de modificar aserciones \\ \hline
+Carrito en \texttt{localStorage} que sobrevive al logout: un test puede heredar el carrito de otro & Alto & Contexto de navegador nuevo por test; carrito preparado explícitamente en cada TC \\ \hline
+Precios aleatorios de \texttt{visual\_user}: resultado no determinista & Alto & Comparar contra el catálogo de referencia y el formato de 2 decimales, nunca contra un valor observado \\ \hline
+Cálculo monetario con redondeo: un esperado fijo oculta errores con otros carritos & Alto & Esperado calculado con la fórmula de \texttt{04-test-data.md} \\ \hline
+Expiración real de la sesión exige esperar 10 minutos & Alto & Validar el atributo \texttt{expires} y simular el vencimiento borrando la cookie \\ \hline
+Validaciones débiles del checkout y del carrito (candidatos DEF) & Alto & Aserción de la regla y \texttt{test.fail()} + DEF si se confirma \\ \hline
+Demora de \texttt{performance\_\allowbreak glitch\_\allowbreak user} frente a los timeouts por defecto & Medio & Timeout explícito solo en esos tests \\ \hline
+\texttt{alert} de \texttt{error\_user} al ordenar bloquea la página & Medio & Registrar un manejador de \texttt{dialog} antes de ordenar \\ \hline
+Contraseña publicada en la página de login podría filtrarse en evidencias & Medio & Leer siempre la variable de entorno; TC-AUTH-LOG-024 no afirma su valor \\ \hline
+Enlaces a sitios externos (About, redes sociales) fuera de control del proyecto & Medio & Asertar el \texttt{href} en lugar de navegar al sitio externo \\ \hline
+Slider con autoplay y Spinner de duración variable (0,9 a 3,6 s) & Medio / Bajo & Verificar inmediatamente tras el clic; esperar la grilla, nunca un tiempo fijo \\ \hline
+Telemetría de terceros (\texttt{backtrace.io}) en la red & Bajo & No asertar tráfico de red de terceros \\ \hline
+\end{longtable}}
+
+\section{Escenarios por submódulo y prioridad}
+Conteo de los resúmenes de \texttt{05-test-scenarios.md}. Criterio de prioridad: P0 happy path o riesgo bloqueante; P1 negativo común, transición de estado, acceso o regresión relevante por usuario; P2 funcionalidad secundaria o regresión adyacente; P3 caso borde, cosmético o de baja frecuencia.
+
+{\gfzebra
+\begin{tabularx}{\textwidth}{|Y|r|r|r|r|r|}
+\hline
+\gfhead \hcell{Submódulo} & \hcell{P0} & \hcell{P1} & \hcell{P2} & \hcell{P3} & \hcell{Total} \\ \hline
+AUTH-LOG & 4 & 8 & 8 & 4 & 24 \\ \hline
+INV-CAT & 3 & 14 & 6 & 5 & 28 \\ \hline
+INV-DYN & 0 & 1 & 6 & 6 & 13 \\ \hline
+CART-CRT & 4 & 9 & 4 & 2 & 19 \\ \hline
+CHK-FLW & 5 & 10 & 8 & 3 & 26 \\ \hline
+NAV-MENU & 1 & 3 & 5 & 7 & 16 \\ \hline
+\textbf{Total} & \textbf{17} & \textbf{45} & \textbf{37} & \textbf{27} & \textbf{126} \\ \hline
+\end{tabularx}}
+
+\section{Trazabilidad}
+Cada \texttt{05-test-scenarios.md} incluye una matriz de reglas a TC y de flujos a TC. Todas las reglas y todos los flujos tienen al menos un TC asociado; algunos submódulos verifican además reglas de otros submódulos.
+
+{\gfzebra
+\begin{tabularx}{\textwidth}{|L{0.13\textwidth}|c|c|c|Y|}
+\hline
+\gfhead \hcell{Submódulo} & \hcell{RN cubiertas} & \hcell{FL cubiertos} & \hcell{TC} & \hcell{Reglas de otros submódulos verificadas} \\ \hline
+AUTH-LOG & 12/12 & 4/4 & 24 & - \\ \hline
+INV-CAT & 13/13 & 3/3 & 28 & RN-AUTH-007 (018); RN-CART-001 (009). \\ \hline
+INV-DYN & 8/8 & 3/3 & 13 & - \\ \hline
+CART-CRT & 11/11 & 3/3 & 19 & RN-AUTH-007 (016); RN-INV-012 (018). \\ \hline
+CHK-FLW & 17/17 & 2/2 & 26 & RN-CART-009 (017). \\ \hline
+NAV-MENU & 10/10 & 3/3 & 16 & RN-AUTH-009 (007). \\ \hline
+\end{tabularx}}
+
+\section{Observaciones clave}
+\begin{itemize}
+  \item \textbf{18 candidatos a defecto} identificados en las etapas 1 y 2, todos confirmados después en la etapa 5 (DEF-SD-001 a DEF-SD-018): 12 dependen del comportamiento intencional de \texttt{problem\_user}, \texttt{error\_user} y \texttt{visual\_user}; 6 afectan a todos los usuarios (carrito compartido, checkout con carrito vacío, campos con solo espacios, subtotal sin decimales, paso 2 accesible sin el paso 1 y Reset App State sin actualizar los botones).
+  \item \textbf{Hallazgos sin regla violada} registrados como recomendaciones (REC), no como defectos: sesión validada solo con la cookie del cliente, expiración absoluta a los 10 minutos, confirmación accesible sin compra, código postal sin formato, zona horaria inconsistente del PDF, Lazy Load sin fin de lista, entre otros.
+  \item \textbf{Riesgo de diseño de pruebas:} el estado vive en el cliente y se comparte entre usuarios del mismo navegador; el aislamiento por contexto de navegador es obligatorio.
+  \item \textbf{Cobertura completa de la especificación:} 126 escenarios, 0 \texttt{PENDING-BROWSER} y 0 \texttt{PENDING-CODE} al cierre de la etapa 2; los 5 TC \texttt{PENDING-BROWSER} de la etapa 1 se verificaron en vivo.
+\end{itemize}
+
+\section{Discrepancias entre fuentes}
+\begin{itemize}
+  \item Los resúmenes de \texttt{05-test-scenarios.md} declaran todos los escenarios como automatizados (0 manuales), mientras que los planes del Sprint 1 clasifican TC-CHK-FLW-019 (PDF de la orden) y TC-INV-CAT-026 (\texttt{visual\_user}, imágenes y controles) como «Ambos»: cada uno tiene una parte automatizada y una revisión visual manual (\texttt{qa/03-test-cases/}). La diferencia es de clasificación, no de cantidad de TC.
+  \item El candidato de \texttt{error\_user} en Reset App State («a confirmar» en la etapa 1) no se reprodujo en la etapa 5 y no generó defecto.
+\end{itemize}
+
+\end{document}

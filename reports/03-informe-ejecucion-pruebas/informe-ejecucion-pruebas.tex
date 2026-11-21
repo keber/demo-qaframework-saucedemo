@@ -1,0 +1,346 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fontspec}
+% IBM Plex Sans from the Tectonic bundle: reproducible output on any machine.
+% Ligatures=TeXOff keeps ASCII quotes and hyphens literal (no typographic substitution).
+\setmainfont{IBMPlexSans}[Extension=.otf, UprightFont=*-Regular,
+  BoldFont=*-Bold, ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic, Ligatures=TeXOff]
+\setmonofont{IBMPlexMono}[Extension=.otf, UprightFont=*-Regular,
+  BoldFont=*-Bold, Scale=MatchLowercase]
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\addto\extrasspanish{\def\%{\char37\relax}}
+\usepackage[top=2.2cm,bottom=2.4cm,left=1.8cm,right=1.8cm,headheight=14pt]{geometry}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, /pgf/number format/assume math mode=true}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+% Brand palette.
+\definecolor{gfred}{HTML}{ED1C23}
+\definecolor{gfblack}{HTML}{111111}
+\definecolor{gfzebra}{HTML}{F4F4F4}
+\definecolor{gfhighlight}{HTML}{FDE9E9}
+\definecolor{gfgreen}{HTML}{188038}
+\definecolor{gfmuted}{HTML}{777777}
+\definecolor{gfgrey}{HTML}{9A9A9A}
+\definecolor{gfsoft}{HTML}{D4D4D4}
+
+\color{gfblack}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\renewcommand{\arraystretch}{1.45}
+\setlist[itemize]{label=\textbullet, leftmargin=1.2em, itemsep=2pt}
+\setlength{\LTpre}{4pt}
+\setlength{\LTpost}{6pt}
+
+\newcommand{\gennote}{Generado por Claude aplicando @keber/qa-framework 1.14.0-rc.9}
+\fancypagestyle{gf}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhead[C]{\color{gfred}\rule{\textwidth}{0.8pt}}%
+  \fancyfoot[L]{\color{gfmuted}\scriptsize \gennote}%
+  \fancyfoot[R]{\color{gfmuted}\footnotesize Página \thepage{} de \pageref*{LastPage}}%
+}
+\fancypagestyle{gffirst}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[L]{\color{gfmuted}\scriptsize \gennote}%
+  \fancyfoot[R]{\color{gfmuted}\footnotesize Página \thepage{} de \pageref*{LastPage}}%
+}
+\pagestyle{gf}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{gfblack}}
+  {{\color{gfred}\rule[-0.2em]{3pt}{1.1em}}\hspace{0.6em}\thesection.}
+  {0.4em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{gfblack}}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\definecolor{gfrule}{HTML}{DDDDDD}
+\arrayrulecolor{gfrule}
+\newcommand{\gfhead}{\rowcolor{gfblack}}
+\newcommand{\hcell}[1]{\textcolor{white}{\bfseries #1}}
+\newcommand{\gfmark}{\rowcolor{gfhighlight}}
+\newcommand{\gfzebra}{\rowcolors{2}{gfzebra}{white}}
+\newcommand{\status}[1]{\textcolor{gfgreen}{\bfseries #1}}
+\newcommand{\statusbad}[1]{\textcolor{gfred}{\bfseries #1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\newtcolorbox{gfnote}{colback=gfzebra, colframe=gfred, boxrule=0pt,
+  leftrule=3pt, arc=0pt, left=8pt, right=8pt, top=5pt, bottom=5pt, fontupper=\small}
+
+\newcommand{\gfcover}[3]{%
+  \thispagestyle{gffirst}%
+  \begin{minipage}[t]{0.78\textwidth}
+    {\color{gfred}\small\bfseries #1}\par\vspace{4pt}
+    {\raggedright\fontsize{22}{28}\selectfont\bfseries #2\par}\vspace{6pt}
+    {\small #3}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.18\textwidth}
+    \vspace{0pt}\raggedleft\includegraphics[width=\linewidth]{garcesfruit-logo.png}
+  \end{minipage}\par\vspace{6pt}
+  {\color{gfred}\rule{\textwidth}{1pt}}\par
+}
+
+\hypersetup{pdftitle={Informe de Ejecución de Pruebas - saucedemo Sprint 1},
+  pdfauthor={Claude (@keber/qa-framework 1.14.0-rc.9)}, pdflang={es-CL}}
+
+\begin{document}
+\small
+
+\gfcover
+  {QA · SAUCEDEMO (SWAG LABS) · SPRINT 1}
+  {Informe de Ejecución de Pruebas}
+  {Etapas 5 y 5b del pipeline · Ejecución oficial EXEC-SD-20261121-002 (21-11-2026 16:47 UTC) · Fecha de informe: 21-11-2026}
+
+{\gfzebra
+\begin{tabularx}{\textwidth}{|L{0.24\textwidth}|Y|}
+\hline
+\gfhead \hcell{Campo} & \hcell{Descripción} \\ \hline
+Resultado general & \status{APROBADO}: 142 de 142 tests en un estado válido (100 \%), 0 fallos inesperados, 0 flaky \\ \hline
+Ejecución oficial & Etapa 5b: 142 tests (126 TC), 122 pasan, 18 fallos esperados con DEF, 2 omitidos (\texttt{PENDING-CODE}); duración 4 min 25 s \\ \hline
+Defectos abiertos & 18 (DEF-SD-001 a DEF-SD-018); ninguno afecta a un TC P0 \\ \hline
+Recomendaciones & 13 (REC-SD-001 a REC-SD-013), sin \texttt{test.fail()} \\ \hline
+Estabilidad & 1.538 de 1.540 ejecuciones con el estado esperado (99,87 \%) en 6 ejecuciones completas; 100 \% tras los heals \\ \hline
+Ambiente & \texttt{\{QA\_BASE\_URL\}} = https://www.saucedemo.com · Chromium (Playwright 1.65.1) · 2 workers · viewport 1280x720 \\ \hline
+\end{tabularx}}
+
+\begin{gfnote}
+Documento generado por Claude aplicando @keber/qa-framework 1.14.0-rc.9. Las cifras se calculan a partir de \texttt{results-summary.json} de las ejecuciones de las etapas 5 y 5b, de los archivos de \texttt{qa/06-defects/} y del reporte de estabilización. Sin credenciales: la contraseña se referencia solo como \texttt{QA\_USER\_PASSWORD}.
+\end{gfnote}
+
+\section{Resumen de la ejecución}
+Estados válidos según la regla 8 del framework: \texttt{test()} en verde, \texttt{test.fail()} con archivo DEF que documenta la regla incumplida, o \texttt{test.skip()} con \texttt{PENDING-CODE}. La ejecución oficial (etapa 5b, comando \texttt{npm run test:all}: suite por defecto más el proyecto \texttt{login-flow}) deja 85,9 \% de los tests en verde, 12,7 \% como fallo esperado con defecto y 1,4 \% omitidos por ser la parte manual de un TC «Ambos».
+
+A nivel de TC: 108 TC sin defecto abierto y 18 TC con fallo esperado (cada uno vinculado a un DEF). Las 2 partes manuales pendientes pertenecen a TC-CHK-FLW-019 y TC-INV-CAT-026, cuya parte automatizada sí se ejecuta.
+
+\subsection{Comparación etapa 5 frente a etapa 5b}
+{\gfzebra
+\begin{tabularx}{\textwidth}{|Y|r|r|r|}
+\hline
+\gfhead \hcell{Métrica} & \hcell{Etapa 5 (15:58 UTC)} & \hcell{Etapa 5b oficial (16:47 UTC)} & \hcell{Diferencia} \\ \hline
+Tests ejecutados & 142 & \textbf{142} & 0 \\ \hline
+TC distintos & 126 & \textbf{126} & 0 \\ \hline
+Pasan (passed) & 121 & \textbf{122} & +1 \\ \hline
+Fallo esperado (\texttt{test.fail} + DEF) & 19 & \textbf{18} & -1 \\ \hline
+Fallos inesperados & 0 & \textbf{0} & 0 \\ \hline
+Omitidos (\texttt{PENDING-CODE}) & 2 & \textbf{2} & 0 \\ \hline
+Flaky & 0 & \textbf{0} & 0 \\ \hline
+Duración & 2 min 26 s & \textbf{4 min 25 s} & - \\ \hline
+Defectos abiertos asociados & 19 & \textbf{18} & -1 \\ \hline
+\end{tabularx}}
+
+El único cambio de resultado es TC-AUTH-LOG-010 (usuario bloqueado): en la etapa 5 era fallo esperado con DEF-SD-019; en la etapa 5b el hallazgo se reclasificó como REC-SD-012 porque RN-AUTH-005 solo exige rechazar el acceso (la cookie creada es inerte), el TC se revisó y ahora pasa. El número DEF-SD-019 queda retirado y no se reutiliza. Las fuentes no explican la mayor duración de la 5b; las ejecuciones R3 a R6 de la etapa 5b, con la misma suite y 2 workers, duraron entre 3 y 4,5 minutos, lo que apunta a la variación propia de un sitio público más que a un cambio en la suite.
+
+\section{Resultados por submódulo}
+{\gfzebra
+\begin{tabularx}{\textwidth}{|Y|r|r|r|r|r|r|r|}
+\hline
+\gfhead \hcell{Submódulo} & \hcell{TC} & \hcell{Tests} & \hcell{Pasan} & \hcell{Fallo esperado} & \hcell{Fallo} & \hcell{Omitido} & \hcell{Válidos} \\ \hline
+AUTH-LOG $\ast$ & 24 & 31 & 31 & 0 & 0 & 0 & 100\% \\ \hline
+INV-CAT & 28 & 29 & 20 & 8 & 0 & 1 & 100\% \\ \hline
+INV-DYN & 13 & 16 & 16 & 0 & 0 & 0 & 100\% \\ \hline
+CART-CRT & 19 & 20 & 18 & 2 & 0 & 0 & 100\% \\ \hline
+CHK-FLW & 26 & 30 & 23 & 6 & 0 & 1 & 100\% \\ \hline
+NAV-MENU & 16 & 16 & 14 & 2 & 0 & 0 & 100\% \\ \hline
+\textbf{Total} & 126 & 142 & 122 & 18 & 0 & 2 & 100\% \\ \hline
+\end{tabularx}}
+{\footnotesize $\ast$ Submódulo con resultado distinto en la etapa 5 (AUTH-LOG: 30 pasan y 1 fallo esperado).}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar stacked, bar width=26pt, width=0.95\textwidth, height=6.4cm,
+  symbolic x coords={AUTH-LOG,INV-CAT,INV-DYN,CART-CRT,CHK-FLW,NAV-MENU}, xtick=data,
+  ymin=0, ymax=34, ylabel={Tests},
+  tick label style={font=\footnotesize}, label style={font=\footnotesize},
+  legend style={at={(0.5,-0.16)}, anchor=north, legend columns=3, draw=none, font=\footnotesize},
+  axis line style={gfmuted}, major grid style={gfrule}, ymajorgrids,
+  point meta=rawy, nodes near coords={\pgfmathfloattofixed{\pgfplotspointmeta}\ifdim\pgfmathresult pt>1.5pt\pgfmathprintnumber{\pgfplotspointmeta}\fi},
+  every node near coord/.append style={font=\scriptsize}, enlarge x limits=0.1]
+\addplot+[fill=gfgreen, draw=gfgreen, every node near coord/.append style={color=white}] coordinates {(AUTH-LOG,31) (INV-CAT,20) (INV-DYN,16) (CART-CRT,18) (CHK-FLW,23) (NAV-MENU,14)};
+\addplot+[fill=gfred, draw=gfred, every node near coord/.append style={color=white}] coordinates {(AUTH-LOG,0) (INV-CAT,8) (INV-DYN,0) (CART-CRT,2) (CHK-FLW,6) (NAV-MENU,2)};
+\addplot+[fill=gfgrey, draw=gfgrey, every node near coord/.append style={color=white}] coordinates {(AUTH-LOG,0) (INV-CAT,1) (INV-DYN,0) (CART-CRT,0) (CHK-FLW,1) (NAV-MENU,0)};
+\legend{Pasan, Fallo esperado (DEF), Omitido (PENDING-CODE)}
+\end{axis}
+\end{tikzpicture}
+\caption{Resultado de la ejecución oficial (etapa 5b) por submódulo.}
+\end{figure}
+
+\begin{minipage}[t]{0.5\textwidth}
+\textbf{Por prioridad (tests)}\par
+{\gfzebra
+\begin{tabularx}{\linewidth}{|Y|r|r|r|r|r|}
+\hline
+\gfhead \hcell{Prio.} & \hcell{Tests} & \hcell{Pasan} & \hcell{F. esp.} & \hcell{Fallo} & \hcell{Omit.} \\ \hline
+P0 & 17 & 17 & 0 & 0 & 0 \\ \hline
+P1 & 54 & 45 & 9 & 0 & 0 \\ \hline
+P2 & 40 & 32 & 7 & 0 & 1 \\ \hline
+P3 & 31 & 28 & 2 & 0 & 1 \\ \hline
+\end{tabularx}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\textbf{Por proyecto Playwright}\par
+{\gfzebra\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|Y|r|r|r|r|}
+\hline
+\gfhead \hcell{Proyecto} & \hcell{Tests} & \hcell{Pasan} & \hcell{F. esp.} & \hcell{Omit.} \\ \hline
+\texttt{chromium} & 126 & 107 & 17 & 2 \\ \hline
+\texttt{login-flow} & 16 & 15 & 1 & 0 \\ \hline
+\end{tabularx}}
+\end{minipage}
+
+Los 17 TC P0 pasan. Los fallos esperados se concentran en P1 (9) y P2 (7): son reglas de negocio incumplidas, principalmente por los usuarios con comportamiento intencional.
+
+\section{Defectos abiertos}
+18 defectos en \texttt{qa/06-defects/open/}, todos reproducidos por la aserción de su regla de negocio (re-verificados con \texttt{DEFECTS\_DIAG=1} en la suite oficial: ninguno falla por infraestructura ni por selector). Distribución por módulo: INV: 8, CART: 2, CHK: 6, NAV: 2.
+
+{\gfzebra\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|L{0.1\textwidth}|L{0.34\textwidth}|L{0.065\textwidth}|c|c|L{0.12\textwidth}|L{0.13\textwidth}|}
+\hline
+\gfhead \hcell{ID} & \hcell{Título} & \hcell{Sev.} & \hcell{Prio.} & \hcell{Mód.} & \hcell{Regla} & \hcell{TC} \\ \hline
+\endfirsthead
+\hline
+\gfhead \hcell{ID} & \hcell{Título} & \hcell{Sev.} & \hcell{Prio.} & \hcell{Mód.} & \hcell{Regla} & \hcell{TC} \\ \hline
+\endhead
+DEF-SD-001 & problem\_\allowbreak{}user ve la imagen sl-404 en los 6 productos & Baja & P2 & INV & RN-INV-011 & TC-INV-CAT-019 \\ \hline
+DEF-SD-002 & problem\_\allowbreak{}user no puede ordenar el listado & Media & P2 & INV & RN-INV-003, RN-INV-004 & TC-INV-CAT-020 \\ \hline
+DEF-SD-003 & problem\_\allowbreak{}user no puede agregar 3 productos ni quitar desde el listado & Alta & P1 & INV & RN-INV-005, RN-INV-006 & TC-INV-CAT-021 \\ \hline
+DEF-SD-004 & problem\_\allowbreak{}user abre el detalle de otro producto (id+1) & Alta & P1 & INV & RN-INV-007 & TC-INV-CAT-022 \\ \hline
+DEF-SD-005 & error\_\allowbreak{}user: ordenar muestra un alert de error y no reordena & Media & P2 & INV & RN-INV-003, RN-INV-004 & TC-INV-CAT-023 \\ \hline
+DEF-SD-006 & error\_\allowbreak{}user no puede agregar 3 productos ni quitar desde el listado & Alta & P1 & INV & RN-INV-005, RN-INV-006, RN-INV-008 & TC-INV-CAT-024 \\ \hline
+DEF-SD-007 & visual\_\allowbreak{}user ve precios aleatorios y sin 2 decimales en el listado & Alta & P1 & INV & RN-INV-012 & TC-INV-CAT-025 \\ \hline
+DEF-SD-008 & visual\_\allowbreak{}user ve la imagen sl-404 de Backpack, el carrito desplazado y un botón desalineado & Baja & P3 & INV & RN-INV-011 & TC-INV-CAT-026 \\ \hline
+DEF-SD-009 & El carrito de un usuario es visible para el siguiente usuario del mismo navegador & Alta & P1 & CART & RN-CART-011 & TC-CART-CRT-012 \\ \hline
+DEF-SD-010 & Se puede iniciar y completar el checkout con el carrito vacío & Media & P1 & CART & RN-CART-008 & TC-CART-CRT-013 \\ \hline
+DEF-SD-011 & El paso 1 del checkout acepta campos con solo espacios & Media & P2 & CHK & RN-CHK-004 & TC-CHK-FLW-007 \\ \hline
+DEF-SD-012 & Con el carrito vacío el subtotal se muestra "\$0" sin 2 decimales & Baja & P3 & CHK & RN-CHK-011 & TC-CHK-FLW-015 \\ \hline
+DEF-SD-013 & El resumen del checkout es accesible sin completar el paso 1 & Media & P2 & CHK & RN-CHK-016 & TC-CHK-FLW-020 \\ \hline
+DEF-SD-014 & problem\_\allowbreak{}user no puede completar el paso 1: el apellido se escribe en el nombre & Alta & P1 & CHK & RN-CHK-002, FL-CHK-001 & TC-CHK-FLW-022 \\ \hline
+DEF-SD-015 & error\_\allowbreak{}user avanza al resumen sin apellido & Alta & P1 & CHK & RN-CHK-002 & TC-CHK-FLW-023 \\ \hline
+DEF-SD-016 & error\_\allowbreak{}user no puede finalizar la compra: finish no hace nada & Crítica & P1 & CHK & RN-CHK-013 & TC-CHK-FLW-024 \\ \hline
+DEF-SD-017 & Reset App State no actualiza los botones del listado hasta recargar & Baja & P2 & NAV & RN-NAV-007 & TC-NAV-MENU-009 \\ \hline
+DEF-SD-018 & problem\_\allowbreak{}user: About apunta a una página 404 de Sauce Labs & Baja & P2 & NAV & RN-NAV-004 & TC-NAV-MENU-014 \\ \hline
+\end{longtable}}
+
+\begin{minipage}[t]{0.36\textwidth}
+\textbf{Por severidad}\par
+{\gfzebra
+\begin{tabularx}{\linewidth}{|Y|r|r|}
+\hline
+\gfhead \hcell{Severidad} & \hcell{N} & \hcell{\%} \\ \hline
+Crítica & 1 & 5,6\% \\ \hline
+Alta & 7 & 38,9\% \\ \hline
+Media & 5 & 27,8\% \\ \hline
+Baja & 5 & 27,8\% \\ \hline
+\textbf{Total} & \textbf{18} & 100\% \\ \hline
+\end{tabularx}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\textbf{Lectura}
+\begin{itemize}
+  \item El único defecto crítico es DEF-SD-016: \texttt{error\_user} no puede finalizar la compra.
+  \item DEF-SD-009 (carrito visible para el siguiente usuario del mismo navegador) es el defecto de mayor impacto que afecta a todos los usuarios.
+  \item 12 de los 18 defectos dependen del comportamiento intencional de \texttt{problem\_user}, \texttt{error\_user} y \texttt{visual\_user}; ninguno bloquea un TC P0 de \texttt{standard\_user}.
+\end{itemize}
+\end{minipage}
+
+\section{Recomendaciones}
+Hallazgos que no incumplen una regla de negocio: se registran en \texttt{qa/06-defects/recommendations/} y nunca justifican un \texttt{test.fail()}.
+
+{\gfzebra\footnotesize
+\begin{longtable}{|L{0.1\textwidth}|L{0.53\textwidth}|c|L{0.2\textwidth}|}
+\hline
+\gfhead \hcell{ID} & \hcell{Hallazgo} & \hcell{Módulo} & \hcell{Categoría} \\ \hline
+\endfirsthead
+\hline
+\gfhead \hcell{ID} & \hcell{Hallazgo} & \hcell{Módulo} & \hcell{Categoría} \\ \hline
+\endhead
+REC-SD-001 & La sesión se valida solo con la cookie session-username del cliente & AUTH & Seguridad \\ \hline
+REC-SD-002 & El campo usuario del login no tiene longitud máxima & AUTH & Robustez \\ \hline
+REC-SD-003 & La sesión expira a los 10 minutos aunque el usuario esté activo & AUTH & Usabilidad \\ \hline
+REC-SD-004 & /\allowbreak{}checkout-complete.html es accesible directamente sin una compra & CHK & Integridad del flujo \\ \hline
+REC-SD-005 & El código postal acepta letras y símbolos & CHK & Calidad de datos \\ \hline
+REC-SD-006 & El nombre del PDF usa hora UTC y "Order Date" la hora local & CHK & Consistencia \\ \hline
+REC-SD-007 & El detalle de un producto inexistente muestra un precio anómalo y un botón operable & INV & Manejo de errores \\ \hline
+REC-SD-008 & Lazy Load repite variantes y no tiene fin de lista & INV & Calidad de datos /\allowbreak{} UX \\ \hline
+REC-SD-009 & Reset App State no reinicia el orden del listado & NAV & Alcance funcional \\ \hline
+REC-SD-010 & About abre un sitio externo en la misma pestaña & NAV & Usabilidad \\ \hline
+REC-SD-011 & La carga directa de una ruta interna responde HTTP 404 & NAV & Observabilidad /\allowbreak{} testabilidad \\ \hline
+REC-SD-012 & El login rechazado de locked\_\allowbreak{}out\_\allowbreak{}user crea igualmente la cookie de sesión & AUTH & Seguridad /\allowbreak{} higiene de sesión \\ \hline
+REC-SD-013 & El menú lateral queda invisible si se abre durante el primer medio segundo de la vista & NAV & Robustez /\allowbreak{} condición de carrera \\ \hline
+\end{longtable}}
+
+\section{Análisis de estabilidad (flakiness)}
+En la etapa 5b la suite completa se ejecutó 6 veces, con repeticiones y con más paralelismo para provocar condiciones de carrera. Una ejecución es correcta cuando el test termina en su estado esperado (\texttt{passed}, o \texttt{failed} en un \texttt{test.fail()} con DEF). Los 2 tests \texttt{PENDING-CODE} no se ejecutan y no cuentan, por lo que cada ejecución completa suma 140 tests.
+
+{\gfzebra
+\begin{tabularx}{\textwidth}{|c|Y|r|r|r|r|r|}
+\hline
+\gfhead \hcell{Ejec.} & \hcell{Comando (npm run ...)} & \hcell{Workers} & \hcell{Ejecuciones} & \hcell{Correctas} & \hcell{Inesperadas} & \hcell{Duración} \\ \hline
+R1 & \texttt{test:all -- --repeat-each=3} & 2 & 420 & 419 & 1 & 10 min 32 s \\ \hline
+R2 & \texttt{test:all -- --repeat-each=3 --workers=4} & 4 & 420 & 420 & 0 & 7 min 29 s \\ \hline
+R3 & \texttt{test:all} & 2 & 140 & 140 & 0 & 3 min 13 s \\ \hline
+R4 & \texttt{test:all} & 2 & 140 & 139 & 1 & 3 min 37 s \\ \hline
+R5 & \texttt{test:all -- --repeat-each=2 --workers=4} & 4 & 280 & 280 & 0 & 3 min 45 s \\ \hline
+R6 & \texttt{test:all (oficial)} & 2 & 140 & 140 & 0 & 4 min 25 s \\ \hline
+\textbf{Total} &  &  & \textbf{1.540} & \textbf{1.538} & \textbf{2} &  \\ \hline
+\end{tabularx}}
+
+Tasa global: 1.538 de 1.540 (99,87 \%). Tras el último heal (R5 y R6): 420 de 420 ejecuciones correctas (100 \%). Por test (140 tests ejecutados, 11 ejecuciones cada uno): 138 con 100 \% y 2 con un fallo cada uno, ambos anteriores al heal correspondiente: TC-INV-DYN-004 (Precios de Lazy Load iguales al catálogo): 10/11 y TC-INV-DYN-012 (Dynamic Catalog con usuarios no estándar (visual\_\allowbreak{}user)): 10/11.
+
+\subsection{Heals aplicados}
+{\gfzebra\footnotesize
+\begin{tabularx}{\textwidth}{|L{0.09\textwidth}|L{0.24\textwidth}|L{0.15\textwidth}|Y|}
+\hline
+\gfhead \hcell{ID} & \hcell{Tests afectados} & \hcell{Categoría} & \hcell{Corrección} \\ \hline
+FLK-SD-06 & TC-INV-DYN-012, TC-NAV-MENU-001, HeaderMenu.open() & D - timing frágil & Esperar a que el panel lateral cerrado quede asentado (atributo hidden) antes del clic en el botón de menú; origen en REC-SD-013 \\ \hline
+FLK-SD-07 & TC-INV-CAT-027, TC-CHK-FLW-025, TC-INV-DYN-012 & D - timing frágil & testInfo.slow() para performance\_\allowbreak{}glitch\_\allowbreak{}user (timeout x3); aserciones sin cambios \\ \hline
+FLK-SD-08 & TC-INV-DYN-004 & D - timing frágil & Leer los pares nombre/\allowbreak{}precio de Lazy Load de forma atómica, por tarjeta \\ \hline
+\end{tabularx}}
+
+Ningún heal debilitó una aserción de la especificación; no se usaron \texttt{retries} ni \texttt{waitForTimeout}. FLK-SD-06 tiene su origen en una carrera de la aplicación (react-burger-menu), registrada como REC-SD-013.
+
+\section{Evaluación de los criterios de salida}
+{\gfzebra
+\begin{tabularx}{\textwidth}{|Y|L{0.4\textwidth}|c|}
+\hline
+\gfhead \hcell{Criterio (sección 6.6 de los planes)} & \hcell{Evidencia} & \hcell{Estado} \\ \hline
+100 \% de los TC P0 y P1 ejecutados; P2 y P3 ejecutados o justificados & 17 P0 y 54 tests P1 ejecutados; las 2 omisiones (P2 y P3) son partes manuales justificadas & \status{Cumple} \\ \hline
+Cada TC en uno de los tres estados válidos & 142 de 142 tests: 122 \texttt{test()}, 18 \texttt{test.fail()} con DEF, 2 \texttt{test.skip()} con \texttt{PENDING-CODE} & \status{Cumple} \\ \hline
+0 tests fallando sin clasificar & 0 fallos inesperados y 0 flaky en la ejecución oficial & \status{Cumple} \\ \hline
+0 \texttt{test.fail()} sin archivo DEF & 18 \texttt{test.fail()} y 18 archivos DEF-SD-001 a 018, uno por TC & \status{Cumple} \\ \hline
+Hallazgos sin regla violada registrados como REC & 13 archivos REC-SD-001 a 013 & \status{Cumple} \\ \hline
+\texttt{qa/README.md} actualizado & Estado de módulos, última ejecución e historial del Sprint 1 & \status{Cumple} \\ \hline
+\end{tabularx}}
+
+\section{Conclusiones}
+\begin{itemize}
+  \item El Sprint 1 cumple los criterios de salida: la suite de 142 tests es estable y todos los TC terminan en un estado válido. Resultado QA: \status{APROBADO} para el cierre del sprint de pruebas.
+  \item La aplicación \textbf{no} está libre de defectos: quedan 18 defectos abiertos (1 crítico, 7 altos), documentados con evidencia y vinculados a su regla de negocio. El resultado aprobado se refiere a la completitud y confiabilidad de las pruebas, no a la calidad del producto.
+  \item Los flujos críticos de \texttt{standard\_user} (login, catálogo, carrito, compra completa con totales correctos y logout) pasan en todas las ejecuciones.
+  \item Seguimiento: revisar con el responsable de la especificación REC-SD-012 por si se eleva a regla; completar las 2 revisiones manuales (\texttt{qa/03-test-cases/}); mantener 2 workers por defecto por el margen de tiempo de \texttt{performance\_\allowbreak glitch\_\allowbreak user}.
+\end{itemize}
+
+\section{Discrepancias entre fuentes}
+\begin{itemize}
+  \item El \texttt{execution-report.md} de la etapa 5b indica «140 de 142 tests: 100 \%», pero según \texttt{results-summary.json} solo 140 tests tienen ejecuciones (los 2 \texttt{PENDING-CODE} no se ejecutan) y de ellos 138 tienen 100 \%; los otros 2 tienen 10/11. Se toma como correcto el JSON.
+  \item El mismo reporte menciona «REC-SD-001 a REC-SD-012», mientras que existen 13 archivos REC (REC-SD-013 se creó también en la etapa 5b); \texttt{qa/README.md} y el reporte de estabilización sí reflejan las 13.
+  \item No se encontraron diferencias entre los totales del JSON, los reportes de ejecución, el \texttt{COVERAGE-MAPPING.md}, el reporte de estabilización y los archivos de defectos (18 DEF, mismo TC por defecto).
+\end{itemize}
+
+\end{document}
