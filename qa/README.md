@@ -10,12 +10,12 @@
 
 | Module | Submodule | TCs Total | TCs Automated | Plan | ADO Suite | Status | Last Run |
 |---|---|---|---|---|---|---|---|
-| Autenticación (AUTH) | Login y sesión (LOG) | 24 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
-| Catálogo de productos (INV) | Listado y detalle (CAT) | 28 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
-| Catálogo de productos (INV) | Dynamic Catalog (DYN) | 13 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
-| Carrito de compras (CART) | Carrito (CRT) | 19 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
-| Checkout (CHK) | Flujo de compra (FLW) | 26 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
-| Navegación y menú (NAV) | Menú lateral, encabezado y footer (MENU) | 16 | - | ⬜ | - | ⚠️ Etapa 2 completada (especificación) | - |
+| Autenticación (AUTH) | Login y sesión (LOG) | 24 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
+| Catálogo de productos (INV) | Listado y detalle (CAT) | 28 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
+| Catálogo de productos (INV) | Dynamic Catalog (DYN) | 13 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
+| Carrito de compras (CART) | Carrito (CRT) | 19 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
+| Checkout (CHK) | Flujo de compra (FLW) | 26 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
+| Navegación y menú (NAV) | Menú lateral, encabezado y footer (MENU) | 16 | - | ✅ | - | ⚠️ Etapa 3 completada (plan de pruebas) | - |
 
 **Legend**: ✅ Done · ⚠️ Partial · 🔲 Not started · ⛔ Blocked
 
@@ -109,4 +109,5 @@ _No sprints completed yet._
 | Naming Conventions | `qa/00-standards/naming-conventions.md` |
 | Memory Index | `qa/memory/INDEX.md` |
 | Agent Next Steps | `qa/AGENT-NEXT-STEPS.md` |
+| Planes de pruebas Sprint 1 | `qa/02-test-plans/sprints/Sprint-1/` |
 | Automation Config | `qa/07-automation/playwright.config.ts` |
