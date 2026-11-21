@@ -56,6 +56,26 @@ export class DynamicCatalogPage {
     await expect.poll(() => this.lazyCardCount(), { timeout: 10_000 }).toBeGreaterThanOrEqual(12);
   }
 
+  /**
+   * Reads every loaded lazy-load card as one {name, price} pair in a single DOM pass.
+   * Reading names and prices with two separate locators is not atomic: the list keeps
+   * growing between both reads and the two arrays drift apart (FLK-SD-08). A card that
+   * shows its name but no price yields price = null, so the caller still sees it.
+   */
+  async readLazyCards(): Promise<Array<{ name: string; price: string | null }>> {
+    return this.page.locator('[data-test^="lazy-load-item-"]').evaluateAll((els) =>
+      els
+        .filter((e) => /^lazy-load-item-\d+$/.test(e.getAttribute('data-test') ?? ''))
+        .map((card) => {
+          const id = card.getAttribute('data-test');
+          const name = card.querySelector(`[data-test="${id}-name"]`);
+          const price = card.querySelector(`[data-test="${id}-price"]`);
+          return name ? { name: (name.textContent ?? '').trim(), price: price ? (price.textContent ?? '').trim() : null } : null;
+        })
+        .filter((c): c is { name: string; price: string | null } => c !== null)
+    );
+  }
+
   /** Scrolls to the sentinel `times` times, waiting each time for more cards. */
   async scrollMore(times: number): Promise<void> {
     for (let i = 0; i < times; i++) {
