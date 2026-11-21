@@ -64,7 +64,7 @@ Tras el último heal (R5 + R6): 420 de 420 ejecuciones correctas (100 %). Verifi
 
 ### Tasa de éxito por test
 
-- 140 de 142 tests: 100 % en todas sus ejecuciones (11 por test: 3 + 3 + 1 + 1 + 2 + 1). La columna "Estabilidad (R1-R6)" de "Detailed Results" muestra el valor de cada test.
+- 140 de 142 tests se ejecutaron (los 2 `PENDING-CODE` no se ejecutan), con 11 ejecuciones cada uno (3 + 3 + 1 + 1 + 2 + 1). De esos 140, 138 tienen 100 % en todas sus ejecuciones y 2 tienen 10/11: TC-INV-DYN-004 y TC-INV-DYN-012 (`visual_user`), detallados abajo. La columna "Estabilidad (R1-R6)" de "Detailed Results" muestra el valor de cada test.
 - TC-INV-DYN-012 (`visual_user`): 10/11 (90,9 %); único fallo en R1, antes del heal FLK-SD-06; 0 fallos en las 8 ejecuciones posteriores.
 - TC-INV-DYN-004: 10/11 (90,9 %); único fallo en R4, antes del heal FLK-SD-08; 0 fallos en las 3 ejecuciones posteriores y 5/5 en la verificación dirigida con 4 workers.
 
@@ -264,7 +264,7 @@ Sin fallos inesperados ni tests flaky.
 | DEF-SD-017 | TC-NAV-MENU-009 | Open (reproduce: `expectOpenDefect`) |
 | DEF-SD-018 | TC-NAV-MENU-014 | Open (reproduce: `expectOpenDefect`) |
 
-Archivos en `qa/06-defects/open/`. DEF-SD-019 queda retirado: reclasificado como REC-SD-012 (RN-AUTH-005 no se incumple). Recomendaciones (sin `test.fail`): REC-SD-001 a REC-SD-012 en `qa/06-defects/recommendations/`.
+Archivos en `qa/06-defects/open/`. DEF-SD-019 queda retirado: reclasificado como REC-SD-012 (RN-AUTH-005 no se incumple). Recomendaciones (sin `test.fail`): REC-SD-001 a REC-SD-013 en `qa/06-defects/recommendations/`.
 
 ---
 
