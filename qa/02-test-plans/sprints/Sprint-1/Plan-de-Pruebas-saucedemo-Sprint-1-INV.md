@@ -88,7 +88,7 @@ Sin tareas ADO: los items del sprint son las reglas de negocio (RN) y los flujos
 | P3 | Caso borde, cosmético o de baja frecuencia | 11 | 10 | 1 | 0 |
 | **Total** | | **41** | **40** | **1** | **0** |
 
-Candidatos DEF conocidos de las etapas 1 y 2 en este módulo: **8** (TC-INV-CAT-019, TC-INV-CAT-020, TC-INV-CAT-021, TC-INV-CAT-022, TC-INV-CAT-023, TC-INV-CAT-024, TC-INV-CAT-025, TC-INV-CAT-026). Se ejecutan con la aserción de la regla; si la desviación se confirma, la etapa 5 los marca con `test.fail()` y crea el archivo `DEF-INV-NNN` (regla 10).
+Candidatos DEF conocidos de las etapas 1 y 2 en este módulo: **8** (TC-INV-CAT-019, TC-INV-CAT-020, TC-INV-CAT-021, TC-INV-CAT-022, TC-INV-CAT-023, TC-INV-CAT-024, TC-INV-CAT-025, TC-INV-CAT-026). Se ejecutan con la aserción de la regla; si la desviación se confirma, la etapa 5 los marca con `test.fail()` y crea el archivo `DEF-SD-NNN` (regla 10).
 
 ## 5. TestSuites (agrupación funcional)
 
@@ -294,7 +294,7 @@ La columna TC-ID muestra el código de submódulo y el número de cada TC (p. ej
 
 - Suite destino: `qa/07-automation/e2e/tests/inventory/` (un archivo por submódulo: catálogo y Dynamic Catalog).
 - TC-INV-CAT-013 y TC-INV-DYN-012 se implementan como tests parametrizados (por id de producto y por usuario).
-- Los TC de `problem_user`, `error_user` y `visual_user` (TC-INV-CAT-019 a 026) son candidatos DEF: se espera `test.fail()` con aserción correcta y archivo `DEF-INV-NNN` en la etapa 5 (regla 10).
+- Los TC de `problem_user`, `error_user` y `visual_user` (TC-INV-CAT-019 a 026) son candidatos DEF: se espera `test.fail()` con aserción correcta y archivo `DEF-SD-NNN` en la etapa 5 (regla 10).
 - TC-INV-CAT-026 es `Ambos`: la parte por atributos y bounding box se automatiza; la comparación por screenshot es manual.
 - Nombre de los tests: `[{TC-ID}] {título} @{prioridad}` (`conventions.testNamingPattern`).
 - Credenciales y URL siempre desde `process.env` (regla 3); nunca escribir la contraseña en código, evidencias ni reportes.

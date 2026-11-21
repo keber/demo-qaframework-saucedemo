@@ -70,7 +70,7 @@ Sin tareas ADO: los items del sprint son las reglas de negocio (RN) y los flujos
 | P3 | Caso borde, cosmético o de baja frecuencia | 2 | 2 | 0 | 0 |
 | **Total** | | **19** | **19** | **0** | **0** |
 
-Candidatos DEF conocidos de las etapas 1 y 2 en este módulo: **2** (TC-CART-CRT-013, TC-CART-CRT-012). Se ejecutan con la aserción de la regla; si la desviación se confirma, la etapa 5 los marca con `test.fail()` y crea el archivo `DEF-CART-NNN` (regla 10).
+Candidatos DEF conocidos de las etapas 1 y 2 en este módulo: **2** (TC-CART-CRT-013, TC-CART-CRT-012). Se ejecutan con la aserción de la regla; si la desviación se confirma, la etapa 5 los marca con `test.fail()` y crea el archivo `DEF-SD-NNN` (regla 10).
 
 ## 5. TestSuites (agrupación funcional)
 

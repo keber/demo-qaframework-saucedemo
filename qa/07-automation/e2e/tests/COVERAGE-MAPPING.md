@@ -1,6 +1,6 @@
 # Coverage Mapping - saucedemo Sprint 1
 
-> Generado desde `qa/05-test-execution/automated/2026-11-21_15-58-09_sprint-1-etapa-5/results-summary.json`. Un TC puede tener varios tests (parametrizados o parte manual de un TC `Ambos`).
+> Generado desde `qa/05-test-execution/automated/2026-11-21_15-58-09_sprint-1-etapa-5/results-summary.json`; actualizado con la ejecución oficial de la etapa 5b (`2026-11-21_16-47-57_sprint-1-etapa-5b`). Un TC puede tener varios tests (parametrizados o parte manual de un TC `Ambos`).
 
 | TC ID | Tests | Playwright spec | Proyecto | Estado | Defecto |
 |---|---|---|---|---|---|
@@ -13,7 +13,7 @@
 | TC-AUTH-LOG-007 | 1 | tests/auth/login-validation.spec.ts | chromium | ✅ Pasa | - |
 | TC-AUTH-LOG-008 | 1 | tests/auth/login.login.spec.ts | login-flow | ✅ Pasa | - |
 | TC-AUTH-LOG-009 | 1 | tests/auth/login.login.spec.ts | login-flow | ✅ Pasa | - |
-| TC-AUTH-LOG-010 | 1 | tests/auth/login.login.spec.ts | login-flow | 🐞 test.fail (DEF) | DEF-SD-019 |
+| TC-AUTH-LOG-010 | 1 | tests/auth/login.login.spec.ts | login-flow | ✅ Pasa | - (REC-SD-012, antes DEF-SD-019) |
 | TC-AUTH-LOG-011 | 1 | tests/auth/login-validation.spec.ts | chromium | ✅ Pasa | - |
 | TC-AUTH-LOG-012 | 1 | tests/auth/login-validation.spec.ts | chromium | ✅ Pasa | - |
 | TC-AUTH-LOG-013 | 1 | tests/auth/login-validation.spec.ts | chromium | ✅ Pasa | - |

@@ -19,7 +19,6 @@
 
 import { test, expect } from '@playwright/test';
 import type { BrowserContext } from '@playwright/test';
-import { expectOpenDefect } from '../../fixtures/defects';
 import { LoginPage } from '../../page-objects/LoginPage';
 import { InventoryPage } from '../../page-objects/InventoryPage';
 import { EXEC_IDX, protectedRouteError } from '../../fixtures/catalog';
@@ -160,10 +159,12 @@ test.describe('AUTH-LOG - Validaciones y mensajes de error (contraseña real)', 
     await expect(login.error).toHaveText('Epic sadface: Sorry, this user has been locked out.');
     await expect(page).toHaveURL(/\/$/);
     await expect(page.getByTestId('inventory-list')).toHaveCount(0);
-    const cookies = await sessionCookies(context);
-    await expectOpenDefect('DEF-SD-019', 'RN-AUTH-005: el login rechazado de locked_out_user crea igualmente la cookie session-username', () => {
-      expect(cookies.map((c) => c.value)).toEqual([]);
-    });
+    // RN-AUTH-005 requires the access to be rejected: a protected route stays closed.
+    // [REVISED - 2026-11-21] No assertion on the session-username cookie: the app writes an
+    // inert cookie, which violates no business rule (REC-SD-012, formerly DEF-SD-019).
+    await page.goto('/inventory.html');
+    await expect(login.error).toHaveText(protectedRouteError('/inventory.html'));
+    await expect(page.getByTestId('inventory-list')).toHaveCount(0);
   });
 });
 

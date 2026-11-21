@@ -44,10 +44,25 @@ export class HeaderMenu {
     this.title = page.getByTestId('title');
   }
 
-  /** Opens the side menu and waits until the panel is exposed (aria-hidden=false). */
+  /**
+   * Waits until a closed menu has settled. react-burger-menu adds the `hidden` attribute
+   * to the closed panel through a timer ~0.3-0.8 s after the view renders. A burger click
+   * that lands while that timer fires leaves the panel in an inconsistent state
+   * (aria-hidden="false" AND hidden): the links never become visible (FLK-SD-06, REC-SD-013).
+   * A real user does not click within that window; the suite waits for the settled state.
+   */
+  async waitForClosedMenuSettled(): Promise<void> {
+    if ((await this.wrap.getAttribute('aria-hidden')) === 'true') {
+      await expect(this.wrap).toHaveAttribute('hidden');
+    }
+  }
+
+  /** Opens the side menu and waits until the panel is exposed (aria-hidden=false, not hidden). */
   async open(): Promise<void> {
+    await this.waitForClosedMenuSettled();
     await this.burger.click();
     await expect(this.wrap).toHaveAttribute('aria-hidden', 'false');
+    await expect(this.wrap).not.toHaveAttribute('hidden');
   }
 
   /**

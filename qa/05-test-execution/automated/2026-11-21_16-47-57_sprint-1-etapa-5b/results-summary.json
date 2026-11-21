@@ -1,0 +1,2963 @@
+{
+  "generatedAt": "2026-11-21T16:52:45.296Z",
+  "playwrightVersion": "1.65.1",
+  "startTime": "2026-11-21T16:47:57.311Z",
+  "durationMs": 265392,
+  "workers": 2,
+  "projects": [
+    "chromium",
+    "login-flow"
+  ],
+  "totals": {
+    "tests": 142,
+    "passed": 122,
+    "failed": 0,
+    "expected-fail": 18,
+    "skipped": 2,
+    "flaky": 0,
+    "distinctTCs": 126
+  },
+  "defects": [
+    "DEF-SD-001",
+    "DEF-SD-002",
+    "DEF-SD-003",
+    "DEF-SD-004",
+    "DEF-SD-005",
+    "DEF-SD-006",
+    "DEF-SD-007",
+    "DEF-SD-008",
+    "DEF-SD-009",
+    "DEF-SD-010",
+    "DEF-SD-011",
+    "DEF-SD-012",
+    "DEF-SD-013",
+    "DEF-SD-014",
+    "DEF-SD-015",
+    "DEF-SD-016",
+    "DEF-SD-017",
+    "DEF-SD-018"
+  ],
+  "tests": [
+    {
+      "tc": "TC-AUTH-LOG-003",
+      "title": "[TC-AUTH-LOG-003] Usuario y contraseña vacíos @P1",
+      "priority": "P1",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1741,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-004",
+      "title": "[TC-AUTH-LOG-004] Contraseña vacía @P1",
+      "priority": "P1",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1651,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-005",
+      "title": "[TC-AUTH-LOG-005] Usuario vacío con contraseña informada @P1",
+      "priority": "P1",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1039,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-007",
+      "title": "[TC-AUTH-LOG-007] Contraseña incorrecta para un usuario válido @P1",
+      "priority": "P1",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 999,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-011",
+      "title": "[TC-AUTH-LOG-011] Cerrar el mensaje de error @P2",
+      "priority": "P2",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 994,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-012",
+      "title": "[TC-AUTH-LOG-012] Campos marcados visualmente ante un error @P3",
+      "priority": "P3",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 869,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-013",
+      "title": "[TC-AUTH-LOG-013] La contraseña se muestra enmascarada @P2",
+      "priority": "P2",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1091,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-024",
+      "title": "[TC-AUTH-LOG-024] La página de login lista los usuarios aceptados @P3",
+      "priority": "P3",
+      "file": "auth/login-validation.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1057,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-022",
+      "title": "[TC-AUTH-LOG-022] Cookie de sesión con usuario bloqueado o inexistente es rechazada @P2",
+      "priority": "P2",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2288,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-014",
+      "title": "[TC-AUTH-LOG-014] Acceso sin sesión a /inventory.html @P0",
+      "priority": "P0",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 826,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-015",
+      "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/cart.html) @P1",
+      "priority": "P1",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 778,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-015",
+      "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/checkout-step-one.html) @P1",
+      "priority": "P1",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 734,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-015",
+      "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/checkout-step-two.html) @P1",
+      "priority": "P1",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 763,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-015",
+      "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/checkout-complete.html) @P1",
+      "priority": "P1",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 852,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-015",
+      "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/inventory-item.html?id=4) @P1",
+      "priority": "P1",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 833,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-017",
+      "title": "[TC-AUTH-LOG-017] Logout cierra la sesión @P0",
+      "priority": "P0",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3749,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-018",
+      "title": "[TC-AUTH-LOG-018] Atrás del navegador tras el logout no muestra contenido @P1",
+      "priority": "P1",
+      "file": "auth/session.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2823,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-001",
+      "title": "[TC-CART-CRT-001] Sin badge con el carrito vacío @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1352,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-002",
+      "title": "[TC-CART-CRT-002] El badge suma y resta al agregar y quitar @P0",
+      "priority": "P0",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1978,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-003",
+      "title": "[TC-CART-CRT-003] El carrito lista los productos agregados @P0",
+      "priority": "P0",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1892,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-004",
+      "title": "[TC-CART-CRT-004] Encabezados de la página del carrito @P3",
+      "priority": "P3",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1943,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-005",
+      "title": "[TC-CART-CRT-005] Quitar un producto desde el carrito @P0",
+      "priority": "P0",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2284,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-006",
+      "title": "[TC-CART-CRT-006] Quitar el último producto deja el carrito vacío @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2198,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-007",
+      "title": "[TC-CART-CRT-007] El producto quitado en el carrito vuelve a \"Add to cart\" en el listado @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2358,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-014",
+      "title": "[TC-CART-CRT-014] El nombre del producto en el carrito abre su detalle @P2",
+      "priority": "P2",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1702,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-019",
+      "title": "[TC-CART-CRT-019] La cantidad por producto es siempre 1 y no es editable @P3",
+      "priority": "P3",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1589,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-008",
+      "title": "[TC-CART-CRT-008] Continue Shopping vuelve al catálogo sin cambiar el carrito @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1532,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-009",
+      "title": "[TC-CART-CRT-009] Checkout abre el paso 1 @P0",
+      "priority": "P0",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1302,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-013",
+      "title": "[TC-CART-CRT-013] No se puede iniciar checkout con el carrito vacío @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 1455,
+      "retries": 0,
+      "openDefect": "DEF-SD-010",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-010",
+      "title": "[TC-CART-CRT-010] El carrito se conserva al recargar @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1775,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-015",
+      "title": "[TC-CART-CRT-015] El carrito queda vacío al completar la compra @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2352,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-016",
+      "title": "[TC-CART-CRT-016] Carrito sin sesión redirige al login @P1",
+      "priority": "P1",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1420,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-017",
+      "title": "[TC-CART-CRT-017] problem_user y error_user pueden quitar productos desde el carrito (problem_user) @P2",
+      "priority": "P2",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1715,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-017",
+      "title": "[TC-CART-CRT-017] problem_user y error_user pueden quitar productos desde el carrito (error_user) @P2",
+      "priority": "P2",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1654,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-018",
+      "title": "[TC-CART-CRT-018] visual_user ve en el carrito el precio real @P2",
+      "priority": "P2",
+      "file": "cart/cart.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1463,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-001",
+      "title": "[TC-CHK-FLW-001] Compra completa con standard_user @P0",
+      "priority": "P0",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2425,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-017",
+      "title": "[TC-CHK-FLW-017] Finalizar muestra la confirmación y vacía el carrito @P0",
+      "priority": "P0",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3065,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-018",
+      "title": "[TC-CHK-FLW-018] Back Home vuelve al catálogo @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3149,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-002",
+      "title": "[TC-CHK-FLW-002] Elementos del paso 1 @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2512,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-003",
+      "title": "[TC-CHK-FLW-003] Los tres campos vacíos @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2334,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-004",
+      "title": "[TC-CHK-FLW-004] Falta el apellido @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3744,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-005",
+      "title": "[TC-CHK-FLW-005] Falta el código postal @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3223,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-006",
+      "title": "[TC-CHK-FLW-006] Falta el nombre con el resto informado @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2345,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-007",
+      "title": "[TC-CHK-FLW-007] Campos con solo espacios son rechazados @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 2414,
+      "retries": 0,
+      "openDefect": "DEF-SD-011",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-008",
+      "title": "[TC-CHK-FLW-008] Cerrar el error del paso 1 @P3",
+      "priority": "P3",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2905,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-009",
+      "title": "[TC-CHK-FLW-009] Cancelar en el paso 1 vuelve al carrito @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2415,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-010",
+      "title": "[TC-CHK-FLW-010] El resumen muestra productos, pago y envío @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3542,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-011",
+      "title": "[TC-CHK-FLW-011] Subtotal igual a la suma de precios @P0",
+      "priority": "P0",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3146,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-012",
+      "title": "[TC-CHK-FLW-012] Impuesto del 8 % redondeado a centavos @P0",
+      "priority": "P0",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2869,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-013",
+      "title": "[TC-CHK-FLW-013] Total igual a subtotal más impuesto @P0",
+      "priority": "P0",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2667,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-014",
+      "title": "[TC-CHK-FLW-014] Totales con 1 y con 6 productos @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 11556,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-015",
+      "title": "[TC-CHK-FLW-015] Totales siempre con 2 decimales @P3",
+      "priority": "P3",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 3448,
+      "retries": 0,
+      "openDefect": "DEF-SD-012",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-016",
+      "title": "[TC-CHK-FLW-016] Cancelar en el paso 2 vuelve al catálogo con el carrito intacto @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5960,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-019",
+      "title": "[TC-CHK-FLW-019] Generar el PDF de la orden @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 9117,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-019",
+      "title": "[TC-CHK-FLW-019] Generar el PDF de la orden - revisión manual @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "skipped",
+      "durationMs": 6,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": "PENDING-CODE: parte manual del TC \"Ambos\" (revisión visual del PDF: legible, 1 página, sin texto superpuesto ni cortado). Procedimiento: qa/03-test-cases/TC-CHK-FLW-019-pdf-de-la-orden.md",
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-026",
+      "title": "[TC-CHK-FLW-026] El PDF contiene los datos de la orden @P3",
+      "priority": "P3",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 10117,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-020",
+      "title": "[TC-CHK-FLW-020] El resumen no es accesible sin completar el paso 1 @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 2417,
+      "retries": 0,
+      "openDefect": "DEF-SD-013",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-021",
+      "title": "[TC-CHK-FLW-021] Checkout sin sesión redirige al login (/checkout-step-one.html) @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1459,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-021",
+      "title": "[TC-CHK-FLW-021] Checkout sin sesión redirige al login (/checkout-step-two.html) @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1962,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-021",
+      "title": "[TC-CHK-FLW-021] Checkout sin sesión redirige al login (/checkout-complete.html) @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2624,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-022",
+      "title": "[TC-CHK-FLW-022] problem_user puede completar el paso 1 @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 4905,
+      "retries": 0,
+      "openDefect": "DEF-SD-014",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-023",
+      "title": "[TC-CHK-FLW-023] error_user no avanza sin apellido @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 4488,
+      "retries": 0,
+      "openDefect": "DEF-SD-015",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-024",
+      "title": "[TC-CHK-FLW-024] error_user puede finalizar la compra @P1",
+      "priority": "P1",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 9930,
+      "retries": 0,
+      "openDefect": "DEF-SD-016",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-025",
+      "title": "[TC-CHK-FLW-025] visual_user y performance_glitch_user calculan los totales con precios reales (visual_user) @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4526,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CHK-FLW-025",
+      "title": "[TC-CHK-FLW-025] visual_user y performance_glitch_user calculan los totales con precios reales (performance_glitch_user) @P2",
+      "priority": "P2",
+      "file": "checkout/checkout-flow.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 13430,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-001",
+      "title": "[TC-INV-CAT-001] El listado muestra 6 productos completos @P0",
+      "priority": "P0",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 10036,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-002",
+      "title": "[TC-INV-CAT-002] Nombres y precios coinciden con el catálogo de referencia @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2991,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-003",
+      "title": "[TC-INV-CAT-003] Orden por defecto A-Z @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2774,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-004",
+      "title": "[TC-INV-CAT-004] Ordenar por nombre Z-A @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3017,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-005",
+      "title": "[TC-INV-CAT-005] Ordenar por precio de menor a mayor @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4537,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-006",
+      "title": "[TC-INV-CAT-006] Ordenar por precio de mayor a menor @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5623,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-007",
+      "title": "[TC-INV-CAT-007] El orden vuelve a A-Z al recargar @P3",
+      "priority": "P3",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4101,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-028",
+      "title": "[TC-INV-CAT-028] El selector de orden ofrece las 4 opciones estáticas @P3",
+      "priority": "P3",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1982,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-008",
+      "title": "[TC-INV-CAT-008] Agregar un producto desde el listado @P0",
+      "priority": "P0",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2807,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-009",
+      "title": "[TC-INV-CAT-009] Agregar los 6 productos @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3337,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-010",
+      "title": "[TC-INV-CAT-010] Quitar un producto desde el listado @P0",
+      "priority": "P0",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2769,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-014",
+      "title": "[TC-INV-CAT-014] Agregar y quitar desde el detalle @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4610,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-015",
+      "title": "[TC-INV-CAT-015] El detalle refleja un producto que ya está en el carrito @P2",
+      "priority": "P2",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4424,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-011",
+      "title": "[TC-INV-CAT-011] El nombre abre el detalle del mismo producto @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1730,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-012",
+      "title": "[TC-INV-CAT-012] La imagen abre el detalle del mismo producto @P2",
+      "priority": "P2",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3427,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-013",
+      "title": "[TC-INV-CAT-013] El detalle muestra los mismos datos que el listado para los 6 productos @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 7166,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-016",
+      "title": "[TC-INV-CAT-016] Volver al listado desde el detalle @P2",
+      "priority": "P2",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3951,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-017",
+      "title": "[TC-INV-CAT-017] Detalle de un producto inexistente @P3",
+      "priority": "P3",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3199,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-018",
+      "title": "[TC-INV-CAT-018] Catálogo sin sesión redirige al login @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2102,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-019",
+      "title": "[TC-INV-CAT-019] problem_user ve la imagen propia de cada producto @P2",
+      "priority": "P2",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 2593,
+      "retries": 0,
+      "openDefect": "DEF-SD-001",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-020",
+      "title": "[TC-INV-CAT-020] problem_user puede ordenar el listado @P2",
+      "priority": "P2",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 2987,
+      "retries": 0,
+      "openDefect": "DEF-SD-002",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-021",
+      "title": "[TC-INV-CAT-021] problem_user puede agregar y quitar los 6 productos @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 3909,
+      "retries": 0,
+      "openDefect": "DEF-SD-003",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-022",
+      "title": "[TC-INV-CAT-022] problem_user abre el detalle del producto elegido @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 2751,
+      "retries": 0,
+      "openDefect": "DEF-SD-004",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-023",
+      "title": "[TC-INV-CAT-023] error_user puede ordenar sin errores @P2",
+      "priority": "P2",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 2421,
+      "retries": 0,
+      "openDefect": "DEF-SD-005",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-024",
+      "title": "[TC-INV-CAT-024] error_user puede agregar y quitar los 6 productos @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 3060,
+      "retries": 0,
+      "openDefect": "DEF-SD-006",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-025",
+      "title": "[TC-INV-CAT-025] visual_user ve precios reales y con 2 decimales @P1",
+      "priority": "P1",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 13361,
+      "retries": 0,
+      "openDefect": "DEF-SD-007",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-026",
+      "title": "[TC-INV-CAT-026] visual_user ve imágenes y controles en su posición @P3",
+      "priority": "P3",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 17537,
+      "retries": 0,
+      "openDefect": "DEF-SD-008",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-026",
+      "title": "[TC-INV-CAT-026] visual_user ve imágenes y controles en su posición - revisión manual @P3",
+      "priority": "P3",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "skipped",
+      "durationMs": 3,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": "PENDING-CODE: parte manual del TC \"Ambos\" (comparación visual de capturas), no automatizable por diseño. Procedimiento: qa/03-test-cases/TC-INV-CAT-026-visual-user-imagenes-y-controles.md",
+      "error": null
+    },
+    {
+      "tc": "TC-INV-CAT-027",
+      "title": "[TC-INV-CAT-027] performance_glitch_user ve el mismo catálogo que standard_user @P3",
+      "priority": "P3",
+      "file": "inventory/catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 22862,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-001",
+      "title": "[TC-INV-DYN-001] Desplegar el submenú Dynamic Catalog @P2",
+      "priority": "P2",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3537,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-002",
+      "title": "[TC-INV-DYN-002] Abrir Lazy Load @P2",
+      "priority": "P2",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4158,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-003",
+      "title": "[TC-INV-DYN-003] El scroll carga más productos @P2",
+      "priority": "P2",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2268,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-004",
+      "title": "[TC-INV-DYN-004] Precios de Lazy Load iguales al catálogo @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2712,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-005",
+      "title": "[TC-INV-DYN-005] Spinner visible durante la carga @P2",
+      "priority": "P2",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5087,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-006",
+      "title": "[TC-INV-DYN-006] El spinner reaparece al recargar @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5877,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-007",
+      "title": "[TC-INV-DYN-007] El punto del slider muestra su producto @P2",
+      "priority": "P2",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3351,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-008",
+      "title": "[TC-INV-DYN-008] El slider avanza automáticamente @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5424,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-011",
+      "title": "[TC-INV-DYN-011] Las vistas del Dynamic Catalog son de solo lectura @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5084,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-013",
+      "title": "[TC-INV-DYN-013] Cerrar el submenú con un segundo clic @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4232,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-009",
+      "title": "[TC-INV-DYN-009] Slider sin sesión redirige al login @P1",
+      "priority": "P1",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3018,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-010",
+      "title": "[TC-INV-DYN-010] Lazy Load y Spinner sin sesión redirigen al login @P2",
+      "priority": "P2",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2027,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-012",
+      "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (problem_user) @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 10294,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-012",
+      "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (error_user) @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 8025,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-012",
+      "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (visual_user) @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 9430,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-INV-DYN-012",
+      "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (performance_glitch_user) @P3",
+      "priority": "P3",
+      "file": "inventory/dynamic-catalog.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 13977,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-001",
+      "title": "[TC-NAV-MENU-001] Abrir y cerrar el menú lateral @P1",
+      "priority": "P1",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3865,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-002",
+      "title": "[TC-NAV-MENU-002] Cerrar el menú con Escape @P3",
+      "priority": "P3",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1880,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-003",
+      "title": "[TC-NAV-MENU-003] Opciones del menú y su orden @P2",
+      "priority": "P2",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3392,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-004",
+      "title": "[TC-NAV-MENU-004] Menú, carrito y footer en todas las vistas internas @P2",
+      "priority": "P2",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3940,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-005",
+      "title": "[TC-NAV-MENU-005] All Items desde el carrito @P1",
+      "priority": "P1",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 2759,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-006",
+      "title": "[TC-NAV-MENU-006] About lleva al sitio de Sauce Labs @P2",
+      "priority": "P2",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 4417,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-007",
+      "title": "[TC-NAV-MENU-007] Logout desde el menú @P0",
+      "priority": "P0",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3383,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-013",
+      "title": "[TC-NAV-MENU-013] Logo del encabezado @P3",
+      "priority": "P3",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1532,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-008",
+      "title": "[TC-NAV-MENU-008] Reset App State vacía el carrito @P1",
+      "priority": "P1",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3204,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-009",
+      "title": "[TC-NAV-MENU-009] Reset App State actualiza los botones del listado @P2",
+      "priority": "P2",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 3255,
+      "retries": 0,
+      "openDefect": "DEF-SD-017",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-010",
+      "title": "[TC-NAV-MENU-010] El menú queda abierto tras Reset App State @P3",
+      "priority": "P3",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 3120,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-015",
+      "title": "[TC-NAV-MENU-015] error_user: Reset App State sin errores @P3",
+      "priority": "P3",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 5344,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-011",
+      "title": "[TC-NAV-MENU-011] Enlaces sociales del footer @P3",
+      "priority": "P3",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1316,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-012",
+      "title": "[TC-NAV-MENU-012] Texto de copyright del footer @P3",
+      "priority": "P3",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1360,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-014",
+      "title": "[TC-NAV-MENU-014] problem_user: About apunta al sitio correcto @P2",
+      "priority": "P2",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "expected-fail",
+      "durationMs": 6304,
+      "retries": 0,
+      "openDefect": "DEF-SD-018",
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-NAV-MENU-016",
+      "title": "[TC-NAV-MENU-016] La página de login no muestra menú ni carrito @P3",
+      "priority": "P3",
+      "file": "navigation/menu.spec.ts",
+      "project": "chromium",
+      "status": "passed",
+      "durationMs": 1174,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-001",
+      "title": "[TC-AUTH-LOG-001] Login exitoso con standard_user @P0",
+      "priority": "P0",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 771,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-002",
+      "title": "[TC-AUTH-LOG-002] Login enviando el formulario con la tecla Enter @P2",
+      "priority": "P2",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 853,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-016",
+      "title": "[TC-AUTH-LOG-016] Login después de intentar acceder a una ruta protegida @P2",
+      "priority": "P2",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 482,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-019",
+      "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (problem_user) @P1",
+      "priority": "P1",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 477,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-019",
+      "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (performance_glitch_user) @P1",
+      "priority": "P1",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 5583,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-019",
+      "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (error_user) @P1",
+      "priority": "P1",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 479,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-019",
+      "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (visual_user) @P1",
+      "priority": "P1",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 468,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-020",
+      "title": "[TC-AUTH-LOG-020] performance_glitch_user inicia sesión pese a la demora @P2",
+      "priority": "P2",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 5552,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-021",
+      "title": "[TC-AUTH-LOG-021] Cookie de sesión creada con el nombre del usuario @P2",
+      "priority": "P2",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 869,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-006",
+      "title": "[TC-AUTH-LOG-006] Usuario inexistente @P1",
+      "priority": "P1",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 1015,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-008",
+      "title": "[TC-AUTH-LOG-008] Usuario en mayúsculas es rechazado @P2",
+      "priority": "P2",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 958,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-009",
+      "title": "[TC-AUTH-LOG-009] Usuario con espacio inicial es rechazado @P3",
+      "priority": "P3",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 1124,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-010",
+      "title": "[TC-AUTH-LOG-010] Usuario bloqueado no puede iniciar sesión @P0",
+      "priority": "P0",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 1349,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-AUTH-LOG-023",
+      "title": "[TC-AUTH-LOG-023] Expiración de la sesión a los 10 minutos @P3",
+      "priority": "P3",
+      "file": "auth/login.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 1904,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-011",
+      "title": "[TC-CART-CRT-011] El carrito se conserva tras logout y login del mismo usuario @P2",
+      "priority": "P2",
+      "file": "cart/cart-session.login.spec.ts",
+      "project": "login-flow",
+      "status": "passed",
+      "durationMs": 3541,
+      "retries": 0,
+      "openDefect": null,
+      "skipReason": null,
+      "error": null
+    },
+    {
+      "tc": "TC-CART-CRT-012",
+      "title": "[TC-CART-CRT-012] Otro usuario no ve el carrito del anterior @P1",
+      "priority": "P1",
+      "file": "cart/cart-session.login.spec.ts",
+      "project": "login-flow",
+      "status": "expected-fail",
+      "durationMs": 4613,
+      "retries": 0,
+      "openDefect": "DEF-SD-009",
+      "skipReason": null,
+      "error": null
+    }
+  ],
+  "flakiness": {
+    "runs": [
+      {
+        "run": "R1",
+        "command": "npm run test:all -- --repeat-each=3",
+        "workers": 2,
+        "durationMs": 632141,
+        "executions": 420,
+        "asExpected": 419,
+        "unexpected": 1
+      },
+      {
+        "run": "R2",
+        "command": "npm run test:all -- --repeat-each=3 --workers=4",
+        "workers": 4,
+        "durationMs": 449474,
+        "executions": 420,
+        "asExpected": 420,
+        "unexpected": 0
+      },
+      {
+        "run": "R3",
+        "command": "npm run test:all",
+        "workers": 2,
+        "durationMs": 193069,
+        "executions": 140,
+        "asExpected": 140,
+        "unexpected": 0
+      },
+      {
+        "run": "R4",
+        "command": "npm run test:all",
+        "workers": 2,
+        "durationMs": 216692,
+        "executions": 140,
+        "asExpected": 139,
+        "unexpected": 1
+      },
+      {
+        "run": "R5",
+        "command": "npm run test:all -- --repeat-each=2 --workers=4",
+        "workers": 4,
+        "durationMs": 225494,
+        "executions": 280,
+        "asExpected": 280,
+        "unexpected": 0
+      },
+      {
+        "run": "R6",
+        "command": "npm run test:all (official)",
+        "workers": 2,
+        "durationMs": 265392,
+        "executions": 140,
+        "asExpected": 140,
+        "unexpected": 0
+      }
+    ],
+    "totals": {
+      "executions": 1540,
+      "asExpected": 1538
+    },
+    "perTest": [
+      {
+        "title": "[TC-AUTH-LOG-003] Usuario y contraseña vacíos @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-004] Contraseña vacía @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-005] Usuario vacío con contraseña informada @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-007] Contraseña incorrecta para un usuario válido @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-011] Cerrar el mensaje de error @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-012] Campos marcados visualmente ante un error @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-013] La contraseña se muestra enmascarada @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-024] La página de login lista los usuarios aceptados @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-022] Cookie de sesión con usuario bloqueado o inexistente es rechazada @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-014] Acceso sin sesión a /inventory.html @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/cart.html) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/checkout-step-one.html) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/checkout-step-two.html) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/checkout-complete.html) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-015] Acceso sin sesión al resto de rutas internas (/inventory-item.html?id=4) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-017] Logout cierra la sesión @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-018] Atrás del navegador tras el logout no muestra contenido @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-001] Sin badge con el carrito vacío @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-002] El badge suma y resta al agregar y quitar @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-003] El carrito lista los productos agregados @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-004] Encabezados de la página del carrito @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-005] Quitar un producto desde el carrito @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-006] Quitar el último producto deja el carrito vacío @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-007] El producto quitado en el carrito vuelve a \"Add to cart\" en el listado @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-014] El nombre del producto en el carrito abre su detalle @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-019] La cantidad por producto es siempre 1 y no es editable @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-008] Continue Shopping vuelve al catálogo sin cambiar el carrito @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-009] Checkout abre el paso 1 @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-013] No se puede iniciar checkout con el carrito vacío @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-010] El carrito se conserva al recargar @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-015] El carrito queda vacío al completar la compra @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-016] Carrito sin sesión redirige al login @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-017] problem_user y error_user pueden quitar productos desde el carrito (problem_user) @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-017] problem_user y error_user pueden quitar productos desde el carrito (error_user) @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-018] visual_user ve en el carrito el precio real @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-001] Compra completa con standard_user @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-017] Finalizar muestra la confirmación y vacía el carrito @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-018] Back Home vuelve al catálogo @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-002] Elementos del paso 1 @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-003] Los tres campos vacíos @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-004] Falta el apellido @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-005] Falta el código postal @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-006] Falta el nombre con el resto informado @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-007] Campos con solo espacios son rechazados @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-008] Cerrar el error del paso 1 @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-009] Cancelar en el paso 1 vuelve al carrito @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-010] El resumen muestra productos, pago y envío @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-011] Subtotal igual a la suma de precios @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-012] Impuesto del 8 % redondeado a centavos @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-013] Total igual a subtotal más impuesto @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-014] Totales con 1 y con 6 productos @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-015] Totales siempre con 2 decimales @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-016] Cancelar en el paso 2 vuelve al catálogo con el carrito intacto @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-019] Generar el PDF de la orden @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-026] El PDF contiene los datos de la orden @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-020] El resumen no es accesible sin completar el paso 1 @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-021] Checkout sin sesión redirige al login (/checkout-step-one.html) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-021] Checkout sin sesión redirige al login (/checkout-step-two.html) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-021] Checkout sin sesión redirige al login (/checkout-complete.html) @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-022] problem_user puede completar el paso 1 @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-023] error_user no avanza sin apellido @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-024] error_user puede finalizar la compra @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-025] visual_user y performance_glitch_user calculan los totales con precios reales (visual_user) @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CHK-FLW-025] visual_user y performance_glitch_user calculan los totales con precios reales (performance_glitch_user) @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-001] El listado muestra 6 productos completos @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-002] Nombres y precios coinciden con el catálogo de referencia @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-003] Orden por defecto A-Z @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-004] Ordenar por nombre Z-A @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-005] Ordenar por precio de menor a mayor @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-006] Ordenar por precio de mayor a menor @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-007] El orden vuelve a A-Z al recargar @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-028] El selector de orden ofrece las 4 opciones estáticas @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-008] Agregar un producto desde el listado @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-009] Agregar los 6 productos @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-010] Quitar un producto desde el listado @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-014] Agregar y quitar desde el detalle @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-015] El detalle refleja un producto que ya está en el carrito @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-011] El nombre abre el detalle del mismo producto @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-012] La imagen abre el detalle del mismo producto @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-013] El detalle muestra los mismos datos que el listado para los 6 productos @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-016] Volver al listado desde el detalle @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-017] Detalle de un producto inexistente @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-018] Catálogo sin sesión redirige al login @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-019] problem_user ve la imagen propia de cada producto @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-020] problem_user puede ordenar el listado @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-021] problem_user puede agregar y quitar los 6 productos @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-022] problem_user abre el detalle del producto elegido @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-023] error_user puede ordenar sin errores @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-024] error_user puede agregar y quitar los 6 productos @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-025] visual_user ve precios reales y con 2 decimales @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-026] visual_user ve imágenes y controles en su posición @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-CAT-027] performance_glitch_user ve el mismo catálogo que standard_user @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-001] Desplegar el submenú Dynamic Catalog @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-002] Abrir Lazy Load @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-003] El scroll carga más productos @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-004] Precios de Lazy Load iguales al catálogo @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 10,
+        "passRate": 90.9
+      },
+      {
+        "title": "[TC-INV-DYN-005] Spinner visible durante la carga @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-006] El spinner reaparece al recargar @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-007] El punto del slider muestra su producto @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-008] El slider avanza automáticamente @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-011] Las vistas del Dynamic Catalog son de solo lectura @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-013] Cerrar el submenú con un segundo clic @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-009] Slider sin sesión redirige al login @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-010] Lazy Load y Spinner sin sesión redirigen al login @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (problem_user) @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (error_user) @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (visual_user) @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 10,
+        "passRate": 90.9
+      },
+      {
+        "title": "[TC-INV-DYN-012] Dynamic Catalog con usuarios no estándar (performance_glitch_user) @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-001] Abrir y cerrar el menú lateral @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-002] Cerrar el menú con Escape @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-003] Opciones del menú y su orden @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-004] Menú, carrito y footer en todas las vistas internas @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-005] All Items desde el carrito @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-006] About lleva al sitio de Sauce Labs @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-007] Logout desde el menú @P0",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-013] Logo del encabezado @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-008] Reset App State vacía el carrito @P1",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-009] Reset App State actualiza los botones del listado @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-010] El menú queda abierto tras Reset App State @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-015] error_user: Reset App State sin errores @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-011] Enlaces sociales del footer @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-012] Texto de copyright del footer @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-014] problem_user: About apunta al sitio correcto @P2",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-NAV-MENU-016] La página de login no muestra menú ni carrito @P3",
+        "project": "chromium",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-001] Login exitoso con standard_user @P0",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-002] Login enviando el formulario con la tecla Enter @P2",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-016] Login después de intentar acceder a una ruta protegida @P2",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (problem_user) @P1",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (performance_glitch_user) @P1",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (error_user) @P1",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-019] Login de los usuarios habilitados no estándar (visual_user) @P1",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-020] performance_glitch_user inicia sesión pese a la demora @P2",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-021] Cookie de sesión creada con el nombre del usuario @P2",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-006] Usuario inexistente @P1",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-008] Usuario en mayúsculas es rechazado @P2",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-009] Usuario con espacio inicial es rechazado @P3",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-010] Usuario bloqueado no puede iniciar sesión @P0",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-AUTH-LOG-023] Expiración de la sesión a los 10 minutos @P3",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-011] El carrito se conserva tras logout y login del mismo usuario @P2",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      },
+      {
+        "title": "[TC-CART-CRT-012] Otro usuario no ve el carrito del anterior @P1",
+        "project": "login-flow",
+        "executions": 11,
+        "asExpected": 11,
+        "passRate": 100
+      }
+    ],
+    "heals": [
+      {
+        "id": "FLK-SD-06",
+        "tests": [
+          "TC-INV-DYN-012",
+          "TC-NAV-MENU-001",
+          "HeaderMenu.open()"
+        ],
+        "category": "D - Fragile timing",
+        "fix": "wait for settled closed side menu (hidden attribute) before the burger click; REC-SD-013"
+      },
+      {
+        "id": "FLK-SD-07",
+        "tests": [
+          "TC-INV-CAT-027",
+          "TC-CHK-FLW-025",
+          "TC-INV-DYN-012"
+        ],
+        "category": "D - Fragile timing",
+        "fix": "testInfo.slow() for performance_glitch_user"
+      },
+      {
+        "id": "FLK-SD-08",
+        "tests": [
+          "TC-INV-DYN-004"
+        ],
+        "category": "D - Fragile timing",
+        "fix": "read lazy-load name/price pairs atomically per card"
+      }
+    ],
+    "defectReverification": "DEFECTS_DIAG=1: the 18 expectOpenDefect tests fail on their business-rule assertion; DEF-SD-019 retired -> REC-SD-012"
+  }
+}

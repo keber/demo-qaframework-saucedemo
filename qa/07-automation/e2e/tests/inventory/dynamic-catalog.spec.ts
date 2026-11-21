@@ -77,13 +77,13 @@ test.describe('INV-DYN - Dynamic Catalog', () => {
     const dyn = await openCatalog(page);
     await dyn.gotoLazyLoad();
     await dyn.scrollMore(3);
-    const names = (await dyn.lazyNames.allTextContents()).map((t) => t.trim());
-    const prices = (await dyn.lazyPrices.allTextContents()).map((t) => t.trim());
-    expect(names.length).toBe(prices.length);
-    for (let i = 0; i < names.length; i++) {
-      const product = baseProduct(names[i]);
-      expect.soft(PRICE_BY_NAME[product], `"${names[i]}" belongs to the reference catalog`).toBeTruthy();
-      expect.soft(prices[i], `price of "${names[i]}"`).toBe(PRICE_BY_NAME[product]);
+    // One DOM pass per card (FLK-SD-08): the list keeps loading while it is read.
+    const cards = await dyn.readLazyCards();
+    expect(cards.length).toBeGreaterThan(12);
+    for (const card of cards) {
+      const product = baseProduct(card.name);
+      expect.soft(PRICE_BY_NAME[product], `"${card.name}" belongs to the reference catalog`).toBeTruthy();
+      expect.soft(card.price, `price of "${card.name}"`).toBe(PRICE_BY_NAME[product]);
     }
   });
 

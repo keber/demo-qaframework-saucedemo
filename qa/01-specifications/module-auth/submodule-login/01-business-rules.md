@@ -94,3 +94,4 @@
 |---|---|---|
 | La sesión se valida solo con la cookie `session-username` del cliente: una cookie creada a mano con `standard_user` da acceso a `/inventory.html` sin pasar por el login | RN-AUTH-007 | REC (seguridad): la app es una demo sin backend; no viola una regla de negocio explícita |
 | El campo usuario no tiene longitud máxima | - | REC (robustez) |
+| El login rechazado de `locked_out_user` crea igualmente la cookie `session-username` (inerte: no da acceso). Detectado en la etapa 5 | RN-AUTH-005 | REC (higiene de sesión): REC-SD-012. Etapa 5b: reclasificado desde DEF-SD-019 porque RN-AUTH-005 solo exige rechazar el acceso |
