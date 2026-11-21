@@ -64,3 +64,13 @@ Impuesto 8 % redondeado a centavos: [4,0] -> $39.98 / $3.20 / $43.18; [4] -> $29
 ## Credenciales en scripts
 
 Leer `QA_USER_PASSWORD` y `QA_USER_*_USERNAME` con dotenv desde `qa/07-automation/e2e/.env`; no imprimir valores. La contraseña es pública en la página de login pero en documentación va como `<PLACEHOLDER>`.
+
+## Hallazgos de la etapa 5 (2026-11-21, ejecución automatizada)
+
+- Confirmados los 18 candidatos DEF de las etapas 1 y 2 (DEF-SD-001 a DEF-SD-018) y uno nuevo: el login rechazado de `locked_out_user` crea igualmente la cookie `session-username` = `locked_out_user` (DEF-SD-019, RN-AUTH-005); esa cookie no da acceso (TC-AUTH-LOG-022).
+- NO se reproduce el error "wa.cesetRart is not a function" de Reset App State con `error_user`: el carrito se vacía sin `pageerror` (TC-NAV-MENU-015 en verde).
+- La carga directa de una ruta interna responde HTTP 404 con fallback de la SPA y deja en consola "Failed to load resource ... 404" y "Permissions policy violation: unload..." para todos los usuarios (REC-SD-011).
+- Placeholder de Lazy Load: el texto real es "Loading" + U+2026 (no tres puntos).
+- PDF de la orden: `pdf-parse` 1.1.1 falla con "bad XRef entry" en algunos PDF (pypdf y `pdfjs-dist` 4.10.38 los leen bien); el extractor de la suite es `pdfjs-dist` (`scripts/pdf-text.mjs`). El texto extraído separa o une producto y precio según el extractor: comparar sin espacios.
+- `visual_user`: en la ejecución el ícono del carrito quedó desplazado ~186 px en x y ~29 px en y respecto de `standard_user` (viewport Desktop Chrome 1280x720).
+- `getByTestId()` requiere `testIdAttribute: 'data-test'` en `playwright.config.ts`. En el detalle la imagen es `item-{slug}-img` (no `inventory-item-{slug}-img`).

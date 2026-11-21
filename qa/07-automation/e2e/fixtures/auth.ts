@@ -24,39 +24,31 @@
  * To act as another role, use a lane whose account has that role (parallelLanes in
  * qa-framework.config.json), not a login inside the test.
  *
- * Supported roles are driven by env vars - see .env.example.
+ * Supported roles are driven by env vars - see .env.example. saucedemo: 'default'
+ * (QA_USER_EMAIL) or a persona name (QA_USER_<PERSONA>_USERNAME), password QA_USER_PASSWORD.
  */
 
 import type { Page } from '@playwright/test';
 import { test } from '@playwright/test';
 
-export type QARole = 'default' | 'admin' | 'readonly' | string;
+export type QARole = 'default' | 'standard_user' | 'problem_user' | 'performance_glitch_user' | 'error_user' | 'visual_user' | 'locked_out_user' | string;
 
 interface LoginConfig {
   email:     string;
   password:  string;
 }
 
-/** Map role name -> credentials from environment variables */
+/**
+ * Map role name -> credentials from environment variables. saucedemo: 'default' is the
+ * lane account (QA_USER_EMAIL = standard_user); any persona name resolves
+ * QA_USER_<PERSONA>_USERNAME. All personas share QA_USER_PASSWORD.
+ */
 function getCredentials(role: QARole): LoginConfig {
-  switch (role) {
-    case 'admin':
-      return {
-        email:    process.env.QA_ADMIN_EMAIL    ?? '',
-        password: process.env.QA_ADMIN_PASSWORD ?? '',
-      };
-    case 'readonly':
-      return {
-        email:    process.env.QA_READONLY_EMAIL    ?? '',
-        password: process.env.QA_READONLY_PASSWORD ?? '',
-      };
-    case 'default':
-    default:
-      return {
-        email:    process.env.QA_USER_EMAIL    ?? '',
-        password: process.env.QA_USER_PASSWORD ?? '',
-      };
+  const password = process.env.QA_USER_PASSWORD ?? '';
+  if (role === 'default') {
+    return { email: process.env.QA_USER_EMAIL ?? '', password };
   }
+  return { email: process.env[`QA_USER_${role.toUpperCase()}_USERNAME`] ?? '', password };
 }
 
 export type ArtifactKind = 'trace' | 'video' | 'screenshot';
@@ -109,15 +101,16 @@ export async function loginAs(page: Page, role: QARole = 'default'): Promise<voi
   if (!email || !password) {
     throw new Error(
       `[qa-framework/auth] Missing credentials for role "${role}". ` +
-      `Check your .env file - expected ${role.toUpperCase()}_EMAIL and ${role.toUpperCase()}_PASSWORD.`
+      `Check your .env file - expected QA_USER_EMAIL or QA_USER_${role.toUpperCase()}_USERNAME, and QA_USER_PASSWORD.`
     );
   }
 
-  const loginPath        = process.env.QA_LOGIN_PATH               ?? '/login';
-  const emailSelector    = process.env.QA_LOGIN_EMAIL_SELECTOR      ?? 'input[type="email"]';
-  const passwordSelector = process.env.QA_LOGIN_PASSWORD_SELECTOR   ?? 'input[type="password"]';
-  const submitSelector   = process.env.QA_LOGIN_SUBMIT_SELECTOR     ?? 'button[type="submit"]';
-  const successSelector  = process.env.QA_LOGIN_SUCCESS_SELECTOR    ?? '.dashboard';
+  // saucedemo defaults; `||` so an empty value in .env also falls back.
+  const loginPath        = process.env.QA_LOGIN_PATH               || '/';
+  const emailSelector    = process.env.QA_LOGIN_EMAIL_SELECTOR      || '#user-name';
+  const passwordSelector = process.env.QA_LOGIN_PASSWORD_SELECTOR   || '#password';
+  const submitSelector   = process.env.QA_LOGIN_SUBMIT_SELECTOR     || '#login-button';
+  const successSelector  = process.env.QA_LOGIN_SUCCESS_SELECTOR    || '.inventory_list';
   const baseURL          = process.env.QA_BASE_URL                  ?? '';
 
   await page.goto(`${baseURL}${loginPath}`, { waitUntil: 'domcontentloaded' });
@@ -137,12 +130,15 @@ export async function loginAs(page: Page, role: QARole = 'default'): Promise<voi
       if (!input) {
         throw new Error(`[qa-framework] Password input not found for selector: ${selector}`);
       }
-      input.value = pwd;
+      // React controlled input: use the native setter so React sees the change.
+      const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
+      if (setter) setter.call(input, pwd); else input.value = pwd;
       input.dispatchEvent(new Event('input', { bubbles: true }));
       input.dispatchEvent(new Event('change', { bubbles: true }));
     },
     [passwordSelector, password] as const
   );
   await page.locator(submitSelector).click();
+  // 15 s covers performance_glitch_user (~5 s login); the global timeout is untouched.
   await page.waitForSelector(successSelector, { timeout: 15_000 });
 }

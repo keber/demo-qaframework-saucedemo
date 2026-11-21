@@ -10,3 +10,5 @@ reports/**/*.aux
 reports/**/*.log
 reports/**/*.out
 reports/**/*.toc
+qa/05-test-execution/automated/test-results/
+qa/07-automation/e2e/results/

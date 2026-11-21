@@ -1,8 +1,8 @@
 {
-  "name": "{{PROJECT_NAME}}-qa-e2e",
+  "name": "saucedemo-qa-e2e",
   "version": "1.0.0",
   "private": true,
-  "description": "E2E Playwright test suite for {{PROJECT_NAME}}",
+  "description": "E2E Playwright test suite for saucedemo (Swag Labs)",
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
@@ -10,16 +10,20 @@
     "test:ui": "playwright test --ui",
     "test:p0": "playwright test --grep @P0",
     "test:p1": "playwright test --grep \"@P0|@P1\"",
-    "test:module": "playwright test --grep {{MODULE_PATTERN}}",
     "test:login-flow": "node scripts/run-opt-in.js login-flow",
     "test:writes": "node scripts/run-opt-in.js writes",
     "test:slow": "node scripts/run-opt-in.js slow",
     "report": "playwright show-report",
-    "validate": "npx keber/qa-framework validate"
+    "validate": "npx keber/qa-framework validate",
+    "test:all": "node scripts/run-all.js",
+    "summarize": "node scripts/summarize-results.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
-    "dotenv": "^16.0.0"
+    "@types/node": "^22.20.5",
+    "dotenv": "^16.0.0",
+    "pdfjs-dist": "^4.10.38",
+    "typescript": "^5.9.3"
   },
   "optionalDependencies": {
     "@alex_neo/playwright-azure-reporter": "^1.20.0"

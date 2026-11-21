@@ -22,7 +22,7 @@ Aplicación bajo prueba: `{{QA_BASE_URL}}` (Swag Labs). Un submódulo por módul
 | 2 - Generación de especificaciones | `/qa-spec-generation` | `feature/stage-2-spec-generation` | ✅ Completada |
 | 3 - Plan de pruebas | `/qa-test-plan` | `feature/stage-3-test-plan` | ✅ Completada |
 | 4 - Casos de prueba | `/qa-test-cases` | `feature/stage-4-test-cases` | ✅ Completada |
-| 5 - Automatización E2E | `/qa-automation` | `feature/stage-5-*` | 🔲 Pendiente |
+| 5 - Automatización E2E | `/qa-automation` | `feature/stage-5-automation` | ✅ Completada |
 | 5b - Estabilización | `/qa-test-stabilization` | `feature/stage-5b-*` | 🔲 Pendiente |
 
 ### Checklist del sprint
@@ -31,19 +31,21 @@ Aplicación bajo prueba: `{{QA_BASE_URL}}` (Swag Labs). Un submódulo por módul
 - [x] Etapa 2: especificaciones revisadas y aprobadas (sin `PENDING-CODE` en el alcance a automatizar). 126 TC en 6 submódulos, matriz de trazabilidad RN/FL -> TC en cada `05-test-scenarios.md`, 0 TC `PENDING-BROWSER` (los 5 de la etapa 1 verificados en vivo)
 - [x] Etapa 3: plan de pruebas del Sprint 1 en `qa/02-test-plans/sprints/Sprint-1/` (5 planes, uno por módulo: AUTH 24, INV 41, CART 19, CHK 26, NAV 16 = 126 TC; P0 17, P1 45, P2 37, P3 27; 124 `Automatizado` + 2 `Ambos`)
 - [x] Etapa 4: steps de los 126 TC expandidos en la sección 9 de los 5 planes (acciones, datos, selectores `data-test` y resultados medibles; IDs sin cambios) + 2 TC independientes para el track `Ambos` en `qa/03-test-cases/` (TC-INV-CAT-026, TC-CHK-FLW-019)
-- [ ] Etapa 5: suites Playwright en `qa/07-automation/e2e/tests/{auth,inventory,cart,checkout,navigation}/`
-- [ ] Etapa 5: defectos `DEF-*` en `qa/06-defects/open/` para cada `test.fail()` y `REC-*` en `qa/06-defects/recommendations/`
+- [x] Etapa 5: suites Playwright en `qa/07-automation/e2e/tests/{auth,inventory,cart,checkout,navigation}/` (126 TC -> 142 tests: 9 specs, 6 POM en `page-objects/`; `npx tsc --noEmit` limpio)
+- [x] Etapa 5: defectos `DEF-*` en `qa/06-defects/open/` para cada `test.fail()` y `REC-*` en `qa/06-defects/recommendations/` (DEF-SD-001 a DEF-SD-019, REC-SD-001 a REC-SD-011)
 - [ ] Etapa 5b: cada TC en estado válido (`test()` verde, `test.fail()` con DEF, o `test.skip()` con `PENDING-CODE`)
 - [ ] Cierre: actualizar `qa/README.md` (estado de módulos y Sprint History) y recortar este archivo
 
-### Entradas clave para la etapa 5
+### Resultado de la etapa 5 (entrada de la etapa 5b)
 
-- Fuente de los tests: sección 9 "Tabla de Pruebas" de `qa/02-test-plans/sprints/Sprint-1/Plan-de-Pruebas-saucedemo-Sprint-1-{AUTH,INV,CART,CHK,NAV}.md`. Cada fila trae steps numerados con valores `data-test` (usar `page.getByTestId()`), datos (`{QA_USER_*}` desde `process.env`, `${EXEC_IDX}`) y resultado esperado medible; la convención está en el párrafo "Etapa 4" sobre cada tabla
-- TC parametrizados: TC-AUTH-LOG-015 y TC-CHK-FLW-021 (por ruta); TC-AUTH-LOG-019, TC-INV-DYN-012, TC-CART-CRT-017 y TC-CHK-FLW-025 (por usuario); TC-CHK-FLW-014 (1 y 6 productos)
-- Track `Ambos`: automatizar la parte de DOM y adjuntar las evidencias para la revisión manual según `qa/03-test-cases/TC-INV-CAT-026-visual-user-imagenes-y-controles.md` y `qa/03-test-cases/TC-CHK-FLW-019-pdf-de-la-orden.md`
-- 18 candidatos DEF marcados en las tablas (INV 8, CART 2, CHK 6, NAV 2), más TC-NAV-MENU-015 a confirmar: aserción de la regla y `test.fail()` + DEF solo si se confirman en ejecución (regla 10)
-- TC-CHK-FLW-026 necesita un parser de PDF como devDependency
-- performance_glitch_user: timeout explícito de 15 s solo en la espera del login; nunca subir el timeout global
+- Ejecución oficial: `qa/05-test-execution/automated/2026-11-21_15-58-09_sprint-1-etapa-5/` (`results-summary.json` + `execution-report.md`). Totales: 142 tests de 126 TC: 121 passed, 19 expected-fail (`test.fail` + DEF), 0 failed, 2 skipped (`PENDING-CODE`), 0 flaky; duración 2m 26s.
+- Comando: `cd qa/07-automation/e2e && npm run test:all` (suite por defecto + proyecto opt-in `login-flow`; los `*.login.spec.ts` escriben la contraseña real y no graban trazas). Resumen: `node scripts/summarize-results.js results/results.json <salida>`.
+- Sesiones: `global-setup.ts` guarda un storageState por persona (`.auth/user-default.json` = standard_user y `.auth/<persona>.json`); `fixtures/base.ts` lo renueva en un proceso hijo cuando a la cookie le quedan menos de 150 s (vence a los 600 s). Elegir persona con `test.use({ qaUser })`.
+- 19 TC con `expectOpenDefect` (DEF-SD-001 a 019). Los 18 candidatos de las etapas 1 y 2 se confirmaron; TC-NAV-MENU-015 NO se confirmó (sin `pageerror` en Reset App State de error_user; queda como test normal y REC-SD-011 por el 404 de rutas profundas). DEF-SD-019 es nuevo: el login rechazado de `locked_out_user` crea la cookie `session-username` (TC-AUTH-LOG-010, RN-AUTH-005); revisar con el responsable de la especificación si se mantiene como DEF o se reclasifica a REC.
+- 2 `test.skip()` con `PENDING-CODE`: las partes manuales de los TC `Ambos` (TC-INV-CAT-026 y TC-CHK-FLW-019); sus capturas y el PDF quedan adjuntos en el reporte HTML del test automatizado.
+- Fallos de automatización corregidos durante la etapa 5 (detalle en `qa/memory/e2e-stabilization-patterns.md`, FLK-SD-01 a 05): espera del render de performance_glitch_user (TC-AUTH-LOG-019/020), elipsis U+2026 del placeholder (TC-INV-DYN-002), parser de PDF (TC-CHK-FLW-026, `pdf-parse` -> `pdfjs-dist`), errores de consola del deep link (TC-NAV-MENU-015).
+- Pendientes para la etapa 5b: ninguno: 0 fallos inesperados en la ejecución oficial. La etapa 5b debe confirmar la estabilidad (2 ejecuciones consecutivas más) y cerrar el sprint.
+- Desviación de nomenclatura: los defectos usan `DEF-SD-NNN` / `REC-SD-NNN` (instrucción de la etapa) y no `DEF-{MODULE}-NNN` como indica `qa/00-standards/naming-conventions.md`; decidir antes del cierre si se renombran.
 
 ### Entradas de la etapa 2 (referencia)
 
