@@ -11,7 +11,9 @@
 [Clic #react-burger-menu-btn]
     │
     ▼
-[Clic data-test="dynamic-catalog-sidebar-link"] ──► [aria-expanded="true", submenú visible]
+[Clic data-test="dynamic-catalog-sidebar-link"] ──► [aria-expanded="true", submenú visible] (RN-INV-014)
+    │
+    ├─ [Segundo clic en dynamic-catalog-sidebar-link] ──► [aria-expanded="false", submenú fuera del DOM] (RN-INV-014)
     │
     ├─ [Lazy Load] ──► [/dynamic-catalog-lazy-load.html]
     ├─ [Spinner] ──► [/dynamic-catalog-spinner.html]
@@ -21,7 +23,9 @@
 [Fin: título "Dynamic Catalog - {vista}"]
 ```
 
-**Postcondition**: Vista de solo lectura abierta; el carrito no cambia.
+**Postcondition**: Vista de solo lectura abierta; el carrito no cambia (RN-INV-020).
+
+**Ruta de error**: acceso directo sin sesión a cualquiera de las 3 rutas -> login con el error de ruta protegida (RN-INV-015, mismo flujo que FL-AUTH-003).
 
 ### FL-INV-005: Scroll con carga diferida
 

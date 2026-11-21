@@ -97,7 +97,8 @@
 - **Type**: Integration
 - **Trigger**: Clic en `generate-pdf-order` en la confirmación
 - **Behavior**: Se descarga un PDF llamado `swag-labs-order-{YYYY-MM-DD_HH-MM-SS}.pdf`; la URL no cambia
-- **Notes**: El contenido del PDF no se validó en esta sesión
+- **Contenido** (verificado en la etapa 2, 2026-11-21, extrayendo el texto del PDF de 1 página): "Swag Labs", "Order Receipt", "ORDER DETAILS" con "Order Date {Mes} {D}, {AAAA} at {h:mm} {AM|PM}", "SHIP TO" con nombre y apellido ingresados y el código postal, "ITEMS" con una fila "{producto} ${precio}" por producto comprado, "Item total ${subtotal}", "Tax ${impuesto}", "Total ${total}" y el texto "Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there."
+- **Notes**: Generado en el navegador (~3 KB). La hora del nombre del archivo está en UTC y la de "Order Date" en hora local del navegador (ver desviaciones)
 
 ### RN-CHK-016: El resumen requiere completar el paso 1
 
@@ -124,4 +125,5 @@
 | problem_user | Al escribir en `lastName` el texto va a `firstName` (queda "Perez" en nombre y apellido vacío); el paso 1 falla con "Error: Last Name is required" y no se puede avanzar | RN-CHK-002 / FL-CHK-001 | DEF |
 | error_user | `lastName` no admite texto (queda vacío) y aun así `continue` avanza al paso 2 sin error | RN-CHK-002 | DEF |
 | error_user | `finish` no hace nada: permanece en `/checkout-step-two.html` | RN-CHK-013 | DEF |
+| todos | El nombre del PDF usa la hora UTC (`swag-labs-order-2026-11-21_15-06-22.pdf`) y el campo "Order Date" del PDF la hora local del navegador ("12:06 PM" en America/Santiago) para la misma orden | RN-CHK-015 | REC (inconsistencia de zona horaria; no viola una regla explícita) |
 | performance_glitch_user, visual_user | Flujo completo correcto, totales con precios reales ($39.98 / $3.20 / $43.18) | - | - |

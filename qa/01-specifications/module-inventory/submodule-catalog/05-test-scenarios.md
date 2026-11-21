@@ -2,7 +2,7 @@
 
 **Module code**: INV  
 **Submodule code**: CAT  
-**Last updated**: 2026-11-21
+**Last updated**: 2026-11-21 (etapa 2)
 
 > Origen de cada TC según la sesión de exploración del 2026-11-21. Los TC marcados como "candidato DEF" describen el comportamiento que exige la regla; si la app no lo cumple, la etapa 5 usa `test.fail()` + archivo DEF (regla 10), nunca una aserción invertida.
 
@@ -13,10 +13,10 @@
 | P0 | 3 | 3 | 0 |
 | P1 | 14 | 14 | 0 |
 | P2 | 6 | 6 | 0 |
-| P3 | 4 | 4 | 0 |
-| **Total** | **27** | **27** | **0** |
+| P3 | 5 | 5 | 0 |
+| **Total** | **28** | **28** | **0** |
 
-Origen: UI-OBSERVED 27
+Origen: UI-OBSERVED 28 (TC-INV-CAT-028 agregado en la etapa 2 para cubrir RN-INV-013)
 
 ## Cobertura obligatoria
 
@@ -28,7 +28,37 @@ Origen: UI-OBSERVED 27
 - [x] Negativo: formato inválido - id de producto inexistente (TC-INV-CAT-017)
 - [x] Transición de estado: Add to cart <-> Remove (TC-INV-CAT-008, 010, 014)
 - [ ] Exportación/descarga - no aplica
-- [x] Búsqueda/orden: ordenamiento (TC-INV-CAT-003 a 007)
+- [x] Búsqueda/orden: ordenamiento (TC-INV-CAT-003 a 007, 028)
+
+## Matriz de trazabilidad
+
+Generada en la etapa 2 a partir del campo Rule de cada TC (RN -> TC) y del recorrido de cada flujo (FL -> TC). Los números son el sufijo de `TC-INV-CAT-NNN`.
+
+| Regla | Título | TC |
+|---|---|---|
+| RN-INV-001 | Catálogo de 6 productos | 001, 002, 027 |
+| RN-INV-002 | Orden por defecto A-Z | 003, 007 |
+| RN-INV-003 | Ordenamiento por nombre | 004, 020, 023 |
+| RN-INV-004 | Ordenamiento por precio | 005, 006, 020, 023 |
+| RN-INV-005 | Agregar al carrito desde el listado | 008, 009, 021, 024 |
+| RN-INV-006 | Quitar del carrito desde el listado | 010, 021, 024 |
+| RN-INV-007 | Navegación al detalle | 011, 012, 013, 022 |
+| RN-INV-008 | Estado del carrito reflejado en el detalle | 014, 015, 024 |
+| RN-INV-009 | Volver al listado | 016 |
+| RN-INV-010 | Producto inexistente | 017 |
+| RN-INV-011 | Imagen correcta por producto | 019, 026 |
+| RN-INV-012 | Precio consistente entre vistas | 002, 013, 025 |
+| RN-INV-013 | Opciones de orden estáticas | 028 |
+
+Reglas de otros submódulos verificadas aquí: RN-AUTH-007 (018); RN-CART-001 (009).
+
+| Flujo | Título | TC |
+|---|---|---|
+| FL-INV-001 | Explorar y ordenar el catálogo | 001, 002, 003, 004, 005, 006, 007, 019, 020, 023, 025, 026, 027, 028 |
+| FL-INV-002 | Agregar y quitar desde el listado | 008, 009, 010, 021, 024 |
+| FL-INV-003 | Consultar el detalle de un producto | 011, 012, 013, 014, 015, 016, 017, 022 |
+
+TC sin flujo propio en este submódulo: TC-INV-CAT-018 (sin sesión) sigue FL-AUTH-003.
 
 ---
 
@@ -580,3 +610,25 @@ Origen: UI-OBSERVED 27
 1. Leer nombres, precios e imágenes; ordenar por `lohi`
 
 **Expected result**: Idénticos a standard_user
+
+### TC-INV-CAT-028: El selector de orden ofrece las 4 opciones estáticas
+
+| Field | Value |
+|-------|-------|
+| Priority | P3 |
+| Type | Functional |
+| Origin | UI-OBSERVED |
+| Automation | Yes |
+| Playwright | (completar tras la automatización) |
+| Rule | RN-INV-013 |
+
+**Preconditions**:
+- Sesión iniciada con `QA_USER_STANDARD_USER_USERNAME` / `QA_USER_PASSWORD` (`<PLACEHOLDER>`)
+
+**Steps**:
+1. Abrir `/inventory.html`
+2. Leer las opciones de `product-sort-container`
+
+**Expected result**: Exactamente 4 opciones, en este orden: `az` "Name (A to Z)", `za` "Name (Z to A)", `lohi` "Price (low to high)", `hilo` "Price (high to low)"
+
+**Notes**: Verificado en vivo en la etapa 2. Lista estática: no depende de otro registro ni genera tráfico de red (RN-INV-013, Type Dependency sin dependencia)

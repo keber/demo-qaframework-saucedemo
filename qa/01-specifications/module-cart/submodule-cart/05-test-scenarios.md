@@ -30,6 +30,34 @@ Origen: UI-OBSERVED 19
 - [ ] Exportación/descarga - no aplica
 - [ ] Paginación/búsqueda - no aplica
 
+## Matriz de trazabilidad
+
+Generada en la etapa 2 a partir del campo Rule de cada TC (RN -> TC) y del recorrido de cada flujo (FL -> TC). Los números son el sufijo de `TC-CART-CRT-NNN`.
+
+| Regla | Título | TC |
+|---|---|---|
+| RN-CART-001 | Badge refleja la cantidad de productos | 001, 002, 006 |
+| RN-CART-002 | Contenido del carrito | 003, 004 |
+| RN-CART-003 | Cantidad unitaria por producto | 019 |
+| RN-CART-004 | Quitar desde el carrito | 005, 006, 007, 017 |
+| RN-CART-005 | Persistencia del carrito en el navegador | 010, 011 |
+| RN-CART-006 | Seguir comprando | 008 |
+| RN-CART-007 | Ir a checkout | 009 |
+| RN-CART-008 | No se puede iniciar checkout con el carrito vacío | 013 |
+| RN-CART-009 | El carrito se vacía al completar la compra | 015 |
+| RN-CART-010 | Enlace al detalle desde el carrito | 014 |
+| RN-CART-011 | Carrito aislado por usuario | 012 |
+
+Reglas de otros submódulos verificadas aquí: RN-AUTH-007 (016); RN-INV-012 (018).
+
+| Flujo | Título | TC |
+|---|---|---|
+| FL-CART-001 | Revisar el carrito y continuar al checkout | 003, 004, 008, 009, 014, 018, 019 |
+| FL-CART-002 | Quitar productos en el carrito | 005, 006, 007, 013, 017 |
+| FL-CART-003 | Persistencia entre sesiones | 010, 011, 012 |
+
+TC sin flujo propio en este submódulo: TC-CART-CRT-001, 002 (badge al agregar) siguen FL-INV-002; TC-CART-CRT-015 sigue FL-CHK-001; TC-CART-CRT-016 sigue FL-AUTH-003.
+
 ---
 
 ### TC-CART-CRT-001: Sin badge con el carrito vacío
