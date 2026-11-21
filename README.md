@@ -90,7 +90,7 @@ Regla clave del framework aplicada: **los tests afirman lo que exige la especifi
 
 ## Auditoría de la suite (qa-suite-audit)
 
-**Reporte HTML publicado:** https://keber.github.io/demo-qaframework-saucedemo/
+**Reporte HTML publicado:** https://keber.dev/demo-qaframework-saucedemo/
 
 ### Origen y propósito
 
