@@ -1,44 +1,42 @@
-# ✅ @keber/qa-framework installed successfully
+# AGENT-NEXT-STEPS - Sprint activo
 
-> This file was generated automatically by the postinstall script.
-> Read it and follow the steps below, then delete this file.
+> Este archivo contiene solo el sprint activo (regla 9 de `.claude/rules/qa-framework.md`).
+> Al cerrar el sprint, mover el checklist a `## Sprint History` de `qa/README.md` y dejar aquí solo el siguiente.
 
-## What was scaffolded
+## Estado de la instalación (completado)
 
-- `qa/` folder structure with spec templates and agent instructions
-- `.github/instructions/qa-framework.instructions.md` with QA agent behavior rules (framework-owned, safe to upgrade)
-- `.claude/rules/qa-framework.md` and `.claude/commands/qa-*.md` - equivalent Claude Code artifacts (framework-owned, safe to upgrade)
+- [x] Framework `@keber/qa-framework` instalado y estructura `qa/` generada
+- [x] Módulos configurados en `qa/qa-framework.config.json` (AUTH, INV, CART, CHK, NAV)
+- [x] `qa/07-automation/e2e/.env` creado (no versionado); credenciales solo por variables de entorno
+- [x] Dependencias E2E instaladas (`npm install` + `npx playwright install chromium` en `qa/07-automation/e2e`)
+- Fuera de alcance: Azure DevOps (`integrations.azureDevOps.enabled: false`), k6 y track de API
+- No se crea `AGENTS.md` en este proyecto
 
-## Required next steps
+## Sprint 1 - Cobertura inicial de saucedemo (etapas 1 a 5b)
 
-### 1. Configure your project modules
-Edit `qa/qa-framework.config.json` and add your project modules under the `"modules"` array.
+Aplicación bajo prueba: `{{QA_BASE_URL}}` (Swag Labs). Un submódulo por módulo.
 
-### 2. Optional integrations
+| Etapa | Comando | Rama | Estado |
+|---|---|---|---|
+| 1 - Análisis de módulos | `/qa-module-analysis` | `feature/stage-1-module-analysis` | ✅ Completada |
+| 2 - Generación de especificaciones | `/qa-spec-generation` | `feature/stage-2-*` | 🔲 Pendiente |
+| 3 - Plan de pruebas | `/qa-test-plan` | `feature/stage-3-*` | 🔲 Pendiente |
+| 4 - Casos de prueba | `/qa-test-cases` | `feature/stage-4-*` | 🔲 Pendiente |
+| 5 - Automatización E2E | `/qa-automation` | `feature/stage-5-*` | 🔲 Pendiente |
+| 5b - Estabilización | `/qa-test-stabilization` | `feature/stage-5b-*` | 🔲 Pendiente |
 
-**Azure DevOps integration:**
-```bash
-npm install @keber/ado-qa
-```
+### Checklist del sprint
 
-**Playwright E2E automation:**
-```bash
-npm install @playwright/test
-cd qa/07-automation/e2e && npm install && npx playwright install chromium
-```
+- [x] Etapa 1: 6 archivos de especificación por submódulo en `qa/01-specifications/module-{auth,inventory,cart,checkout,navigation}/`
+- [ ] Etapa 2: especificaciones revisadas y aprobadas (sin `PENDING-CODE` en el alcance a automatizar)
+- [ ] Etapa 3: plan de pruebas del Sprint 1 en `qa/02-test-plans/`
+- [ ] Etapa 4: casos de prueba en `qa/03-test-cases/`
+- [ ] Etapa 5: suites Playwright en `qa/07-automation/e2e/tests/{auth,inventory,cart,checkout,navigation}/`
+- [ ] Etapa 5: defectos `DEF-*` en `qa/06-defects/open/` para cada `test.fail()` y `REC-*` en `qa/06-defects/recommendations/`
+- [ ] Etapa 5b: cada TC en estado válido (`test()` verde, `test.fail()` con DEF, o `test.skip()` con `PENDING-CODE`)
+- [ ] Cierre: actualizar `qa/README.md` (estado de módulos y Sprint History) y recortar este archivo
 
-**Playwright API/integration automation:**
-```bash
-cd qa/07-automation/integration && npm install
-```
+### Entradas clave para la etapa 2
 
-### 3. Credentials
-- Copy `qa/07-automation/e2e/.env.example` -> `qa/07-automation/e2e/.env` and fill in credentials
-- Copy `qa/07-automation/integration/.env.example` -> `qa/07-automation/integration/.env` and fill in credentials
-- Add both `.env` files and both `.auth/` folders to `.gitignore`
-
-### 4. Optional: review rulebook (AGENTS.md)
-If the repository has no `AGENTS.md` at its root, copy `qa/00-standards/agents-md-template.md`
-to `AGENTS.md` and fill in its placeholders with the user. It gives reviewers rule IDs to cite,
-a register of tracked exceptions and a list of what NOT to report. If an `AGENTS.md` already
-exists, do not replace it: offer to merge the sections it lacks. The framework never edits it.
+- Hallazgos de comportamiento por usuario: `qa/memory/saucedemo-app-behavior.md`
+- Candidatos a defecto detectados en la etapa 1 (a confirmar y documentar en la etapa 5): ver la sección "Desviaciones observadas" de cada `01-business-rules.md`

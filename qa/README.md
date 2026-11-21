@@ -2,7 +2,7 @@
 
 > Framework: `@keber/qa-framework` v1.14.0-rc.9
 > Language: es | Base URL: `{{QA_BASE_URL}}`
-> ADO Project: `{ADO_ORG} / {ADO_PROJECT}` _(optional - remove line if not using Azure DevOps)_
+> Azure DevOps: fuera de alcance en este proyecto
 
 ---
 
@@ -10,7 +10,12 @@
 
 | Module | Submodule | TCs Total | TCs Automated | Plan | ADO Suite | Status | Last Run |
 |---|---|---|---|---|---|---|---|
-| {MODULE_NAME} | {SUBMODULE_NAME} | - | - | ⬜ | - | 🔲 Not started | - |
+| Autenticación (AUTH) | Login y sesión (LOG) | 24 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
+| Catálogo de productos (INV) | Listado y detalle (CAT) | 27 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
+| Catálogo de productos (INV) | Dynamic Catalog (DYN) | 13 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
+| Carrito de compras (CART) | Carrito (CRT) | 19 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
+| Checkout (CHK) | Flujo de compra (FLW) | 26 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
+| Navegación y menú (NAV) | Menú lateral, encabezado y footer (MENU) | 16 | - | ⬜ | - | ⚠️ Etapa 1 completada (análisis) | - |
 
 **Legend**: ✅ Done · ⚠️ Partial · 🔲 Not started · ⛔ Blocked
 
@@ -44,7 +49,7 @@ npx playwright test --last-failed
 
 | ID | Description | Affects | Opened | Status |
 |---|---|---|---|---|
-| - | No active blockers | - | - | - |
+| - | Sin bloqueos activos. Defectos candidatos de la etapa 1 en la sección "Desviaciones observadas" de cada `01-business-rules.md` | - | - | - |
 
 ---
 
