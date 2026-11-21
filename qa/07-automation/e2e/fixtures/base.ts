@@ -11,6 +11,7 @@
  *     QA_SESSION_REFRESH_MARGIN_S (default 150 s) left, it is renewed by running
  *     scripts/saucedemo-session.js as a CHILD PROCESS. The login therefore never runs
  *     inside the test runner, where trace/video/screenshot could record it.
+ *   - performance_glitch_user tests run with test.slow() (triple timeout, FLK-SD-07).
  *   - `newPersonaContext(browser, user)` for the few TCs that need a second context
  *     (another persona side by side, or "a new context" step of the plan).
  *
@@ -72,6 +73,10 @@ export const test = base.extend<{ qaUser: QaUser }>({
   qaUser: ['standard_user', { option: true }],
 
   storageState: async ({ qaUser }, use, testInfo) => {
+    // performance_glitch_user delays every view by design (~5 s per render). Its multi-view
+    // tests reached 23-27 s of the 30 s budget under load in stage 5b (FLK-SD-07), so they
+    // get the triple timeout of test.slow(). Assertions and waits are unchanged.
+    if (qaUser === 'performance_glitch_user') testInfo.slow();
     if (qaUser === 'anonymous') {
       await use(EMPTY_STATE);
       return;
